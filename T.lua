@@ -1,12 +1,2337 @@
---[[
- .____                  ________ ___.    _____                           __                
- |    |    __ _______   \_____  \\_ |___/ ____\_ __  ______ ____ _____ _/  |_  ___________ 
- |    |   |  |  \__  \   /   |   \| __ \   __\  |  \/  ___// ___\\__  \\   __\/  _ \_  __ \
- |    |___|  |  // __ \_/    |    \ \_\ \  | |  |  /\___ \\  \___ / __ \|  | (  <_> )  | \/
- |_______ \____/(____  /\_______  /___  /__| |____//____  >\___  >____  /__|  \____/|__|   
-         \/          \/         \/    \/                \/     \/     \/                   
-          \_Welcome to LuaObfuscator.com   (Alpha 0.10.9) ~  Much Love, Ferib 
+local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/ginomihan812-debug/S/refs/heads/main/untitled.lua'))()
 
-]]--
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+local RunService = game:GetService("RunService")
+local StarterGui = game:GetService("StarterGui")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Workspace = game:GetService("Workspace")
+local Lighting = game:GetService("Lighting")
 
-local v0=loadstring(game:HttpGet("https://raw.githubusercontent.com/ginomihan812-debug/S/refs/heads/main/untitled.lua"))();local v1=game:GetService("Players");local v2=v1.LocalPlayer;local v3=game:GetService("RunService");local v4=game:GetService("StarterGui");local v5=game:GetService("ReplicatedStorage");local v6=game:GetService("Workspace");local v7=game:GetService("Lighting");local v8;local function v9() local v124=0 -0 ;while true do if (v124==(0 -0)) then if v8 then return;end v8=v2.Idled:Connect(function() local v601=0;while true do if (1==v601) then task.wait(1429 -(1233 + 195) );game:GetService("VirtualUser"):Button2Up(Vector2.new(0 -0 ,0 + 0 ),workspace.CurrentCamera.CFrame);break;end if (v601==0) then task.wait(0.1 + 0 );game:GetService("VirtualUser"):Button2Down(Vector2.new(0 + 0 ,0 + 0 ),workspace.CurrentCamera.CFrame);v601=1 + 0 ;end end end);v124=1434 -(797 + 636) ;end if (v124==(4 -3)) then v4:SetCore("SendNotification",{Title="反挂机已开启。",Text=" ",Duration=3,Icon="rbxassetid://128981664025072"});break;end end end v9();local v10=v0:CreateWindow({Name="银狼脚本",LoadingTitle="银狼脚本",LoadingSubtitle="ST封锁战线",ShowText="银狼脚本",Icon=128981664026691 -(1427 + 192) ,Style=3,DisableRayfieldPrompts=true,ConfigurationSaving={Enabled=false}});local v11=v10:CreateTab("主要功能");local v12=v10:CreateTab("其它");local v13=v10:CreateTab("自动化");local v14=v10:CreateTab("选择特殊泰坦");local v15=v10:CreateTab("选择角色");local v16=v10:CreateTab("加入私服房");local v17=v10:CreateTab("ESP");local v18=v10:CreateTab("商店");local v19=v10:CreateTab("付费功能");local v20=0;v11:CreateInput({Name="CFrame移速",PlaceholderText="",RemoveTextAfterFocusLost=false,Callback=function(v125) local v126=0 + 0 ;local v127;while true do if (v126==(0 -0)) then v127=tonumber(v125);if v127 then v20=v127;else v20=0 + 0 ;end break;end end end});v3.Stepped:Connect(function() if ((v20>(0 + 0)) and v2.Character and v2.Character:FindFirstChild("HumanoidRootPart")) then local v417=326 -(192 + 134) ;local v418;local v419;while true do if (v417==(1277 -(316 + 960))) then v418.CFrame=v418.CFrame + (v419 * v20) ;break;end if (v417==(0 + 0)) then v418=v2.Character.HumanoidRootPart;v419=v2.Character.Humanoid.MoveDirection;v417=1 + 0 ;end end end end);v11:CreateButton({Name="复制休闲码",Ext=true,Callback=function() pcall(function() local v382=0;local v383;while true do if (v382==(1 + 0)) then v4:SetCore("SendNotification",{Title="功能提示",Text="休闲码已复制到剪贴板！",Duration=7 -5 ,Icon="rbxassetid://128981664025072"});break;end if (v382==(551 -(83 + 468))) then v383=v5:WaitForChild("DiffModeCode").Value;setclipboard(v383);v382=1807 -(1202 + 604) ;end end end);end});v11:CreateButton({Name="随机服务器",Ext=true,Callback=function() local v128=0 -0 ;local v129;local v130;local v131;local v132;while true do if (v128==(4 -1)) then v132();break;end if (v128==(0 -0)) then v129=game:GetService("HttpService");v130=game:GetService("TeleportService");v128=1;end if (v128==(327 -(45 + 280))) then v132=nil;function v132() local v603=0;local v604;local v605;local v606;while true do if (v603==(2 + 0)) then v130:TeleportToPlaceInstance(game.PlaceId,v606,v2);break;end if ((1 + 0)==v603) then v605=v604[math.random(1 + 0 , #v604)];v606=v605.id;v603=2 + 0 ;end if ((0 + 0)==v603) then v604=v131(game.PlaceId);if ( #v604==(0 -0)) then v4:SetCore("SendNotification",{Title="提示",Text="没有找到可用的服务器",Duration=1913 -(340 + 1571) ,Icon="rbxassetid://128981664025072"});return;end v603=1 + 0 ;end end end v128=1775 -(1733 + 39) ;end if (v128==1) then v131=nil;function v131(v607) local v608=0;local v609;local v610;local v611;while true do if (v608==0) then v609="https://games.roblox.com/v1/games/"   .. v607   .. "/servers/Public?limit=100" ;v610,v611=pcall(function() return v129:JSONDecode(game:HttpGet(v609));end);v608=1;end if (v608==(2 -1)) then if (v610 and v611 and v611.data) then return v611.data;end return {};end end end v128=2;end end end});v11:CreateToggle({Name="背包界面",CurrentValue=false,Flag="InventoryToggle",Ext=true,Callback=function(v133) local v134=1034 -(125 + 909) ;local v135;while true do if ((1948 -(1096 + 852))==v134) then v135=v2:FindFirstChild("PlayerGui");if v135 then local v676=v135:FindFirstChild("Inventory");if v676 then local v795=0;while true do if ((0 + 0)==v795) then v676.Enabled=v133;v4:SetCore("SendNotification",{Title="功能提示",Text=(v133 and "已开启背包界面") or "已关闭背包界面" ,Duration=2,Icon="rbxassetid://128981664025072"});break;end end else v4:SetCore("SendNotification",{Title="错误提示",Text="找不到 Inventory 界面",Duration=2 -0 ,Icon="rbxassetid://128981664025072"});end end break;end end end});local v21=false;local v22=nil;local v23=nil;local v24={"CameraAwaken","Kaijin","TekrinnDialogueRemote","CameraAwakenV2","CameraAwakenHeadCap","Kakajumon"};local function v25() for v384,v385 in pairs(v24) do local v386=1317 -(1114 + 203) ;local v387;while true do if (v386==0) then v387=v5:FindFirstChild(v385);if v387 then v387:Destroy();end break;end end end end local function v26() local v136=726 -(228 + 498) ;local v137;local v138;while true do if (v136==(0 + 0)) then v137=v2:FindFirstChild("PlayerGui");v138=game:GetService("CoreGui");v136=1 + 0 ;end if (v136==1) then if v137 then for v728,v729 in pairs(v137:GetChildren()) do if v729:IsA("ScreenGui") then local v817=0;local v818;while true do if (v817==(663 -(174 + 489))) then v818=v729.Name:lower();if (v818:find("dialogue") or v818:find("dialog")) then v729:Destroy();end break;end end end end end for v612,v613 in pairs(v138:GetChildren()) do if v613:IsA("ScreenGui") then local v730=0 -0 ;local v731;while true do if (v730==0) then v731=v613.Name:lower();if (v731:find("dialogue") or v731:find("dialog")) then v613:Destroy();end break;end end end end break;end end end local function v27() local v139=1905 -(830 + 1075) ;local v140;local v141;while true do if (v139==2) then for v614,v615 in pairs(v141:GetPlayingAnimationTracks()) do local v616=524 -(303 + 221) ;while true do if (v616==0) then v615:Stop();v615:Destroy();break;end end end break;end if (v139==(1269 -(231 + 1038))) then v140=v2.Character;if  not v140 then return;end v139=1 + 0 ;end if (v139==1) then v141=v140:FindFirstChildWhichIsA("Humanoid");if  not v141 then return;end v139=1164 -(171 + 991) ;end end end v11:CreateToggle({Name="删除山本特效",CurrentValue=false,Flag="DeleteShanbenToggle",Ext=true,Callback=function(v142) if v142 then if  not v21 then local v617=0 -0 ;while true do if (v617==(0 -0)) then v21=true;v25();v617=2 -1 ;end if (v617==2) then if v23 then local v851=0 + 0 ;while true do if (v851==0) then v23:Disconnect();v23=nil;break;end end end v23=v5.ChildAdded:Connect(function(v819) local v820=0 -0 ;while true do if (v820==0) then task.wait(0.1);if v21 then for v912,v913 in pairs(v24) do if (v819.Name==v913) then v819:Destroy();end end end break;end end end);v617=3;end if (v617==(8 -5)) then v22=task.spawn(function() while v21 do local v852=0 -0 ;while true do if (v852==(0 -0)) then task.wait(1249 -(111 + 1137) );if v21 then local v914=158 -(91 + 67) ;while true do if (v914==1) then v27();break;end if (v914==(0 -0)) then v25();v26();v914=1 + 0 ;end end end break;end end end end);break;end if (v617==(524 -(423 + 100))) then v26();v27();v617=1 + 1 ;end end end v4:SetCore("SendNotification",{Title="功能提示",Text="已开启删除山本特效",Duration=2,Icon="rbxassetid://128981664025072"});else v21=false;if v22 then task.cancel(v22);v22=nil;end if v23 then local v618=0 -0 ;while true do if (v618==0) then v23:Disconnect();v23=nil;break;end end end v4:SetCore("SendNotification",{Title="功能提示",Text="已关闭删除山本特效",Duration=2 + 0 ,Icon="rbxassetid://128981664025072"});end end});local v28=nil;v11:CreateToggle({Name="锁定视角",CurrentValue=false,Flag="LockCameraToggle",Ext=true,Callback=function(v143) if v143 then local v420=771 -(326 + 445) ;while true do if (0==v420) then if  not v28 then v28=v3.Heartbeat:Connect(function() local v821=v2.Character;if  not v821 then return;end local v822=v821:FindFirstChild("HumanoidRootPart");if  not v822 then return;end local v823=workspace.CurrentCamera;if  not v823 then return;end local v824=v823.CFrame.LookVector;local v825=Vector3.new(v824.X,0 -0 ,v824.Z).Unit;if (v825.Magnitude>(0 -0)) then v822.CFrame=CFrame.lookAt(v822.Position,v822.Position + v825 );end end);end v4:SetCore("SendNotification",{Title="功能提示",Text="已开启锁定视角",Duration=4 -2 ,Icon="rbxassetid://128981664025072"});break;end end else local v421=711 -(530 + 181) ;while true do if (v421==0) then if v28 then v28:Disconnect();v28=nil;end v4:SetCore("SendNotification",{Title="功能提示",Text="已关闭锁定视角",Duration=883 -(614 + 267) ,Icon="rbxassetid://128981664025072"});break;end end end end});local v29=nil;v11:CreateToggle({Name="zuts远距离跟随",CurrentValue=false,Flag="MonsterFollowToggle",Ext=true,Callback=function(v144) if v144 then local v422=0;while true do if (v422==(32 -(19 + 13))) then if  not v29 then v29=v3.Heartbeat:Connect(function() pcall(function() local v853=0 -0 ;local v854;local v855;local v856;local v857;local v858;while true do if ((2 -1)==v853) then v856=v6:FindFirstChild("Living");if  not v856 then return;end v857=v856:FindFirstChild("Zombie Upgraded Titan Speaker V2");if  not v857 then return;end v853=5 -3 ;end if (v853==(0 + 0)) then v854=v2.Character;if  not v854 then return;end v855=v854:FindFirstChild("HumanoidRootPart");if  not v855 then return;end v853=1 -0 ;end if (v853==(3 -1)) then v858=v857:FindFirstChild("HumanoidRootPart");if  not v858 then return;end v855.CFrame=CFrame.new(v858.Position + Vector3.new(1902 -(1293 + 519) ,15, -(265 -135)) ,v858.Position);break;end end end);end);end v4:SetCore("SendNotification",{Title="功能提示",Text="已开启zuts远距离跟随",Duration=4 -2 ,Icon="rbxassetid://128981664025072"});break;end end else local v423=0 -0 ;while true do if (v423==(0 -0)) then if v29 then v29:Disconnect();v29=nil;end v4:SetCore("SendNotification",{Title="功能提示",Text="已关闭zuts远距离跟随",Duration=2,Icon="rbxassetid://128981664025072"});break;end end end end});local v30=false;local v31=nil;v11:CreateToggle({Name="删除导弹特效",CurrentValue=false,Flag="DeleteMissileToggle",Ext=true,Callback=function(v145) if v145 then if  not v30 then v30=true;v31=task.spawn(function() while v30 do local v732=0 -0 ;local v733;while true do if (v732==1) then task.wait(0.1);break;end if ((0 + 0)==v732) then v733=v6:FindFirstChild("Effects");if v733 then for v903,v904 in ipairs(v733:GetChildren()) do if (v904.Name=="MissileBOOM") then pcall(function() v904:Destroy();end);end end end v732=1;end end end end);v4:SetCore("SendNotification",{Title="功能提示",Text="已开启删除导弹特效",Duration=1 + 1 ,Icon="rbxassetid://128981664025072"});end else v30=false;if v31 then task.cancel(v31);v31=nil;end v4:SetCore("SendNotification",{Title="功能提示",Text="已关闭删除导弹特效",Duration=2,Icon="rbxassetid://128981664025072"});end end});v11:CreateToggle({Name="自动重生",CurrentValue=false,Flag="AutoRebirthToggle",Ext=true,Callback=function(v146) if v146 then task.spawn(function() while v146 do local v619=0;local v620;while true do if (v619==(0 -0)) then v620=v2.Character;if v620 then local v859=0 + 0 ;local v860;while true do if (v859==(0 + 0)) then v860=v620:FindFirstChild("Humanoid");if (v860 and (v860.Health<(7 + 3)) and v620:IsDescendantOf(v6:FindFirstChild("Living"))) then v860.Health=1096 -(709 + 387) ;end break;end end end v619=1859 -(673 + 1185) ;end if (v619==1) then task.wait(1);break;end end end end);v4:SetCore("SendNotification",{Title="功能提示",Text="已开启自动重生",Duration=5 -3 ,Icon="rbxassetid://128981664025072"});else v4:SetCore("SendNotification",{Title="功能提示",Text="已关闭自动重生",Duration=6 -4 ,Icon="rbxassetid://128981664025072"});end end});local v32=false;local v33=nil;v12:CreateButton({Name="飞行",Ext=true,Callback=function() if  not v32 then local v424=0;while true do if ((0 -0)==v424) then v32=true;v33=loadstring(game:HttpGet("\104\116\116\112\115\58\47\47\114\97\119\46\103\105\116\104\117\98\117\115\101\114\99\111\110\116\101\110\116\46\99\111\109\47\77\65\75\69\56\54\54\47\102\107\99\120\102\103\47\114\101\102\115\47\104\101\97\100\115\47\109\97\105\110\47\37\69\57\37\65\51\37\57\69\37\69\56\37\65\49\37\56\67\46\108\117\97"))();v424=1 + 0 ;end if (v424==(1 + 0)) then v4:SetCore("SendNotification",{Title="功能提示",Text="已开启飞行",Duration=2 -0 ,Icon="rbxassetid://128981664025072"});break;end end else local v425=0;while true do if ((0 + 0)==v425) then v32=false;v33=nil;v425=1;end if (v425==(1 -0)) then v4:SetCore("SendNotification",{Title="功能提示",Text="已关闭飞行",Duration=3 -1 ,Icon="rbxassetid://128981664025072"});break;end end end end});local v34=false;v12:CreateToggle({Name="画质简化",CurrentValue=false,Flag="GraphicsSimplifiedToggle",Ext=true,Callback=function(v147) v34=v147;if v147 then v7.GlobalShadows=false;v7.ShadowSoftness=0;v7.Brightness=1882 -(446 + 1434) ;pcall(function() local v459=0;while true do if (v459==(1283 -(1040 + 243))) then v7.Bloom.Enabled=false;v7.Blur.Enabled=false;v459=2 -1 ;end if (v459==1) then v7.SunRays.Enabled=false;v7.ColorCorrection.Enabled=false;v459=1849 -(559 + 1288) ;end if (v459==2) then v7.DepthOfField.Enabled=false;break;end end end);settings().Rendering.QualityLevel=1932 -(609 + 1322) ;pcall(function() local v460=0;while true do if (v460==(455 -(13 + 441))) then v6.Terrain.WaterReflectance=0 -0 ;v6.Terrain.WaterTransparency=0.5 -0 ;break;end if ((0 -0)==v460) then v6.Terrain.WaterWaveSize=0;v6.Terrain.WaterWaveSpeed=0 + 0 ;v460=3 -2 ;end end end);v4:SetCore("SendNotification",{Title="功能提示",Text="已开启画质简化 (流畅模式)",Duration=2,Icon="rbxassetid://128981664025072"});else local v430=0 + 0 ;while true do if (v430==(1 + 0)) then v7.Brightness=1;pcall(function() v7.Bloom.Enabled=true;v7.Blur.Enabled=true;v7.SunRays.Enabled=true;v7.ColorCorrection.Enabled=true;v7.DepthOfField.Enabled=true;end);v430=2;end if (v430==(5 -3)) then settings().Rendering.QualityLevel=6 + 4 ;pcall(function() local v748=0;while true do if (v748==0) then v6.Terrain.WaterWaveSize=5;v6.Terrain.WaterWaveSpeed=18 -8 ;v748=1 + 0 ;end if (v748==1) then v6.Terrain.WaterReflectance=0.5;v6.Terrain.WaterTransparency=0.5 + 0 ;break;end end end);v430=3 + 0 ;end if (v430==(3 + 0)) then v4:SetCore("SendNotification",{Title="功能提示",Text="已关闭画质简化 (恢复原画质)",Duration=2 + 0 ,Icon="rbxassetid://128981664025072"});break;end if (v430==(433 -(153 + 280))) then v7.GlobalShadows=true;v7.ShadowSoftness=2 -1 ;v430=1;end end end end});v12:CreateToggle({Name="快速互动",CurrentValue=false,Flag="QuickInteractToggle",Ext=true,Callback=function(v148) if v148 then local v431=0;while true do if (v431==0) then for v749,v750 in ipairs(v6:GetDescendants()) do if v750:IsA("ProximityPrompt") then v750.HoldDuration=0 + 0 ;end end v4:SetCore("SendNotification",{Title="功能提示",Text="已开启快速互动",Duration=2,Icon="rbxassetid://128981664025072"});break;end end else local v432=0 + 0 ;while true do if (v432==(0 + 0)) then for v751,v752 in ipairs(v6:GetDescendants()) do if v752:IsA("ProximityPrompt") then v752.HoldDuration=1;end end v4:SetCore("SendNotification",{Title="功能提示",Text="已关闭快速互动",Duration=2 + 0 ,Icon="rbxassetid://128981664025072"});break;end end end end});local v35=nil;v12:CreateToggle({Name="夜视",CurrentValue=false,Flag="NightVisionToggle",Ext=true,Callback=function(v149) if v149 then local v433=0 + 0 ;while true do if (v433==(0 -0)) then if  not v35 then v35=v3.RenderStepped:Connect(function() v7.Ambient=Color3.new(1 + 0 ,668 -(89 + 578) ,1 + 0 );end);end v4:SetCore("SendNotification",{Title="功能提示",Text="已开启夜视",Duration=3 -1 ,Icon="rbxassetid://128981664025072"});break;end end else local v434=0;while true do if (v434==(1050 -(572 + 477))) then v4:SetCore("SendNotification",{Title="功能提示",Text="已关闭夜视",Duration=2,Icon="rbxassetid://128981664025072"});break;end if (v434==(0 + 0)) then if v35 then v35:Disconnect();v35=nil;end v7.Ambient=Color3.new(0 + 0 ,0,0 + 0 );v434=1;end end end end});local v36=false;local v37=nil;local function v38() local v150=86 -(84 + 2) ;local v151;local v152;while true do if (v150==2) then if v152 then v152.NameDisplayDistance=0;end for v621,v622 in pairs(v151:GetDescendants()) do if v622:IsA("BillboardGui") then for v797,v798 in pairs(v622:GetChildren()) do if (v798:IsA("TextLabel") and ((v798.Text==v2.Name) or (v798.Text==v2.DisplayName))) then v622:Destroy();end end end end break;end if (v150==(0 -0)) then if  not v36 then return;end v151=v2.Character;v150=1 + 0 ;end if (v150==1) then if  not v151 then return;end v152=v151:FindFirstChildWhichIsA("Humanoid");v150=2;end end end local function v39() if  not v36 then local v435=v2.Character;if v435 then local v623=842 -(497 + 345) ;local v624;while true do if (0==v623) then v624=v435:FindFirstChildWhichIsA("Humanoid");if v624 then v624.NameDisplayDistance=10;end break;end end end end end v2.CharacterAdded:Connect(function() local v153=0 + 0 ;while true do if (v153==(0 + 0)) then task.wait(0.5);if v36 then v38();else v39();end break;end end end);v12:CreateToggle({Name="隐藏名字(客户端)",CurrentValue=false,Flag="HideNameToggle",Ext=true,Callback=function(v154) local v155=1333 -(605 + 728) ;while true do if (v155==0) then v36=v154;if v154 then local v683=0 + 0 ;while true do if (v683==0) then v38();if  not v37 then v37=task.spawn(function() while v36 do task.wait(0.5);v38();end end);end v683=1;end if (v683==1) then v4:SetCore("SendNotification",{Title="功能提示",Text="已开启隐藏名字",Duration=3 -1 ,Icon="rbxassetid://128981664025072"});break;end end else local v684=0 + 0 ;while true do if (v684==0) then v36=false;if v37 then local v879=0 -0 ;while true do if (v879==(0 + 0)) then task.cancel(v37);v37=nil;break;end end end v684=2 -1 ;end if (v684==(1 + 0)) then v39();v4:SetCore("SendNotification",{Title="功能提示",Text="已关闭隐藏名字",Duration=491 -(457 + 32) ,Icon="rbxassetid://128981664025072"});break;end end end break;end end end});v12:CreateButton({Name="重置人物（自杀）",Ext=true,Callback=function() local v156=0 + 0 ;local v157;while true do if (v156==0) then v157=v2;if (v157 and v157.Character and v157.Character:FindFirstChild("Humanoid")) then local v685=0;while true do if (v685==(1402 -(832 + 570))) then v157.Character.Humanoid.Health=0;v4:SetCore("SendNotification",{Title="功能提示",Text="已执行重置人物",Duration=2 + 0 ,Icon="rbxassetid://128981664025072"});break;end end else v4:SetCore("SendNotification",{Title="错误提示",Text="未找到角色",Duration=1 + 1 ,Icon="rbxassetid://128981664025072"});end break;end end end});local v40=nil;v13:CreateToggle({Name="自动百抽",CurrentValue=false,Flag="AutoGachaToggle",Ext=true,Callback=function(v158) if v158 then if  not v40 then local v625=0 -0 ;while true do if (v625==0) then v40=v3.RenderStepped:Connect(function() local v830=0 + 0 ;local v831;while true do if (v830==0) then v831=v5.GachaSkins;v831:FireServer("100Spins");v830=797 -(588 + 208) ;end if (v830==(2 -1)) then task.wait(1815 -(884 + 916) );break;end end end);v4:SetCore("SendNotification",{Title="功能提示",Text="已开启自动百抽",Duration=3 -1 ,Icon="rbxassetid://128981664025072"});break;end end end elseif v40 then local v626=0;while true do if (v626==1) then v4:SetCore("SendNotification",{Title="功能提示",Text="已关闭自动百抽",Duration=2 + 0 ,Icon="rbxassetid://128981664025072"});break;end if ((653 -(232 + 421))==v626) then v40:Disconnect();v40=nil;v626=1890 -(1569 + 320) ;end end end end});local v41=nil;local v42=false;local function v43() local v159=0;local v160;while true do if (v159==0) then v42=false;if v41 then local v686=0;while true do if (v686==(0 + 0)) then task.cancel(v41);v41=nil;break;end end end v159=1 + 0 ;end if (v159==(6 -4)) then v4:SetCore("SendNotification",{Title="自动化",Text="天文模式已停止",Duration=2,Icon="rbxassetid://128981664025072"});break;end if (v159==(606 -(316 + 289))) then v160=v2.Character and v2.Character:FindFirstChild("HumanoidRootPart") ;if v160 then for v753,v754 in ipairs(v160:GetChildren()) do if (v754:IsA("BodyVelocity") or v754:IsA("BodyGyro")) then v754:Destroy();end end end v159=5 -3 ;end end end local function v44() local v161=v2;local v162=v5;local v163=v162:WaitForChild("Buff");local v164=v162:WaitForChild("Vote");local v165=v162:WaitForChild("GetReadyRemote");local v166=v161.Character;if  not v166 then v166=v161.CharacterAdded:Wait();end local v167=v166:WaitForChild("HumanoidRootPart");local v168=v166:WaitForChild("Humanoid");local v169=true;local v170=0 + 0 ;spawn(function() while v169 and v42  do pcall(function() if (v166 and v168 and (v168.Health>(1453 -(666 + 787)))) then if ((v168.Health<=(v168.MaxHealth/(427 -(360 + 65)))) and ((tick() -v170)>(5 + 0))) then local v799=254 -(79 + 175) ;while true do if (v799==0) then v163:FireServer();v170=tick();break;end end end end end);task.wait(0.1 -0 );if  not v42 then break;end end end);local v171=tick() + 10 ;while (tick()<v171) and v42  do local v388=0 + 0 ;while true do if (v388==0) then v164:FireServer("AstroV2");task.wait();break;end end end if  not v42 then return;end v165:FireServer("1",true);local v172=tick();while ((tick() -v172)<71) and v42  do task.wait(2 -1 );end if  not v42 then return;end v166=v161.Character;if  not v166 then v169=false;return;end v167=v166:WaitForChild("HumanoidRootPart");local v174={Vector3.new( -(1282.88 -616),1195.16 -(503 + 396) , -(722.21 -(92 + 89))),Vector3.new(950 -460 ,152.81 + 143 , -(321.63 + 220)),Vector3.new(1918.42 -1428 ,296.16,487.95),Vector3.new( -(92.22000000000003 + 575),296.21,1112.04 -624 )};local v175=Vector3.new( -22.88,2.71 + 0 , -1.34);local v176=430 + 470 ;local v177=530;local v178=15 -10 ;local v179=Instance.new("BodyVelocity",v167);v179.MaxForce=Vector3.new(12480950 + 87519050 ,100000000,100000000);v179.Velocity=Vector3.zero;v179.P=30500 -10500 ;local v184=Instance.new("BodyGyro",v167);v184.MaxTorque=Vector3.new(100001244 -(485 + 759) ,100000000,231388380 -131388380 );v184.P=20000;v184.CFrame=v167.CFrame;local function v189(v389) local v390=0;local v391;local v392;while true do if (0==v390) then v391=(v389-v167.Position).Magnitude;v392=0;v390=1190 -(442 + 747) ;end if (v390==(1136 -(832 + 303))) then while (v391>v178) and v42  do local v687=v167.Position;local v688=(v389-v687).Unit;v179.Velocity=v688 * v177 ;local v690=Vector3.new(v688.X,946 -(88 + 858) ,v688.Z);if (v690.Magnitude>(0 + 0)) then v184.CFrame=CFrame.lookAt(v687,v687 + v690 );end task.wait();if  not v42 then break;end local v691=(v389-v167.Position).Magnitude;if (math.abs(v691-v391 )<0.5) then v392=v392 + 1 ;else v392=0 + 0 ;end if (v392>30) then break;end v391=v691;end v179.Velocity=Vector3.zero;break;end end end local v190=tick();while ((tick() -v190)<v176) and v42  do for v436,v437 in ipairs(v174) do v189(v437);if (((tick() -v190)>=v176) or  not v42) then break;end task.wait(0.02);end end pcall(function() if v179 then v179:Destroy();end end);pcall(function() if v184 then v184:Destroy();end end);v166=v161.Character;if (v166 and v166:FindFirstChild("HumanoidRootPart")) then v166.HumanoidRootPart.CFrame=CFrame.new(v175);end v169=false;end v13:CreateToggle({Name="自动通关天文模式",CurrentValue=false,Flag="AutoLoopToggle",Ext=true,Callback=function(v191) if v191 then if  not v42 then local v630=0 + 0 ;while true do if ((789 -(766 + 23))==v630) then v42=true;v41=task.spawn(function() while v42 do v44();if  not v42 then break;end task.wait(24 -19 );end end);v630=1 -0 ;end if (v630==(2 -1)) then v4:SetCore("SendNotification",{Title="自动化",Text="开跑了",Duration=2,Icon="rbxassetid://128981664025072"});break;end end end else v43();end end});local v45=game:GetService("VirtualInputManager");local v46=game:GetService("UserInputService");v46.MouseIconEnabled=false;local v48=false;local v49=nil;local function v50() local v192=0 -0 ;local v193;local v194;local v195;local v196;local v197;local v198;while true do if (v192==3) then v45:SendTouchEvent(v198,2,v196,v197);return true;end if (v192==(1073 -(1036 + 37))) then v193=v2:FindFirstChild("GachaMomment");if  not v193 then return false;end v194=v193.AbsolutePosition;v195=v193.AbsoluteSize;v192=1;end if (v192==(2 + 0)) then v45:SendTouchEvent(v198,0 -0 ,v196,v197);task.wait(0.02 + 0 );v45:SendTouchEvent(v198,1481 -(641 + 839) ,v196,v197);task.wait(0.02);v192=916 -(910 + 3) ;end if (v192==1) then if ((v194.X==(0 -0)) and (v194.Y==(1684 -(1466 + 218)))) then return false;end v196=v194.X + (v195.X/(1 + 1)) ;v197=v194.Y + (v195.Y/2) ;v198=math.random(2148 -(556 + 592) ,3556 + 6443 );v192=2;end end end v13:CreateToggle({Name="自动点击抽奖",CurrentValue=false,Flag="AutoClickGachaToggle",Ext=true,Callback=function(v199) if v199 then if  not v48 then local v631=808 -(329 + 479) ;while true do if (1==v631) then v4:SetCore("SendNotification",{Title="功能提示",Text="已开启自动点击抽奖",Duration=2,Icon="rbxassetid://128981664025072"});break;end if ((854 -(174 + 680))==v631) then v48=true;v49=task.spawn(function() while v48 do if  not v50() then task.wait(0.5 -0 );else task.wait(0.05 -0 );end end end);v631=1 + 0 ;end end end else local v439=0;while true do if (v439==(739 -(396 + 343))) then v48=false;if v49 then local v801=0 + 0 ;while true do if (v801==(1477 -(29 + 1448))) then task.cancel(v49);v49=nil;break;end end end v439=1;end if (v439==(1390 -(135 + 1254))) then v4:SetCore("SendNotification",{Title="功能提示",Text="已关闭自动点击抽奖",Duration=7 -5 ,Icon="rbxassetid://128981664025072"});break;end end end end});local v51=false;local v52=nil;local v53=140 -110 ;v13:CreateToggle({Name="自动互动材料",CurrentValue=false,Flag="AutoInteractToggle",Ext=true,Callback=function(v200) if v200 then if  not v51 then v51=true;v52=task.spawn(function() local v692={};local v693={};local v694={"lever","Head","AT","SpecterRoom","ModelDoor","Right arm","Acid Arm","Material"};for v755,v756 in ipairs(v6:GetDescendants()) do if v756:IsA("ProximityPrompt") then v756.HoldDuration=0 + 0 ;end end v6.DescendantAdded:Connect(function(v757) if v757:IsA("ProximityPrompt") then v757.HoldDuration=1545 -(320 + 1225) ;end end);local function v695(v758) local v759=0 -0 ;while true do if (v759==1) then if (v758==v2.Character) then return true;end return false;end if (v759==(0 + 0)) then if ( not v758 or  not v758:IsA("Model")) then return false;end if v1:GetPlayerFromCharacter(v758) then return true;end v759=1465 -(157 + 1307) ;end end end local function v696(v760) if ( not v760 or  not v760:IsA("Model")) then return false;end if v695(v760) then return false;end if v760:FindFirstChildWhichIsA("Humanoid") then return true;end return false;end local function v697(v761) local v762=0;while true do if (v762==0) then if  not v761 then return false;end for v880,v881 in pairs(v694) do if (v761.Name==v881) then return true;end if (v761.Parent and (v761.Parent.Name==v881)) then return true;end if (v761.Parent and v761.Parent.Parent and (v761.Parent.Parent.Name==v881)) then return true;end end v762=1;end if (1==v762) then return false;end end end local function v698(v763) if  not v763 then return false;end if (v763:IsA("ClickDetector") or v763:IsA("ProximityPrompt") or v763:IsA("TouchInterest")) then return true;end if v763:IsA("Tool") then return true;end for v802,v803 in pairs(v763:GetDescendants()) do if v803:IsA("ClickDetector") then return true;end if v803:IsA("ProximityPrompt") then return true;end if v803:IsA("TouchInterest") then return true;end if v803:IsA("Tool") then return true;end end return false;end local function v699(v764) if (v764:IsA("BasePart") or v764:IsA("Part") or v764:IsA("MeshPart") or v764:IsA("UnionOperation")) then return v764;end if v764:IsA("Model") then local v834=v764:FindFirstChild("HumanoidRootPart");if v834 then return v834;end local v835=v764:FindFirstChildWhichIsA("BasePart");if v835 then return v835;end end if v764:IsA("Tool") then local v836=1859 -(821 + 1038) ;local v837;while true do if (v836==0) then v837=v764:FindFirstChild("Handle") or v764:FindFirstChildWhichIsA("BasePart") ;if v837 then return v837;end break;end end end return nil;end local function v700(v765) local v766=0 -0 ;while true do if (v766==(1 + 0)) then if v697(v765) then return;end if v693[v765] then return;end v766=2;end if (v766==(3 -1)) then v693[v765]=true;break;end if (v766==(0 + 0)) then if ( not v765 or  not v765.Parent) then return;end if v696(v765) then return;end v766=2 -1 ;end end end local function v701() local v767=1026 -(834 + 192) ;while true do if (v767==(0 + 0)) then v693={};for v882,v883 in pairs(v6:GetDescendants()) do if v698(v883) then if  not v696(v883) then local v916=0 + 0 ;local v917;while true do if (v916==0) then v917=v883;if (v883:IsA("ClickDetector") or v883:IsA("ProximityPrompt") or v883:IsA("TouchInterest")) then v917=v883.Parent;end v916=1 + 0 ;end if (v916==1) then if (v917 and  not v697(v917)) then v700(v917);end break;end end end end end break;end end end v6.DescendantAdded:Connect(function(v768) local v769=0 -0 ;while true do if (v769==0) then task.wait(304.1 -(300 + 4) );if v698(v768) then if  not v696(v768) then local v907=0;local v908;while true do if (1==v907) then if (v908 and  not v697(v908)) then v700(v908);end break;end if (v907==(0 + 0)) then v908=v768;if (v768:IsA("ClickDetector") or v768:IsA("ProximityPrompt") or v768:IsA("TouchInterest")) then v908=v768.Parent;end v907=1;end end end end break;end end end);v6.DescendantRemoving:Connect(function(v770) if v693[v770] then v693[v770]=nil;end end);local function v702(v771) local v772=0 -0 ;local v773;local v774;while true do if (v772==2) then if v774 then local v889=362 -(112 + 250) ;while true do if (v889==(0 + 0)) then fireclickdetector(v774);return;end end end for v884,v885 in pairs(v771:GetDescendants()) do if v885:IsA("TouchInterest") then local v905=0 -0 ;local v906;while true do if (1==v905) then return;end if (v905==(0 + 0)) then v906=v885.Parent;if (v906 and v906:IsA("BasePart")) then firetouchinterest(v906,v2.Character:FindFirstChild("HumanoidRootPart"),0 + 0 );end v905=1 + 0 ;end end end end break;end if (v772==(1 + 0)) then if v773 then fireproximityprompt(v773);return;end v774=v771:FindFirstChildWhichIsA("ClickDetector",true);v772=2 + 0 ;end if (v772==(1414 -(1001 + 413))) then if ( not v771 or  not v771.Parent) then return;end v773=v771:FindFirstChildWhichIsA("ProximityPrompt",true);v772=2 -1 ;end end end local function v703() local v775=v2.Character;if  not v775 then return nil,math.huge;end local v776=v775:FindFirstChild("HumanoidRootPart");if  not v776 then return nil,math.huge;end local v777=nil;local v778=math.huge;for v804,v805 in pairs(v693) do if (v804 and v804.Parent) then local v867=882 -(244 + 638) ;local v868;while true do if (v867==0) then v868=v699(v804);if (v868 and v868.Parent) then local v918=v868.Position;if v918 then local v922=(v776.Position-v918).Magnitude;if (v922<v778) then local v931=0;while true do if (0==v931) then v778=v922;v777=v804;break;end end end end end break;end end end end return v777,v778;end v701();while v51 do local v779=693 -(627 + 66) ;local v780;while true do if (v779==(0 -0)) then v780=v2.Character;if v780 then local v890=0;local v891;while true do if (v890==(602 -(512 + 90))) then v891=v780:FindFirstChild("HumanoidRootPart");if v891 then local v923=1906 -(1665 + 241) ;local v924;local v925;while true do if (v923==(717 -(373 + 344))) then v924,v925=v703();if (v924 and v925 and (v925<=v53)) then if  not v692[v924] then local v935=0;while true do if ((0 + 0)==v935) then v702(v924);v692[v924]=true;break;end end end end break;end end end break;end end end v779=1 + 0 ;end if (v779==(2 -1)) then task.wait(1 -0 );break;end end end end);v4:SetCore("SendNotification",{Title="自动化",Text="已开启自动互动材料",Duration=1101 -(35 + 1064) ,Icon="rbxassetid://128981664025072"});end else local v440=0 + 0 ;while true do if (v440==(0 -0)) then v51=false;if v52 then local v806=0 + 0 ;while true do if (v806==0) then task.cancel(v52);v52=nil;break;end end end v440=1237 -(298 + 938) ;end if (v440==1) then v4:SetCore("SendNotification",{Title="自动化",Text="已关闭自动互动材料",Duration=2,Icon="rbxassetid://128981664025072"});break;end end end end});v13:CreateSlider({Name="自动互动材料范围",Range={1666 -(636 + 1030) ,26 + 24 },Increment=1 + 0 ,CurrentValue=9 + 21 ,Flag="AutoInteractRange",Callback=function(v201) local v202=0;while true do if (v202==(0 + 0)) then v53=v201;v4:SetCore("SendNotification",{Title="功能提示",Text="互动范围已设为: "   .. v201   .. " 米" ,Duration=2,Icon="rbxassetid://128981664025072"});break;end end end});v14:CreateSection("特殊泰坦");v14:CreateButton({Name="泰坦电视2.0",Ext=true,Callback=function() pcall(function() v5.ForChangeCharacter:FireServer("Upgraded Titan TV",222 -(55 + 166) );v4:SetCore("SendNotification",{Title="角色切换",Text="已切换至 泰坦电视2.0",Duration=2,Icon="rbxassetid://128981664025072"});end);end});v14:CreateButton({Name="泰坦音响2.0",Ext=true,Callback=function() pcall(function() local v393=0;while true do if (v393==(0 + 0)) then v5.ForChangeCharacter:FireServer("Upgraded Titan Speaker",1 + 0 );v4:SetCore("SendNotification",{Title="角色切换",Text="已切换至 泰坦音响2.0",Duration=2,Icon="rbxassetid://128981664025072"});break;end end end);end});v14:CreateButton({Name="泰坦监控2.0",Ext=true,Callback=function() pcall(function() local v394=0 -0 ;while true do if (v394==0) then v5.ForChangeCharacter:FireServer("Upgraded Titan Cameraman",298 -(36 + 261) );v4:SetCore("SendNotification",{Title="角色切换",Text="已切换至 泰坦监控2.0",Duration=3 -1 ,Icon="rbxassetid://128981664025072"});break;end end end);end});v14:CreateButton({Name="泰坦时钟",Ext=true,Callback=function() pcall(function() local v395=0;while true do if ((1368 -(34 + 1334))==v395) then v5.ForChangeCharacter:FireServer("Clock Titan",0);v4:SetCore("SendNotification",{Title="角色切换",Text="已切换至 泰坦时钟",Duration=2,Icon="rbxassetid://128981664025072"});break;end end end);end});v14:CreateButton({Name="x18",Ext=true,Callback=function() pcall(function() local v396=0 + 0 ;while true do if (v396==(0 + 0)) then v5.ForChangeCharacter:FireServer("G-Toilet Z",1283 -(1035 + 248) );v4:SetCore("SendNotification",{Title="角色切换",Text="已切换至 x18",Duration=23 -(20 + 1) ,Icon="rbxassetid://128981664025072"});break;end end end);end});v14:CreateButton({Name="塞壬",Ext=true,Callback=function() pcall(function() local v397=0 + 0 ;while true do if (v397==0) then v5.ForChangeCharacter:FireServer("Siren Titan",0);v4:SetCore("SendNotification",{Title="角色切换",Text="已切换至 塞壬",Duration=2,Icon="rbxassetid://128981664025072"});break;end end end);end});v15:CreateSection("角色");v15:CreateButton({Name="天文大电视",Ext=true,Callback=function() pcall(function() local v398=319 -(134 + 185) ;while true do if (v398==(1133 -(549 + 584))) then v5.ForChangeCharacter:FireServer("Astro Large TV man",0);v4:SetCore("SendNotification",{Title="角色切换",Text="已切换至 天文大电视",Duration=687 -(314 + 371) ,Icon="rbxassetid://128981664025072"});break;end end end);end});v15:CreateButton({Name="故障",Ext=true,Callback=function() pcall(function() local v399=0 -0 ;while true do if (v399==(968 -(478 + 490))) then v5.ForChangeCharacter:FireServer("Glitch Double plunger",0 + 0 );v4:SetCore("SendNotification",{Title="角色切换",Text="已切换至 故障",Duration=2,Icon="rbxassetid://128981664025072"});break;end end end);end});v15:CreateButton({Name="反派",Ext=true,Callback=function() pcall(function() v5.ForChangeCharacter:FireServer("Brown Camera man",1173 -(786 + 386) );v4:SetCore("SendNotification",{Title="角色切换",Text="已切换至 反派",Duration=6 -4 ,Icon="rbxassetid://128981664025072"});end);end});v15:CreateButton({Name="音队",Ext=true,Callback=function() pcall(function() local v400=0;while true do if (v400==(1379 -(1055 + 324))) then v5.ForChangeCharacter:FireServer("Dark Speakerman",1342 -(1093 + 247) );v4:SetCore("SendNotification",{Title="角色切换",Text="已切换至 音队",Duration=2,Icon="rbxassetid://128981664025072"});break;end end end);end});v15:CreateButton({Name="首席时钟",Ext=true,Callback=function() pcall(function() local v401=0 + 0 ;while true do if (0==v401) then v5.ForChangeCharacter:FireServer("Clock Man",0 + 0 );v4:SetCore("SendNotification",{Title="角色切换",Text="已切换至 首席时钟",Duration=7 -5 ,Icon="rbxassetid://128981664025072"});break;end end end);end});v15:CreateButton({Name="女三体",Ext=true,Callback=function() pcall(function() local v402=0;while true do if (v402==(0 -0)) then v5.ForChangeCharacter:FireServer("Tri Soldier Athena (Girl)",0 -0 );v4:SetCore("SendNotification",{Title="角色切换",Text="已切换至 女三体",Duration=4 -2 ,Icon="rbxassetid://128981664025072"});break;end end end);end});v15:CreateButton({Name="山本",Ext=true,Callback=function() pcall(function() v5.ForChangeCharacter:FireServer("Head Captain Of The CCTV",0 + 0 );v4:SetCore("SendNotification",{Title="角色切换",Text="已切换至 山本",Duration=7 -5 ,Icon="rbxassetid://128981664025072"});end);end});v15:CreateButton({Name="普罗米修斯",Ext=true,Callback=function() pcall(function() v5.ForChangeCharacter:FireServer("Prometheus",0 -0 );v4:SetCore("SendNotification",{Title="角色切换",Text="已切换至 普罗米修斯",Duration=2 + 0 ,Icon="rbxassetid://128981664025072"});end);end});v15:CreateButton({Name="女监控2.0",Ext=true,Callback=function() pcall(function() local v403=0 -0 ;while true do if (v403==(688 -(364 + 324))) then v5.ForChangeCharacter:FireServer("Camera woman 2.0",0);v4:SetCore("SendNotification",{Title="角色切换",Text="已切换至 女监控2.0",Duration=5 -3 ,Icon="rbxassetid://128981664025072"});break;end end end);end});v15:CreateButton({Name="DJ2.0",Ext=true,Callback=function() pcall(function() local v404=0;while true do if (v404==(0 -0)) then v5.ForChangeCharacter:FireServer("DJ Toilet 2.0",0 + 0 );v4:SetCore("SendNotification",{Title="角色切换",Text="已切换至 DJ2.0",Duration=8 -6 ,Icon="rbxassetid://128981664025072"});break;end end end);end});v16:CreateButton({Name="点击进入私服",Ext=true,Callback=function() pcall(function() local v405=0 -0 ;while true do if (v405==(0 -0)) then v5.VIPServer:FireServer("Join","TLSophvrRP");v4:SetCore("SendNotification",{Title="功能提示",Text="已尝试加入私服代码: TLSophvrRP",Duration=1270 -(1249 + 19) ,Icon="rbxassetid://128981664025072"});break;end end end);end});local v54=false;local v55={};local v56={};local v57=nil;local v58=nil;local function v59() local v203=0 + 0 ;local v204;while true do if (v203==0) then v204={};for v632,v633 in pairs(v1:GetPlayers()) do v204[v633.Name]=true;v204[v633.DisplayName]=true;end v203=1;end if (v203==(3 -2)) then return v204;end end end local v60=v59();v1.PlayerAdded:Connect(function() v60=v59();end);v1.PlayerRemoving:Connect(function() v60=v59();end);local function v61(v205) local v206=1086 -(686 + 400) ;local v207;while true do if (v206==3) then return false;end if ((2 + 0)==v206) then v207=v205:FindFirstChild("Humanoid");if (v207 and v207:FindFirstChild("DisplayName")) then return true;end v206=232 -(73 + 156) ;end if (v206==1) then if v60[v205.Name] then return true;end if (v205==v2.Character) then return true;end v206=1 + 1 ;end if (v206==0) then if ( not v205 or  not v205:IsA("Model")) then return false;end if v1:GetPlayerFromCharacter(v205) then return true;end v206=1;end end end local function v62(v208) local v209=811 -(721 + 90) ;local v210;local v211;local v212;local v213;while true do if (v209==(1 + 2)) then v212=Instance.new("TextLabel",v211);v212.Size=UDim2.new(3 -2 ,470 -(224 + 246) ,0.6 -0 ,0 -0 );v212.Position=UDim2.new(0 + 0 ,0 + 0 ,0,0 + 0 );v209=4;end if (v209==4) then v212.BackgroundTransparency=1 -0 ;v212.Text=v208.Name;v212.TextColor3=Color3.fromRGB(848 -593 ,768 -(203 + 310) ,1993 -(1238 + 755) );v209=1 + 4 ;end if (v209==(1543 -(709 + 825))) then v213.TextStrokeTransparency=0.3 -0 ;v213.TextStrokeColor3=Color3.fromRGB(0 -0 ,864 -(196 + 668) ,0 -0 );v56[v208]={name=v212,dist=v213};break;end if (v209==(16 -8)) then v213.TextColor3=Color3.fromRGB(1033 -(171 + 662) ,200,200);v213.TextSize=102 -(4 + 89) ;v213.Font=Enum.Font.Gotham;v209=9;end if (v209==(17 -12)) then v212.TextSize=11;v212.Font=Enum.Font.GothamBold;v212.TextStrokeTransparency=0.3 + 0 ;v209=26 -20 ;end if (v209==(3 + 3)) then v212.TextStrokeColor3=Color3.fromRGB(1486 -(35 + 1451) ,0,1453 -(28 + 1425) );v213=Instance.new("TextLabel",v211);v213.Size=UDim2.new(1994 -(941 + 1052) ,0 + 0 ,1514.4 -(822 + 692) ,0 -0 );v209=4 + 3 ;end if (v209==2) then v211.StudsOffset=Vector3.new(297 -(45 + 252) ,2.5 + 0 ,0);v211.AlwaysOnTop=true;v211.Parent=v208;v209=2 + 1 ;end if (v209==(16 -9)) then v213.Position=UDim2.new(433 -(114 + 319) ,0,0.6 -0 ,0);v213.BackgroundTransparency=1;v213.Text="0m";v209=9 -1 ;end if (v209==1) then v211=Instance.new("BillboardGui");v211.Adornee=v210;v211.Size=UDim2.new(0 + 0 ,120,0 -0 ,40);v209=3 -1 ;end if ((1963 -(556 + 1407))==v209) then if v56[v208] then return;end v210=v208:FindFirstChild("HumanoidRootPart") or v208:FindFirstChildWhichIsA("BasePart") ;if  not v210 then return;end v209=1207 -(741 + 465) ;end end end local function v63(v214) if v56[v214] then local v441=v56[v214].name.Parent;if v441 then v441:Destroy();end v56[v214]=nil;end end local function v64(v215) local v216=465 -(170 + 295) ;local v217;local v218;while true do if (v216==(2 + 1)) then v218.OutlineColor=Color3.fromRGB(255,255,235 + 20 );v218.FillTransparency=0.7 -0 ;v218.OutlineTransparency=0.5 + 0 ;v216=4;end if (v216==(2 + 0)) then v218=Instance.new("Highlight");v218.Adornee=v215;v218.FillColor=Color3.fromRGB(255,145 + 110 ,1485 -(957 + 273) );v216=1 + 2 ;end if (1==v216) then v217=v215:FindFirstChildWhichIsA("Humanoid");if  not v217 then return;end if (v217.Health<=(0 + 0)) then return;end v216=7 -5 ;end if (v216==4) then v218.Parent=v215;v55[v215]=v218;v62(v215);break;end if (v216==(0 -0)) then if v55[v215] then return;end if ( not v215 or  not v215:IsA("Model")) then return;end if v61(v215) then return;end v216=2 -1 ;end end end local function v65(v219) local v220=0 -0 ;while true do if (0==v220) then if v55[v219] then local v704=1780 -(389 + 1391) ;while true do if (v704==(0 + 0)) then v55[v219]:Destroy();v55[v219]=nil;break;end end end v63(v219);break;end end end local function v66() local v221=0;while true do if (v221==(0 + 0)) then for v636,v637 in pairs(v55) do v65(v636);end for v638,v639 in pairs(v56) do v63(v638);end break;end end end local function v67() local v222=0 -0 ;local v223;while true do if (0==v222) then v66();if  not v54 then return;end v222=1;end if (v222==2) then if  not v223 then return;end for v640,v641 in pairs(v223:GetChildren()) do if (v641:IsA("Model") and  not v61(v641)) then v64(v641);end end break;end if (v222==(952 -(783 + 168))) then v60=v59();v223=v6:FindFirstChild("Living");v222=6 -4 ;end end end local function v68() local v224=0 + 0 ;local v225;while true do if ((312 -(309 + 2))==v224) then if  not v225 then return;end for v642,v643 in pairs(v56) do if (v643 and v643.dist and v643.dist.Parent) then local v781=0 -0 ;local v782;while true do if (v781==(1212 -(1090 + 122))) then v782=v642:FindFirstChild("HumanoidRootPart") or v642:FindFirstChildWhichIsA("BasePart") ;if v782 then local v892=0 + 0 ;local v893;while true do if ((0 -0)==v892) then v893=(v225.Position-v782.Position).Magnitude;v643.dist.Text=string.format("%.1fm",v893);break;end end end break;end end end end break;end if (v224==(0 + 0)) then if  not v54 then return;end v225=v2.Character and v2.Character:FindFirstChild("HumanoidRootPart") ;v224=1;end end end local v69=v6:FindFirstChild("Living");if v69 then v58=v69.ChildAdded:Connect(function(v443) local v444=0;while true do if (0==v444) then task.wait(1118.3 -(628 + 490) );if (v54 and v443:IsA("Model") and  not v61(v443)) then v64(v443);end break;end end end);end v17:CreateToggle({Name="透视ST角色",CurrentValue=false,Flag="NpcHighlightToggle",Ext=true,Callback=function(v226) local v227=0 + 0 ;while true do if (v227==0) then v54=v226;if v226 then local v705=0;while true do if (v705==0) then if  not v57 then v57=v3.Heartbeat:Connect(v68);end v67();v705=2 -1 ;end if (v705==(4 -3)) then v4:SetCore("SendNotification",{Title="功能提示",Text="已开启透视ST角色",Duration=776 -(431 + 343) ,Icon="rbxassetid://128981664025072"});break;end end else v66();if v57 then local v807=0 -0 ;while true do if (v807==(0 -0)) then v57:Disconnect();v57=nil;break;end end end v4:SetCore("SendNotification",{Title="功能提示",Text="已关闭透视ST角色",Duration=2 + 0 ,Icon="rbxassetid://128981664025072"});end break;end end end});local v70=false;local v71={};local v72=nil;local function v73(v228) local v229=0 + 0 ;while true do if (0==v229) then for v644,v645 in ipairs(v1:GetPlayers()) do if (v645.Character==v228) then return v645;end end return nil;end end end local function v74(v230,v231) local v232=1695 -(556 + 1139) ;local v233;local v234;local v235;local v236;while true do if ((17 -(6 + 9))==v232) then v235.BackgroundTransparency=1 + 0 ;v235.Text=v231.Name;v235.TextColor3=Color3.fromRGB(131 + 124 ,424 -(28 + 141) ,0);v235.TextSize=11;v235.Font=Enum.Font.GothamBold;v235.TextStrokeTransparency=0.3;v232=2 + 1 ;end if (v232==1) then v234.AlwaysOnTop=true;v234.MaxDistance=12343 -2343 ;v234.Parent=v233;v235=Instance.new("TextLabel");v235.Size=UDim2.new(1,0 + 0 ,1317.6 -(486 + 831) ,0 -0 );v235.Position=UDim2.new(0 -0 ,0 + 0 ,0 -0 ,1263 -(668 + 595) );v232=2;end if (v232==(5 + 0)) then v236.TextStrokeColor3=Color3.fromRGB(0,0 + 0 ,0 -0 );v236.Parent=v234;return {billboard=v234,name=v235,dist=v236};end if (v232==(294 -(23 + 267))) then v236.BackgroundTransparency=1;v236.Text="0m";v236.TextColor3=Color3.fromRGB(2144 -(1129 + 815) ,200,587 -(371 + 16) );v236.TextSize=1759 -(1326 + 424) ;v236.Font=Enum.Font.Gotham;v236.TextStrokeTransparency=0.3 -0 ;v232=18 -13 ;end if ((118 -(88 + 30))==v232) then v233=v230:FindFirstChild("Head");if  not v233 then return;end v234=Instance.new("BillboardGui");v234.Name="PlayerInfo";v234.Size=UDim2.new(771 -(720 + 51) ,266 -146 ,1776 -(421 + 1355) ,65 -25 );v234.StudsOffset=Vector3.new(0 + 0 ,1085.5 -(286 + 797) ,0 -0 );v232=1;end if (v232==(4 -1)) then v235.TextStrokeColor3=Color3.fromRGB(439 -(397 + 42) ,0 + 0 ,0);v235.Parent=v234;v236=Instance.new("TextLabel");v236.Name="DistLabel";v236.Size=UDim2.new(1,800 -(24 + 776) ,0.4,0 -0 );v236.Position=UDim2.new(0,0,785.6 -(222 + 563) ,0);v232=8 -4 ;end end end local function v75(v237,v238) local v239=0 + 0 ;local v240;local v241;while true do if ((191 -(23 + 167))==v239) then v241.Adornee=v237;v241.FillColor=Color3.fromRGB(255,2053 -(690 + 1108) ,255);v241.OutlineColor=Color3.fromRGB(93 + 162 ,211 + 44 ,255);v241.FillTransparency=848.7 -(40 + 808) ;v239=1 + 1 ;end if (v239==0) then v240=v237:FindFirstChild("Humanoid");if  not v240 then return;end v241=Instance.new("Highlight");v241.Name="PlayerESP";v239=1;end if ((7 -5)==v239) then v241.OutlineTransparency=0.5 + 0 ;v241.DepthMode=Enum.HighlightDepthMode.AlwaysOnTop;v241.Parent=v237;return v241;end end end local function v76(v242) local v243=0 + 0 ;local v244;local v245;while true do if (v243==(1 + 0)) then v245=v242:FindFirstChild("Head");if v245 then local v706=571 -(47 + 524) ;local v707;while true do if (v706==(0 + 0)) then v707=v245:FindFirstChild("PlayerInfo");if v707 then v707:Destroy();end break;end end end break;end if (v243==(0 -0)) then v244=v242:FindFirstChild("PlayerESP");if v244 then v244:Destroy();end v243=1 -0 ;end end end local function v77(v246) local v247=0 -0 ;local v248;while true do if ((1728 -(1165 + 561))==v247) then v75(v246,v248);v74(v246,v248);break;end if ((1 + 0)==v247) then if v246:FindFirstChild("PlayerESP") then return;end task.wait(0.2 -0 );v247=1 + 1 ;end if (v247==(479 -(341 + 138))) then v248=v73(v246);if  not v248 then return;end v247=1 + 0 ;end end end local function v78() local v249=0 -0 ;local v250;while true do if (1==v249) then for v646,v647 in ipairs(v250:GetChildren()) do if (v647:IsA("Model") and v647:FindFirstChild("Humanoid")) then v77(v647);end end break;end if (v249==(326 -(89 + 237))) then v250=v6:FindFirstChild("Living");if  not v250 then return;end v249=3 -2 ;end end end local function v79() local v251=0;local v252;local v253;while true do if ((3 -1)==v251) then if  not v253 then return;end for v648,v649 in ipairs(v253:GetChildren()) do if v649:IsA("Model") then local v783=881 -(581 + 300) ;local v784;while true do if (v783==0) then v784=v649:FindFirstChild("Head");if v784 then local v894=1220 -(855 + 365) ;local v895;while true do if (0==v894) then v895=v784:FindFirstChild("PlayerInfo");if v895 then local v926=v895:FindFirstChild("DistLabel");if v926 then local v932=0 -0 ;local v933;while true do if (0==v932) then v933=v649:FindFirstChild("HumanoidRootPart") or v649:FindFirstChildWhichIsA("BasePart") ;if v933 then local v936=(v252.Position-v933.Position).Magnitude;v926.Text=string.format("%.1fm",v936);end break;end end end end break;end end end break;end end end end break;end if (v251==(1 + 0)) then if  not v252 then return;end v253=v6:FindFirstChild("Living");v251=1237 -(1030 + 205) ;end if (v251==(0 + 0)) then if  not v70 then return;end v252=v2.Character and v2.Character:FindFirstChild("HumanoidRootPart") ;v251=1 + 0 ;end end end local function v80() local v254=0;local v255;local v256;local v257;while true do if (v254==1) then if  not v255 then local v708=v6.ChildAdded:Connect(function(v785) if (v785.Name=="Living") then v80();end end);table.insert(v71,v708);return;end v78();v254=2;end if (v254==(288 -(156 + 130))) then v256=v255.ChildAdded:Connect(function(v650) if (v650:IsA("Model") and v650:FindFirstChild("Humanoid")) then v77(v650);end end);table.insert(v71,v256);v254=6 -3 ;end if (v254==(0 -0)) then if  not v70 then return;end v255=v6:FindFirstChild("Living");v254=1;end if (v254==(5 -2)) then v257=v255.ChildRemoved:Connect(function(v651) v76(v651);end);table.insert(v71,v257);break;end end end local function v81() local v258=0 + 0 ;local v259;while true do if (0==v258) then if v72 then local v709=0;while true do if (v709==(0 + 0)) then task.cancel(v72);v72=nil;break;end end end for v652,v653 in ipairs(v71) do pcall(function() v653:Disconnect();end);end v258=1;end if (v258==1) then v71={};v259=v6:FindFirstChild("Living");v258=71 -(10 + 59) ;end if ((1 + 1)==v258) then if v259 then for v786,v787 in ipairs(v259:GetChildren()) do v76(v787);end end break;end end end v17:CreateToggle({Name="玩家透视",CurrentValue=false,Flag="PlayerEspToggle",Ext=true,Callback=function(v260) local v261=0 -0 ;while true do if (v261==(1163 -(671 + 492))) then v70=v260;if v260 then local v710=0;while true do if ((0 + 0)==v710) then v81();v80();v710=1216 -(369 + 846) ;end if (v710==1) then v72=task.spawn(function() while v70 do task.wait(0.5 + 0 );v79();end end);v4:SetCore("SendNotification",{Title="功能提示",Text="已开启玩家透视",Duration=2 + 0 ,Icon="rbxassetid://128981664025072"});break;end end else local v711=1945 -(1036 + 909) ;while true do if (v711==(0 + 0)) then v81();v4:SetCore("SendNotification",{Title="功能提示",Text="已关闭玩家透视",Duration=2 -0 ,Icon="rbxassetid://128981664025072"});break;end end end break;end end end});local v82=false;local v83=nil;local v84=nil;local function v85() local v262=v2:FindFirstChild("PlayerGui");if v262 then local v445=203 -(11 + 192) ;local v446;while true do if (v445==(0 + 0)) then v446=v262:FindFirstChild("PlayerCountUI");if v446 then v446:Destroy();end break;end end end end local function v86() local v263=v2:FindFirstChild("PlayerGui");if  not v263 then return nil;end local v264=Instance.new("ScreenGui");v264.Name="PlayerCountUI";v264.IgnoreGuiInset=true;v264.ResetOnSpawn=false;v264.Parent=v263;local v269=Instance.new("TextLabel");v269.Name="AliveLabel";v269.Size=UDim2.new(175 -(135 + 40) ,242 -142 ,0,14 + 8 );v269.Position=UDim2.new(2 -1 , -105,0 -0 ,181 -(50 + 126) );v269.BackgroundTransparency=2 -1 ;v269.Text="存活: 0";v269.TextColor3=Color3.fromRGB(0 + 0 ,1668 -(1233 + 180) ,1069 -(522 + 447) );v269.Font=Enum.Font.SourceSansBold;v269.TextSize=14;v269.TextStrokeTransparency=0;v269.TextStrokeColor3=Color3.fromRGB(1421 -(107 + 1314) ,0 + 0 ,0 -0 );v269.TextXAlignment=Enum.TextXAlignment.Right;v269.Parent=v264;local v284=Instance.new("TextLabel");v284.Name="DownedLabel";v284.Size=UDim2.new(0 + 0 ,100,0 -0 ,87 -65 );v284.Position=UDim2.new(1, -(2015 -(716 + 1194)),0,1 + 26 );v284.BackgroundTransparency=1 + 0 ;v284.Text="倒地: 0";v284.TextColor3=Color3.fromRGB(758 -(74 + 429) ,154 -74 ,40 + 40 );v284.Font=Enum.Font.SourceSansBold;v284.TextSize=31 -17 ;v284.TextStrokeTransparency=0;v284.TextStrokeColor3=Color3.fromRGB(0 + 0 ,0 -0 ,0 -0 );v284.TextXAlignment=Enum.TextXAlignment.Right;v284.Parent=v264;return v264;end local function v87() local v297=v2:FindFirstChild("PlayerGui");if  not v297 then return;end local v298=v297:FindFirstChild("PlayerCountUI");if  not v298 then return;end local v299=v298:FindFirstChild("AliveLabel");local v300=v298:FindFirstChild("DownedLabel");if ( not v299 or  not v300) then return;end pcall(function() local v406=v6:FindFirstChild("Living");if  not v406 then v299.Text="存活: 0";v300.Text="倒地: 0";return;end local v407=433 -(279 + 154) ;local v408=778 -(454 + 324) ;for v447,v448 in ipairs(v1:GetPlayers()) do local v449=0 + 0 ;local v450;while true do if (v449==(17 -(12 + 5))) then v450=v448.Character;if (v450 and v450:IsDescendantOf(v406)) then local v808=v450:FindFirstChild("HumanoidRootPart");local v809=false;if v808 then local v870=v808:FindFirstChild("ReviveUI");if v870 then v809=true;end end if v809 then v408=v408 + 1 + 0 ;else v407=v407 + (2 -1) ;end end break;end end end v299.Text="存活: "   .. v407 ;v300.Text="倒地: "   .. v408 ;end);end local function v88() local v301=0 + 0 ;while true do if (v301==(1093 -(277 + 816))) then if v84 then return;end v84=task.spawn(function() while v82 do local v713=0 -0 ;while true do if (v713==(1183 -(1058 + 125))) then v87();task.wait(1);break;end end end end);break;end end end local function v89() if v84 then task.cancel(v84);v84=nil;end end local function v90() local v302=0 + 0 ;while true do if (v302==(975 -(815 + 160))) then if v83 then return;end v83=task.spawn(function() while v82 do local v714=v2:FindFirstChild("PlayerGui");if v714 then local v810=0 -0 ;local v811;while true do if (v810==(0 -0)) then v811=v714:FindFirstChild("PlayerCountUI");if  not v811 then v86();end break;end end end task.wait(0.5 + 0 );end end);break;end end end local function v91() if v83 then local v451=0;while true do if (v451==0) then task.cancel(v83);v83=nil;break;end end end end v17:CreateToggle({Name="玩家显示",CurrentValue=false,Flag="PlayerDisplayToggle",Ext=true,Callback=function(v303) local v304=0 -0 ;while true do if (v304==(1898 -(41 + 1857))) then v82=v303;if v303 then v85();v86();v90();v88();v4:SetCore("SendNotification",{Title="功能提示",Text="已开启玩家显示",Duration=2,Icon="rbxassetid://128981664025072"});else v91();v89();v85();v4:SetCore("SendNotification",{Title="功能提示",Text="已关闭玩家显示",Duration=2,Icon="rbxassetid://128981664025072"});end break;end end end});local v92=false;local v93=nil;local v94=nil;local v95={Common=1893 -(1222 + 671) ,Epic=0 -0 ,Legendary=0,Mythic=0 -0 };local v96=0;local function v97() local v305=1182 -(229 + 953) ;local v306;while true do if (v305==4) then v94.Position=UDim2.new(1774.25 -(1111 + 663) ,1579 -(874 + 705) ,0.02 + 0 ,0);v94.BackgroundTransparency=1 + 0 ;v94.TextColor3=Color3.new(1 -0 ,1 + 0 ,1);v305=684 -(642 + 37) ;end if ((1 + 2)==v305) then v93.ResetOnSpawn=false;v94=Instance.new("TextLabel");v94.Size=UDim2.new(0.5,0,0.07 + 0 ,0);v305=9 -5 ;end if (v305==(455 -(233 + 221))) then v93=Instance.new("ScreenGui");v93.Name="GachaStatUI";v93.Parent=game:GetService("CoreGui");v305=2;end if (v305==(4 -2)) then v93.DisplayOrder=880 + 119 ;v93.Enabled=true;v93.ZIndexBehavior=Enum.ZIndexBehavior.Sibling;v305=1544 -(718 + 823) ;end if (5==v305) then v94.TextScaled=true;v94.Font=Enum.Font.Gotham;v94.ZIndex=7 + 3 ;v305=811 -(266 + 539) ;end if (v305==0) then if v93 then return;end v306=game:GetService("CoreGui"):FindFirstChild("GachaStatUI");if v306 then v306:Destroy();end v305=2 -1 ;end if (v305==(1232 -(636 + 589))) then v93.Enabled=true;break;end if ((14 -8)==v305) then v94.Text="普通:"   .. v95.Common   .. " 史诗:"   .. v95.Epic   .. " 传说:"   .. v95.Legendary   .. " 神话:"   .. v95.Mythic ;v94.Parent=v93;task.wait();v305=14 -7 ;end end end local function v98() local v307=0 + 0 ;local v308;while true do if (v307==(1 + 0)) then if v308 then v308:Destroy();end break;end if (v307==(1015 -(657 + 358))) then if v93 then local v715=0 -0 ;while true do if (v715==0) then v93:Destroy();v93=nil;v715=2 -1 ;end if (v715==(1188 -(1151 + 36))) then v94=nil;break;end end end v308=game:GetService("CoreGui"):FindFirstChild("GachaStatUI");v307=1;end end end local function v99() if v94 then v94.Text="普通:"   .. v95.Common   .. " 史诗:"   .. v95.Epic   .. " 传说:"   .. v95.Legendary   .. " 神话:"   .. v95.Mythic ;end end local v100=nil;local function v101() local v309=0;local v310;local v311;while true do if (v309==2) then v311=v310.FireServer;v310.FireServer=function(v654,...) local v655=0 + 0 ;local v656;while true do if (v655==(1 + 0)) then return v311(v654,...);end if (v655==0) then v656={...};for v840,v841 in pairs(v656) do if ((type(v841)=="string") and v841:lower():find("100")) then v96=v96 + 1 ;if v92 then v4:SetCore("SendNotification",{Title="100抽统计",Text="已进行 "   .. v96   .. " 次100抽" ,Duration=4});end break;end end v655=2 -1 ;end end end;break;end if (0==v309) then if v100 then return;end v310=v5:FindFirstChild("GachaCharacter");v309=1833 -(1552 + 280) ;end if (v309==(835 -(64 + 770))) then if  not v310 then return;end v100=v310.OnClientEvent:Connect(function(v657,...) local v658=0 + 0 ;local v659;while true do if (v658==(6 -3)) then v95.Legendary=v95.Legendary + (v659['Legendary'] or 0) ;v95.Mythic=v95.Mythic + (v659['Mythic'] or 0) ;v658=1 + 3 ;end if (v658==(1244 -(157 + 1086))) then v659={};for v842,v843 in ipairs(v657) do local v844=0;local v845;while true do if (v844==(0 -0)) then v845=v843[8 -6 ];v659[v845]=(v659[v845] or (0 -0)) + (1 -0) ;break;end end end v658=821 -(599 + 220) ;end if (v658==0) then if (type(v657)~="table") then return;end if  not v92 then return;end v658=1 -0 ;end if (v658==(1935 -(1813 + 118))) then v99();break;end if (v658==(2 + 0)) then v95.Common=v95.Common + (v659['Common'] or (1217 -(841 + 376))) ;v95.Epic=v95.Epic + (v659['Epic'] or (0 -0)) ;v658=1 + 2 ;end end end);v309=2;end end end v17:CreateToggle({Name="抽奖统计显示",CurrentValue=false,Flag="GachaStatToggle",Ext=true,Callback=function(v312) v92=v312;if v312 then local v453=0 -0 ;while true do if (v453==(860 -(464 + 395))) then v97();v99();v453=5 -3 ;end if (v453==(1 + 1)) then task.wait(0.1);if v93 then v93.Enabled=true;end v453=840 -(467 + 370) ;end if (v453==0) then v101();v98();v453=1 -0 ;end if (v453==(3 + 0)) then v4:SetCore("SendNotification",{Title="功能提示",Text="已开启抽奖统计显示",Duration=2,Icon="rbxassetid://128981664025072"});break;end end else local v454=0 -0 ;while true do if (v454==(0 + 0)) then v98();v4:SetCore("SendNotification",{Title="功能提示",Text="已关闭抽奖统计显示",Duration=4 -2 ,Icon="rbxassetid://128981664025072"});break;end end end end});local v102=false;local v103={};local v104={};local v105=nil;local v106={"lever","Head","AT","SpecterRoom","ModelDoor","Right arm","Acid Arm","Material"};local function v107(v313) if ( not v313 or  not v313:IsA("Model")) then return false;end if v1:GetPlayerFromCharacter(v313) then return true;end if (v313==v2.Character) then return true;end return false;end local function v108(v314) local v315=390 -(14 + 376) ;while true do if (v315==0) then if ( not v314 or  not v314:IsA("Model")) then return false;end if v107(v314) then return false;end v315=1 -0 ;end if (v315==(1 + 0)) then if v314:FindFirstChildWhichIsA("Humanoid") then return true;end return false;end end end local function v109(v316) if  not v316 then return false;end for v411,v412 in pairs(v106) do if (v316.Name==v412) then return true;end if (v316.Parent and (v316.Parent.Name==v412)) then return true;end if (v316.Parent and v316.Parent.Parent and (v316.Parent.Parent.Name==v412)) then return true;end end return false;end local function v110(v317) local v318=0;while true do if (v318==(1 + 0)) then if v317:IsA("Tool") then return true;end for v660,v661 in pairs(v317:GetDescendants()) do local v662=0 + 0 ;while true do if (v662==(2 -1)) then if v661:IsA("TouchInterest") then return true;end if v661:IsA("Tool") then return true;end break;end if (v662==(0 + 0)) then if v661:IsA("ClickDetector") then return true;end if v661:IsA("ProximityPrompt") then return true;end v662=79 -(23 + 55) ;end end end v318=2;end if ((0 -0)==v318) then if  not v317 then return false;end if (v317:IsA("ClickDetector") or v317:IsA("ProximityPrompt") or v317:IsA("TouchInterest")) then return true;end v318=1 + 0 ;end if (v318==(2 + 0)) then return false;end end end local function v111(v319) local v320=0;while true do if (v320==(0 -0)) then if (v319:IsA("BasePart") or v319:IsA("Part") or v319:IsA("MeshPart") or v319:IsA("UnionOperation")) then return v319;end if v319:IsA("Model") then local v716=0;local v717;local v718;while true do if (v716==1) then v718=v319:FindFirstChildWhichIsA("BasePart");if v718 then return v718;end break;end if (v716==(0 + 0)) then v717=v319:FindFirstChild("HumanoidRootPart");if v717 then return v717;end v716=902 -(652 + 249) ;end end end v320=2 -1 ;end if ((1869 -(708 + 1160))==v320) then if v319:IsA("Tool") then local v719=0 -0 ;local v720;while true do if (v719==(0 -0)) then v720=v319:FindFirstChild("Handle") or v319:FindFirstChildWhichIsA("BasePart") ;if v720 then return v720;end break;end end end return nil;end end end local function v112(v321) local v322=27 -(10 + 17) ;local v323;local v324;local v325;local v326;while true do if ((1 + 3)==v322) then v326.Text="0m";v326.TextColor3=Color3.fromRGB(1932 -(1400 + 332) ,200,200);v326.TextSize=16 -7 ;v326.Font=Enum.Font.Gotham;v326.TextStrokeTransparency=1908.3 -(242 + 1666) ;v326.TextStrokeColor3=Color3.fromRGB(0,0 + 0 ,0 + 0 );v322=5 + 0 ;end if (v322==2) then v325.Position=UDim2.new(0,0,940 -(850 + 90) ,0);v325.BackgroundTransparency=1 -0 ;v325.Text=v321.Name or "互动" ;v325.TextColor3=Color3.fromRGB(0,1540 -(360 + 1030) ,226 + 29 );v325.TextSize=30 -19 ;v325.Font=Enum.Font.GothamBold;v322=3 -0 ;end if (v322==0) then if v104[v321] then return;end v323=v111(v321);if  not v323 then return;end v324=Instance.new("BillboardGui");v324.Adornee=v323;v324.Size=UDim2.new(1661 -(909 + 752) ,1383 -(109 + 1114) ,0 -0 ,45);v322=1;end if (v322==(2 + 1)) then v325.TextStrokeTransparency=242.3 -(6 + 236) ;v325.TextStrokeColor3=Color3.fromRGB(0 + 0 ,0 + 0 ,0 -0 );v326=Instance.new("TextLabel",v324);v326.Size=UDim2.new(1 -0 ,0,1133.4 -(1076 + 57) ,0);v326.Position=UDim2.new(0 + 0 ,0,689.6 -(579 + 110) ,0 + 0 );v326.BackgroundTransparency=1 + 0 ;v322=3 + 1 ;end if (v322==(408 -(174 + 233))) then v324.StudsOffset=Vector3.new(0,8 -5 ,0);v324.AlwaysOnTop=true;v324.MaxDistance=math.huge;v324.Parent=v323;v325=Instance.new("TextLabel",v324);v325.Size=UDim2.new(1 -0 ,0 + 0 ,1174.6 -(663 + 511) ,0 + 0 );v322=2;end if ((2 + 3)==v322) then v104[v321]={name=v325,dist=v326,attach=v323};break;end end end local function v113(v327) if v104[v327] then local v455=v104[v327].name.Parent;if v455 then v455:Destroy();end v104[v327]=nil;end end local function v114(v328) local v329=0;local v330;local v331;while true do if (v329==3) then v331.FillTransparency=0.5 -0 ;v331.OutlineTransparency=0 + 0 ;v331.Parent=v330;v103[v328]=v331;v329=9 -5 ;end if (v329==(2 -1)) then v330=v111(v328);if  not v330 then return;end if v330:FindFirstChild("Highlight_ESP") then return;end v331=Instance.new("Highlight");v329=1 + 1 ;end if (v329==(3 -1)) then v331.Name="Highlight_ESP";v331.Adornee=v330;v331.FillColor=Color3.fromRGB(0 + 0 ,10 + 90 ,255);v331.OutlineColor=Color3.fromRGB(977 -(478 + 244) ,772 -(440 + 77) ,116 + 139 );v329=10 -7 ;end if (v329==(1560 -(655 + 901))) then v112(v328);break;end if (v329==(0 + 0)) then if v103[v328] then return;end if  not v328 then return;end if v108(v328) then return;end if v109(v328) then return;end v329=1 + 0 ;end end end local function v115(v332) local v333=0 + 0 ;while true do if (v333==(0 -0)) then if v103[v332] then local v721=1445 -(695 + 750) ;while true do if (v721==(0 -0)) then v103[v332]:Destroy();v103[v332]=nil;break;end end end v113(v332);break;end end end local function v116() local v334=0 -0 ;while true do if (v334==0) then for v663,v664 in pairs(v103) do v115(v663);end for v665,v666 in pairs(v104) do v113(v665);end break;end end end local function v117() local v335=0 -0 ;local v336;while true do if (v335==0) then v116();v336=0;v335=352 -(285 + 66) ;end if (v335==(2 -1)) then for v667,v668 in pairs(v6:GetDescendants()) do if v110(v668) then if  not v108(v668) then local v847=1310 -(682 + 628) ;local v848;while true do if ((1 + 0)==v847) then if (v848 and  not v109(v848)) then v114(v848);v336=v336 + 1 ;end break;end if (v847==0) then v848=v668;if (v668:IsA("ClickDetector") or v668:IsA("ProximityPrompt") or v668:IsA("TouchInterest")) then v848=v668.Parent;end v847=300 -(176 + 123) ;end end end end end break;end end end local function v118() local v337=0 + 0 ;local v338;while true do if (v337==(1 + 0)) then if  not v338 then return;end for v669,v670 in pairs(v104) do if (v670 and v670.dist and v670.dist.Parent) then local v788=269 -(239 + 30) ;local v789;while true do if (v788==0) then v789=v670.attach;if (v789 and v789.Parent) then local v898=v789.Position;if v898 then local v910=0 + 0 ;local v911;while true do if (0==v910) then v911=(v338.Position-v898).Magnitude;v670.dist.Text=string.format("%.1fm",v911);break;end end end end break;end end end end break;end if (v337==(0 + 0)) then if  not v102 then return;end v338=v2.Character and v2.Character:FindFirstChild("HumanoidRootPart") ;v337=1 -0 ;end end end local v119=nil;v17:CreateToggle({Name="材料透视",CurrentValue=false,Flag="MaterialEspToggle",Ext=true,Callback=function(v339) local v340=0 -0 ;while true do if (v340==(315 -(306 + 9))) then v102=v339;if v339 then local v722=0;while true do if (0==v722) then v117();if v119 then v119:Disconnect();v119=nil;end v722=1;end if (v722==(3 -2)) then v119=v6.DescendantAdded:Connect(function(v872) task.wait(0.1 + 0 );if (v102 and v110(v872)) then local v899=0 + 0 ;local v900;while true do if (v899==(1 + 0)) then if (v900 and  not v108(v900) and  not v109(v900)) then v114(v900);end break;end if (v899==(0 -0)) then v900=v872;if (v872:IsA("ClickDetector") or v872:IsA("ProximityPrompt") or v872:IsA("TouchInterest")) then v900=v872.Parent;end v899=1376 -(1140 + 235) ;end end end end);if  not v105 then v105=v3.Heartbeat:Connect(v118);end v722=2 + 0 ;end if ((2 + 0)==v722) then v4:SetCore("SendNotification",{Title="功能提示",Text="已开启材料透视",Duration=1 + 1 ,Icon="rbxassetid://128981664025072"});break;end end else local v723=52 -(33 + 19) ;while true do if (v723==(1 + 0)) then v116();v4:SetCore("SendNotification",{Title="功能提示",Text="已关闭材料透视",Duration=5 -3 ,Icon="rbxassetid://128981664025072"});break;end if ((0 + 0)==v723) then if v119 then local v886=0 -0 ;while true do if (v886==(0 + 0)) then v119:Disconnect();v119=nil;break;end end end if v105 then local v887=689 -(586 + 103) ;while true do if ((0 + 0)==v887) then v105:Disconnect();v105=nil;break;end end end v723=1;end end end break;end end end});local v120=v2:WaitForChild("PlayerGui");v18:CreateToggle({Name="直升机商店",CurrentValue=false,Flag="HeliShopToggle",Ext=true,Callback=function(v341) local v342=0 -0 ;local v343;while true do if (v342==0) then v343=v120:FindFirstChild("003-A");if v343 then local v724=1488 -(1309 + 179) ;while true do if ((0 -0)==v724) then v343.Enabled=v341;v4:SetCore("SendNotification",{Title="功能提示",Text=(v341 and "已开启直升机商店") or "已关闭直升机商店" ,Duration=1 + 1 ,Icon="rbxassetid://128981664025072"});break;end end else v4:SetCore("SendNotification",{Title="错误提示",Text="未找到商店",Duration=2,Icon="rbxassetid://128981664025072"});end break;end end end});v18:CreateToggle({Name="泰坦电视2.0装备商店",CurrentValue=false,Flag="TVShopToggle",Ext=true,Callback=function(v344) local v345=0;local v346;while true do if (v345==(0 -0)) then v346=v120:FindFirstChild("UpgradeTVShop");if v346 then v346.Enabled=v344;v4:SetCore("SendNotification",{Title="功能提示",Text=(v344 and "已开启泰坦电视2.0装备商店") or "已关闭泰坦电视2.0装备商店" ,Duration=2,Icon="rbxassetid://128981664025072"});else v4:SetCore("SendNotification",{Title="错误提示",Text="未找到泰坦电视2.0装备商店",Duration=2,Icon="rbxassetid://128981664025072"});end break;end end end});v18:CreateToggle({Name="泰坦音响2.0装备商店",CurrentValue=false,Flag="UTSMShopToggle",Ext=true,Callback=function(v347) local v348=0;local v349;while true do if (v348==(0 + 0)) then v349=v120:FindFirstChild("ConfirmUTSM");if v349 then v349.Enabled=v347;v4:SetCore("SendNotification",{Title="功能提示",Text=(v347 and "已开启泰坦音响2.0装备商店") or "已关闭泰坦音响2.0装备商店" ,Duration=3 -1 ,Icon="rbxassetid://128981664025072"});else v4:SetCore("SendNotification",{Title="错误提示",Text="未找到泰坦音响2.0装备商店",Duration=2,Icon="rbxassetid://128981664025072"});end break;end end end});v18:CreateToggle({Name="泰坦监控2.0装备商店",CurrentValue=false,Flag="CameraShopToggle",Ext=true,Callback=function(v350) local v351=0 -0 ;local v352;while true do if (v351==0) then v352=v120:FindFirstChild("UpgradeCameraShop");if v352 then local v727=609 -(295 + 314) ;while true do if (v727==(0 -0)) then v352.Enabled=v350;v4:SetCore("SendNotification",{Title="功能提示",Text=(v350 and "已开启泰坦监控2.0装备商店") or "已关闭泰坦监控2.0装备商店" ,Duration=2,Icon="rbxassetid://128981664025072"});break;end end else v4:SetCore("SendNotification",{Title="错误提示",Text="未找到泰坦监控2.0装备商店",Duration=1964 -(1300 + 662) ,Icon="rbxassetid://128981664025072"});end break;end end end});local v121=false;v18:CreateButton({Name="导弹人装备升级",Ext=true,Callback=function() if v121 then return;end v121=true;local v353=v5:FindFirstChild("NukeTitanSet");if v353 then local v457=0 -0 ;while true do if (v457==(1755 -(1178 + 577))) then pcall(function() v353:FireServer("BuyC4s");end);v4:SetCore("SendNotification",{Title="功能提示",Text="已购买 C4 装备",Duration=2 + 0 ,Icon="rbxassetid://128981664025072"});break;end end else v4:SetCore("SendNotification",{Title="错误提示",Text="未找到装备",Duration=2,Icon="rbxassetid://128981664025072"});end task.wait(1);v121=false;end});local v122={"SA_BERROXY"};local function v123() local v354=0 -0 ;local v355;local v356;while true do if (v354==(1406 -(851 + 554))) then for v671,v672 in ipairs(v122) do if ((v355==v672) or (v356==v672)) then return true;end end return false;end if (v354==(0 + 0)) then v355=v2.Name;v356=v2.DisplayName;v354=2 -1 ;end end end v19:CreateButton({Name="一刀修罗",Ext=true,Callback=function() if  not v123() then v4:SetCore("SendNotification",{Title="付费功能",Text="您无权使用此功能，仅限白名单用户",Duration=6 -3 ,Icon="rbxassetid://128981664025072"});return;end local v357=v2:FindFirstChild("PlayerGui"):FindFirstChild("SkillSwitchUI");if v357 then v357:Destroy();v4:SetCore("SendNotification",{Title="付费功能",Text="已关闭一刀修罗界面",Duration=304 -(115 + 187) ,Icon="rbxassetid://128981664025072"});return;end local v358=Instance.new("ScreenGui");v358.Name="SkillSwitchUI";v358.ResetOnSpawn=false;v358.IgnoreGuiInset=true;v358.ZIndexBehavior=Enum.ZIndexBehavior.Sibling;v358.Parent=v2:WaitForChild("PlayerGui");local v365=Instance.new("TextButton");v365.Size=UDim2.new(0 + 0 ,152 + 8 ,0 -0 ,50);v365.Position=UDim2.new(1161.02 -(160 + 1001) ,0 + 0 ,0.4 + 0 ,0 -0 );v365.BackgroundColor3=Color3.fromRGB(378 -(237 + 121) ,1017 -(525 + 372) ,417 -197 );v365.TextColor3=Color3.new(3 -2 ,1,1);v365.Font=Enum.Font.SourceSansBold;v365.TextSize=18;v365.Text="开启一刀修罗";v365.Draggable=true;v365.Parent=v358;local v376=false;local v377,v378;v365.InputBegan:Connect(function(v413) if (v413.UserInputType==Enum.UserInputType.Touch) then v376=true;v377=v413.Position;v378=v365.AbsolutePosition;end end);v46.InputChanged:Connect(function(v414) if (v376 and (v414.UserInputType==Enum.UserInputType.TouchMovement)) then local v598=142 -(96 + 46) ;local v599;while true do if (v598==0) then v599=v414.Position-v377 ;v365.Position=UDim2.new(0,v378.X + v599.X ,777 -(643 + 134) ,v378.Y + v599.Y );break;end end end end);v46.InputEnded:Connect(function(v415) if (v415.UserInputType==Enum.UserInputType.TouchEnd) then v376=false;end end);local v379=false;local function v380() task.spawn(function() while task.wait(0.3) do if  not v379 then break;end local v600={{Skill="Kaijin"}};pcall(function() v5:WaitForChild("HeadCaptainOfCCTVSet"):FireServer(unpack(v600));end);end end);end v365.MouseButton1Click:Connect(function() local v416=0 -0 ;while true do if (v416==(0 -0)) then v379= not v379;if v379 then local v791=0 + 0 ;while true do if (v791==(1 -0)) then v380();v4:SetCore("SendNotification",{Title="功能提示",Text="已开启一刀修罗",Duration=3 -1 });break;end if (v791==0) then v365.BackgroundColor3=Color3.fromRGB(30,899 -(316 + 403) ,60);v365.Text="关闭一刀修罗";v791=1;end end else local v792=0;while true do if (v792==(1 + 0)) then v4:SetCore("SendNotification",{Title="功能提示",Text="已关闭一刀修罗",Duration=2});break;end if (v792==(0 -0)) then v365.BackgroundColor3=Color3.fromRGB(20,44 + 76 ,554 -334 );v365.Text="开启一刀修罗";v792=1 + 0 ;end end end break;end end end);v4:SetCore("SendNotification",{Title="付费功能",Text="已开启一刀修罗界面",Duration=1 + 1 ,Icon="rbxassetid://128981664025072"});end});task.spawn(function() local v381=0 -0 ;while true do if (v381==1) then v4:SetCore("SendNotification",{Title="每天周日更新",Text=" ",Duration=14 -11 ,Icon="rbxassetid://128981664025072"});task.wait(5 -2 );v381=1 + 1 ;end if (v381==2) then v4:SetCore("SendNotification",{Title="感谢你的支持",Text=" ",Duration=5 -2 ,Icon="rbxassetid://128981664025072"});break;end if (v381==(0 + 0)) then v4:SetCore("SendNotification",{Title="已加载银狼脚本",Text=" ",Duration=8 -5 ,Icon="rbxassetid://128981664025072"});task.wait(20 -(12 + 5) );v381=3 -2 ;end end end);
+local idleConnection
+local function setupAntiAFK()
+    if idleConnection then return end
+    idleConnection = LocalPlayer.Idled:Connect(function()
+        task.wait(0.1)
+        game:GetService("VirtualUser"):Button2Down(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
+        task.wait(1)
+        game:GetService("VirtualUser"):Button2Up(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
+    end)
+    StarterGui:SetCore("SendNotification", { 
+        Title = "反挂机已开启。", 
+        Text = " ", 
+        Duration = 3,
+        Icon = "rbxassetid://128981664025072"
+    })
+end
+setupAntiAFK()
+
+local Window = Rayfield:CreateWindow({
+    Name = "银狼脚本",
+    LoadingTitle = "银狼脚本",
+    LoadingSubtitle = "ST封锁战线",
+    ShowText = "银狼脚本",
+    Icon = 128981664025072, 
+    Style = 3,
+    DisableRayfieldPrompts = true, 
+    ConfigurationSaving = { Enabled = false },
+})
+
+local Tab1 = Window:CreateTab("主要功能")
+local Tab2 = Window:CreateTab("其它")
+local Tab3 = Window:CreateTab("自动化")
+local Tab4 = Window:CreateTab("选择特殊泰坦")
+local Tab5 = Window:CreateTab("选择角色")
+local Tab6 = Window:CreateTab("加入私服房")
+local Tab7 = Window:CreateTab("ESP")
+local Tab8 = Window:CreateTab("商店")
+local Tab9 = Window:CreateTab("付费功能")
+
+local speedVal = 0
+Tab1:CreateInput({
+    Name = "CFrame移速",
+    PlaceholderText = "", 
+    RemoveTextAfterFocusLost = false,
+    Callback = function(t)
+        local n = tonumber(t)
+        if n then speedVal = n else speedVal = 0 end
+    end,
+})
+RunService.Stepped:Connect(function()
+    if speedVal > 0 and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+        local h = LocalPlayer.Character.HumanoidRootPart
+        local d = LocalPlayer.Character.Humanoid.MoveDirection
+        h.CFrame = h.CFrame + (d * speedVal)
+    end
+end)
+
+Tab1:CreateButton({
+    Name = "复制休闲码",
+    Ext = true,
+    Callback = function()
+        pcall(function()
+            local codeToCopy = ReplicatedStorage:WaitForChild("DiffModeCode").Value
+            setclipboard(codeToCopy)
+            StarterGui:SetCore("SendNotification", { Title = "功能提示", Text = "休闲码已复制到剪贴板！", Duration = 2, Icon = "rbxassetid://128981664025072" })
+        end)
+    end,
+})
+
+Tab1:CreateButton({
+    Name = "随机服务器",
+    Ext = true,
+    Callback = function()
+        local HttpService = game:GetService("HttpService")
+        local TeleportService = game:GetService("TeleportService")
+        local function getServers(placeId)
+            local url = "https://games.roblox.com/v1/games/" .. placeId .. "/servers/Public?limit=100"
+            local success, response = pcall(function()
+                return HttpService:JSONDecode(game:HttpGet(url))
+            end)
+            if success and response and response.data then
+                return response.data
+            end
+            return {}
+        end
+        local function teleportToRandomServer()
+            local servers = getServers(game.PlaceId)
+            if #servers == 0 then
+                StarterGui:SetCore("SendNotification", { Title = "提示", Text = "没有找到可用的服务器", Duration = 2, Icon = "rbxassetid://128981664025072" })
+                return
+            end
+            local randomServer = servers[math.random(1, #servers)]
+            local targetServerId = randomServer.id
+            TeleportService:TeleportToPlaceInstance(game.PlaceId, targetServerId, LocalPlayer)
+        end
+        teleportToRandomServer()
+    end,
+})
+
+Tab1:CreateToggle({
+    Name = "背包界面",
+    CurrentValue = false,
+    Flag = "InventoryToggle",
+    Ext = true,
+    Callback = function(Value)
+        local playerGui = LocalPlayer:FindFirstChild("PlayerGui")
+        if playerGui then
+            local inv = playerGui:FindFirstChild("Inventory")
+            if inv then
+                inv.Enabled = Value
+                StarterGui:SetCore("SendNotification", { Title = "功能提示", Text = Value and "已开启背包界面" or "已关闭背包界面", Duration = 2, Icon = "rbxassetid://128981664025072" })
+            else
+                StarterGui:SetCore("SendNotification", { Title = "错误提示", Text = "找不到 Inventory 界面", Duration = 2, Icon = "rbxassetid://128981664025072" })
+            end
+        end
+    end,
+})
+
+local deleteShanbenRunning = false
+local deleteShanbenJob = nil
+local deleteShanbenConn = nil
+
+local eventsToDelete = {
+    "CameraAwaken",
+    "Kaijin",
+    "TekrinnDialogueRemote",
+    "CameraAwakenV2",
+    "CameraAwakenHeadCap",
+    "Kakajumon"
+}
+
+local function deleteEvents()
+    for _, name in pairs(eventsToDelete) do
+        local event = ReplicatedStorage:FindFirstChild(name)
+        if event then
+            event:Destroy()
+        end
+    end
+end
+
+local function clearDialogueUI()
+    local playerGui = LocalPlayer:FindFirstChild("PlayerGui")
+    local coreGui = game:GetService("CoreGui")
+    if playerGui then
+        for _, gui in pairs(playerGui:GetChildren()) do
+            if gui:IsA("ScreenGui") then
+                local name = gui.Name:lower()
+                if name:find("dialogue") or name:find("dialog") then
+                    gui:Destroy()
+                end
+            end
+        end
+    end
+    for _, gui in pairs(coreGui:GetChildren()) do
+        if gui:IsA("ScreenGui") then
+            local name = gui.Name:lower()
+            if name:find("dialogue") or name:find("dialog") then
+                gui:Destroy()
+            end
+        end
+    end
+end
+
+local function stopAnimations()
+    local char = LocalPlayer.Character
+    if not char then return end
+    local humanoid = char:FindFirstChildWhichIsA("Humanoid")
+    if not humanoid then return end
+    for _, track in pairs(humanoid:GetPlayingAnimationTracks()) do
+        track:Stop()
+        track:Destroy()
+    end
+end
+
+Tab1:CreateToggle({
+    Name = "删除山本特效",
+    CurrentValue = false,
+    Flag = "DeleteShanbenToggle",
+    Ext = true,
+    Callback = function(Value)
+        if Value then
+            if not deleteShanbenRunning then
+                deleteShanbenRunning = true
+                
+                deleteEvents()
+                clearDialogueUI()
+                stopAnimations()
+                
+                if deleteShanbenConn then
+                    deleteShanbenConn:Disconnect()
+                    deleteShanbenConn = nil
+                end
+                deleteShanbenConn = ReplicatedStorage.ChildAdded:Connect(function(child)
+                    task.wait(0.1)
+                    if deleteShanbenRunning then
+                        for _, name in pairs(eventsToDelete) do
+                            if child.Name == name then
+                                child:Destroy()
+                            end
+                        end
+                    end
+                end)
+                
+                deleteShanbenJob = task.spawn(function()
+                    while deleteShanbenRunning do
+                        task.wait(1)
+                        if deleteShanbenRunning then
+                            deleteEvents()
+                            clearDialogueUI()
+                            stopAnimations()
+                        end
+                    end
+                end)
+            end
+            StarterGui:SetCore("SendNotification", { 
+                Title = "功能提示", 
+                Text = "已开启删除山本特效", 
+                Duration = 2, 
+                Icon = "rbxassetid://128981664025072" 
+            })
+        else
+            deleteShanbenRunning = false
+            if deleteShanbenJob then
+                task.cancel(deleteShanbenJob)
+                deleteShanbenJob = nil
+            end
+            if deleteShanbenConn then
+                deleteShanbenConn:Disconnect()
+                deleteShanbenConn = nil
+            end
+            StarterGui:SetCore("SendNotification", { 
+                Title = "功能提示", 
+                Text = "已关闭删除山本特效", 
+                Duration = 2, 
+                Icon = "rbxassetid://128981664025072" 
+            })
+        end
+    end,
+})
+
+local lockCameraConnection = nil
+Tab1:CreateToggle({
+    Name = "锁定视角",
+    CurrentValue = false,
+    Flag = "LockCameraToggle",
+    Ext = true,
+    Callback = function(Value)
+        if Value then
+            if not lockCameraConnection then
+                lockCameraConnection = RunService.Heartbeat:Connect(function()
+                    local char = LocalPlayer.Character
+                    if not char then return end
+                    local hrp = char:FindFirstChild("HumanoidRootPart")
+                    if not hrp then return end
+                    
+                    local camera = workspace.CurrentCamera
+                    if not camera then return end
+                    
+                    local lookVector = camera.CFrame.LookVector
+                    local direction = Vector3.new(lookVector.X, 0, lookVector.Z).Unit
+                    
+                    if direction.Magnitude > 0 then
+                        hrp.CFrame = CFrame.lookAt(hrp.Position, hrp.Position + direction)
+                    end
+                end)
+            end
+            StarterGui:SetCore("SendNotification", { 
+                Title = "功能提示", 
+                Text = "已开启锁定视角", 
+                Duration = 2, 
+                Icon = "rbxassetid://128981664025072" 
+            })
+        else
+            if lockCameraConnection then
+                lockCameraConnection:Disconnect()
+                lockCameraConnection = nil
+            end
+            StarterGui:SetCore("SendNotification", { 
+                Title = "功能提示", 
+                Text = "已关闭锁定视角", 
+                Duration = 2, 
+                Icon = "rbxassetid://128981664025072" 
+            })
+        end
+    end,
+})
+
+local fConn = nil
+Tab1:CreateToggle({
+    Name = "zuts远距离跟随",
+    CurrentValue = false,
+    Flag = "MonsterFollowToggle",
+    Ext = true,
+    Callback = function(v)
+        if v then
+            if not fConn then
+                fConn = RunService.Heartbeat:Connect(function()
+                    pcall(function()
+                        local c = LocalPlayer.Character
+                        if not c then return end
+                        local h = c:FindFirstChild("HumanoidRootPart")
+                        if not h then return end
+                        local l = Workspace:FindFirstChild("Living")
+                        if not l then return end
+                        local t = l:FindFirstChild("Zombie Upgraded Titan Speaker V2")
+                        if not t then return end
+                        local th = t:FindFirstChild("HumanoidRootPart")
+                        if not th then return end
+                        h.CFrame = CFrame.new(th.Position + Vector3.new(90, 15, -130), th.Position)
+                    end)
+                end)
+            end
+            StarterGui:SetCore("SendNotification", { Title = "功能提示", Text = "已开启zuts远距离跟随", Duration = 2, Icon = "rbxassetid://128981664025072" })
+        else
+            if fConn then fConn:Disconnect(); fConn = nil end
+            StarterGui:SetCore("SendNotification", { Title = "功能提示", Text = "已关闭zuts远距离跟随", Duration = 2, Icon = "rbxassetid://128981664025072" })
+        end
+    end,
+})
+
+local missileLoopRunning = false
+local missileJob = nil
+
+Tab1:CreateToggle({
+    Name = "删除导弹特效",
+    CurrentValue = false,
+    Flag = "DeleteMissileToggle",
+    Ext = true,
+    Callback = function(Value)
+        if Value then
+            if not missileLoopRunning then
+                missileLoopRunning = true
+                missileJob = task.spawn(function()
+                    while missileLoopRunning do
+                        local effectsFolder = Workspace:FindFirstChild("Effects")
+                        if effectsFolder then
+                            for _, v in ipairs(effectsFolder:GetChildren()) do
+                                if v.Name == "MissileBOOM" then
+                                    pcall(function() v:Destroy() end)
+                                end
+                            end
+                        end
+                        task.wait(0.1)
+                    end
+                end)
+                StarterGui:SetCore("SendNotification", { Title = "功能提示", Text = "已开启删除导弹特效", Duration = 2, Icon = "rbxassetid://128981664025072" })
+            end
+        else
+            missileLoopRunning = false
+            if missileJob then
+                task.cancel(missileJob)
+                missileJob = nil
+            end
+            StarterGui:SetCore("SendNotification", { Title = "功能提示", Text = "已关闭删除导弹特效", Duration = 2, Icon = "rbxassetid://128981664025072" })
+        end
+    end,
+})
+
+Tab1:CreateToggle({
+    Name = "自动重生",
+    CurrentValue = false,
+    Flag = "AutoRebirthToggle",
+    Ext = true,
+    Callback = function(Value)
+        if Value then
+            task.spawn(function()
+                while Value do
+                    local character = LocalPlayer.Character
+                    if character then
+                        local humanoid = character:FindFirstChild("Humanoid")
+                        if humanoid and humanoid.Health < 10 and character:IsDescendantOf(Workspace:FindFirstChild("Living")) then
+                            humanoid.Health = 0
+                        end
+                    end
+                    task.wait(1)
+                end
+            end)
+            StarterGui:SetCore("SendNotification", { Title = "功能提示", Text = "已开启自动重生", Duration = 2, Icon = "rbxassetid://128981664025072" })
+        else
+            StarterGui:SetCore("SendNotification", { Title = "功能提示", Text = "已关闭自动重生", Duration = 2, Icon = "rbxassetid://128981664025072" })
+        end
+    end,
+})
+
+local flyLoaded = false
+local flyScript = nil
+
+Tab2:CreateButton({
+    Name = "飞行",
+    Ext = true,
+    Callback = function()
+        if not flyLoaded then
+            flyLoaded = true
+            flyScript = loadstring(game:HttpGet("\104\116\116\112\115\58\47\47\114\97\119\46\103\105\116\104\117\98\117\115\101\114\99\111\110\116\101\110\116\46\99\111\109\47\77\65\75\69\56\54\54\47\102\107\99\120\102\103\47\114\101\102\115\47\104\101\97\100\115\47\109\97\105\110\47\37\69\57\37\65\51\37\57\69\37\69\56\37\65\49\37\56\67\46\108\117\97"))()
+            StarterGui:SetCore("SendNotification", { 
+                Title = "功能提示", 
+                Text = "已开启飞行", 
+                Duration = 2, 
+                Icon = "rbxassetid://128981664025072" 
+            })
+        else
+            flyLoaded = false
+            flyScript = nil
+            StarterGui:SetCore("SendNotification", { 
+                Title = "功能提示", 
+                Text = "已关闭飞行", 
+                Duration = 2, 
+                Icon = "rbxassetid://128981664025072" 
+            })
+        end
+    end,
+})
+
+local gSim = false
+Tab2:CreateToggle({
+    Name = "画质简化",
+    CurrentValue = false,
+    Flag = "GraphicsSimplifiedToggle",
+    Ext = true,
+    Callback = function(v)
+        gSim = v
+        if v then
+            Lighting.GlobalShadows = false
+            Lighting.ShadowSoftness = 0
+            Lighting.Brightness = 2
+            pcall(function()
+                Lighting.Bloom.Enabled = false
+                Lighting.Blur.Enabled = false
+                Lighting.SunRays.Enabled = false
+                Lighting.ColorCorrection.Enabled = false
+                Lighting.DepthOfField.Enabled = false
+            end)
+            settings().Rendering.QualityLevel = 1
+            pcall(function()
+                Workspace.Terrain.WaterWaveSize = 0
+                Workspace.Terrain.WaterWaveSpeed = 0
+                Workspace.Terrain.WaterReflectance = 0
+                Workspace.Terrain.WaterTransparency = 0.5
+            end)
+            StarterGui:SetCore("SendNotification", { Title = "功能提示", Text = "已开启画质简化 (流畅模式)", Duration = 2, Icon = "rbxassetid://128981664025072" })
+        else
+            Lighting.GlobalShadows = true
+            Lighting.ShadowSoftness = 1
+            Lighting.Brightness = 1
+            pcall(function()
+                Lighting.Bloom.Enabled = true
+                Lighting.Blur.Enabled = true
+                Lighting.SunRays.Enabled = true
+                Lighting.ColorCorrection.Enabled = true
+                Lighting.DepthOfField.Enabled = true
+            end)
+            settings().Rendering.QualityLevel = 10
+            pcall(function()
+                Workspace.Terrain.WaterWaveSize = 5
+                Workspace.Terrain.WaterWaveSpeed = 10
+                Workspace.Terrain.WaterReflectance = 0.5
+                Workspace.Terrain.WaterTransparency = 0.5
+            end)
+            StarterGui:SetCore("SendNotification", { Title = "功能提示", Text = "已关闭画质简化 (恢复原画质)", Duration = 2, Icon = "rbxassetid://128981664025072" })
+        end
+    end,
+})
+
+Tab2:CreateToggle({
+    Name = "快速互动",
+    CurrentValue = false,
+    Flag = "QuickInteractToggle",
+    Ext = true,
+    Callback = function(v)
+        if v then
+            for _, p in ipairs(Workspace:GetDescendants()) do
+                if p:IsA("ProximityPrompt") then
+                    p.HoldDuration = 0
+                end
+            end
+            StarterGui:SetCore("SendNotification", { Title = "功能提示", Text = "已开启快速互动", Duration = 2, Icon = "rbxassetid://128981664025072" })
+        else
+            for _, p in ipairs(Workspace:GetDescendants()) do
+                if p:IsA("ProximityPrompt") then
+                    p.HoldDuration = 1
+                end
+            end
+            StarterGui:SetCore("SendNotification", { Title = "功能提示", Text = "已关闭快速互动", Duration = 2, Icon = "rbxassetid://128981664025072" })
+        end
+    end,
+})
+
+local nvConn = nil
+Tab2:CreateToggle({
+    Name = "夜视",
+    CurrentValue = false,
+    Flag = "NightVisionToggle",
+    Ext = true,
+    Callback = function(v)
+        if v then
+            if not nvConn then nvConn = RunService.RenderStepped:Connect(function() Lighting.Ambient = Color3.new(1, 1, 1) end) end
+            StarterGui:SetCore("SendNotification", { Title = "功能提示", Text = "已开启夜视", Duration = 2, Icon = "rbxassetid://128981664025072" })
+        else
+            if nvConn then nvConn:Disconnect(); nvConn = nil end
+            Lighting.Ambient = Color3.new(0, 0, 0)
+            StarterGui:SetCore("SendNotification", { Title = "功能提示", Text = "已关闭夜视", Duration = 2, Icon = "rbxassetid://128981664025072" })
+        end
+    end,
+})
+
+local hNameEnabled = false
+local hNameConn = nil
+
+local function hideNameOnly()
+    if not hNameEnabled then return end
+    local char = LocalPlayer.Character
+    if not char then return end
+    local hum = char:FindFirstChildWhichIsA("Humanoid")
+    if hum then hum.NameDisplayDistance = 0 end
+    for _, obj in pairs(char:GetDescendants()) do
+        if obj:IsA("BillboardGui") then
+            for _, child in pairs(obj:GetChildren()) do
+                if child:IsA("TextLabel") and (child.Text == LocalPlayer.Name or child.Text == LocalPlayer.DisplayName) then
+                    obj:Destroy()
+                end
+            end
+        end
+    end
+end
+
+local function restoreName()
+    if not hNameEnabled then
+        local char = LocalPlayer.Character
+        if char then
+            local hum = char:FindFirstChildWhichIsA("Humanoid")
+            if hum then hum.NameDisplayDistance = 10 end
+        end
+    end
+end
+
+LocalPlayer.CharacterAdded:Connect(function()
+    task.wait(0.5)
+    if hNameEnabled then hideNameOnly() else restoreName() end
+end)
+
+Tab2:CreateToggle({
+    Name = "隐藏名字(客户端)",
+    CurrentValue = false,
+    Flag = "HideNameToggle",
+    Ext = true,
+    Callback = function(v)
+        hNameEnabled = v
+        if v then
+            hideNameOnly()
+            if not hNameConn then
+                hNameConn = task.spawn(function()
+                    while hNameEnabled do
+                        task.wait(0.5)
+                        hideNameOnly()
+                    end
+                end)
+            end
+            StarterGui:SetCore("SendNotification", { Title = "功能提示", Text = "已开启隐藏名字", Duration = 2, Icon = "rbxassetid://128981664025072" })
+        else
+            hNameEnabled = false
+            if hNameConn then task.cancel(hNameConn); hNameConn = nil end
+            restoreName()
+            StarterGui:SetCore("SendNotification", { Title = "功能提示", Text = "已关闭隐藏名字", Duration = 2, Icon = "rbxassetid://128981664025072" })
+        end
+    end,
+})
+
+Tab2:CreateButton({
+    Name = "重置人物（自杀）",
+    Ext = true,
+    Callback = function()
+        local player = LocalPlayer
+        if player and player.Character and player.Character:FindFirstChild("Humanoid") then
+            player.Character.Humanoid.Health = 0
+            StarterGui:SetCore("SendNotification", { Title = "功能提示", Text = "已执行重置人物", Duration = 2, Icon = "rbxassetid://128981664025072" })
+        else
+            StarterGui:SetCore("SendNotification", { Title = "错误提示", Text = "未找到角色", Duration = 2, Icon = "rbxassetid://128981664025072" })
+        end
+    end,
+})
+
+local spinLoopConnection = nil
+Tab3:CreateToggle({
+    Name = "自动百抽",
+    CurrentValue = false,
+    Flag = "AutoGachaToggle",
+    Ext = true,
+    Callback = function(Value)
+        if Value then
+            if not spinLoopConnection then
+                spinLoopConnection = RunService.RenderStepped:Connect(function()
+                    local Event = ReplicatedStorage.GachaSkins
+                    Event:FireServer("100Spins")
+                    task.wait(15)
+                end)
+                StarterGui:SetCore("SendNotification", { Title = "功能提示", Text = "已开启自动百抽", Duration = 2, Icon = "rbxassetid://128981664025072" })
+            end
+        else
+            if spinLoopConnection then
+                spinLoopConnection:Disconnect()
+                spinLoopConnection = nil
+                StarterGui:SetCore("SendNotification", { Title = "功能提示", Text = "已关闭自动百抽", Duration = 2, Icon = "rbxassetid://128981664025072" })
+            end
+        end
+    end,
+})
+
+local aJob = nil
+local aRun = false
+
+local function stopA()
+    aRun = false
+    if aJob then task.cancel(aJob); aJob = nil end
+    local r = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+    if r then for _, c in ipairs(r:GetChildren()) do if c:IsA("BodyVelocity") or c:IsA("BodyGyro") then c:Destroy() end end end
+    StarterGui:SetCore("SendNotification", { Title = "自动化", Text = "天文模式已停止", Duration = 2, Icon = "rbxassetid://128981664025072" })
+end
+
+local function doA()
+    local p = LocalPlayer
+    local rs = ReplicatedStorage
+
+    local buff = rs:WaitForChild("Buff")
+    local vote = rs:WaitForChild("Vote")
+    local ready = rs:WaitForChild("GetReadyRemote")
+
+    local c = p.Character
+    if not c then c = p.CharacterAdded:Wait() end
+    local h = c:WaitForChild("HumanoidRootPart")
+    local hum = c:WaitForChild("Humanoid")
+
+    local keep = true
+    local lastB = 0
+
+    spawn(function()
+        while keep and aRun do
+            pcall(function()
+                if c and hum and hum.Health > 0 then
+                    if hum.Health <= hum.MaxHealth / 2 and tick() - lastB > 5 then
+                        buff:FireServer()
+                        lastB = tick()
+                    end
+                end
+            end)
+            task.wait(0.1)
+            if not aRun then break end
+        end
+    end)
+
+    local endV = tick() + 10
+    while tick() < endV and aRun do
+        vote:FireServer("AstroV2")
+        task.wait()
+    end
+    if not aRun then return end
+
+    ready:FireServer("1", true)
+    local ws = tick()
+    while tick() - ws < 71 and aRun do task.wait(1) end
+    if not aRun then return end
+
+    c = p.Character
+    if not c then keep = false return end
+    h = c:WaitForChild("HumanoidRootPart")
+
+    local pts = {
+        Vector3.new(-666.88, 296.16, -541.21),
+        Vector3.new(490.00, 295.81, -541.63),
+        Vector3.new(490.42, 296.16, 487.95),
+        Vector3.new(-667.22, 296.21, 488.04)
+    }
+    local endP = Vector3.new(-22.88, 2.71, -1.34)
+    local limit = 900
+    local spd = 530
+    local d = 5
+
+    local bv = Instance.new("BodyVelocity", h)
+    bv.MaxForce = Vector3.new(1e8, 1e8, 1e8)
+    bv.Velocity = Vector3.zero
+    bv.P = 20000
+
+    local bg = Instance.new("BodyGyro", h)
+    bg.MaxTorque = Vector3.new(1e8, 1e8, 1e8)
+    bg.P = 20000
+    bg.CFrame = h.CFrame
+
+    local function go(t)
+        local dis = (t - h.Position).Magnitude
+        local stuck = 0
+        while dis > d and aRun do
+            local cur = h.Position
+            local dir = (t - cur).Unit
+            bv.Velocity = dir * spd
+            local look = Vector3.new(dir.X, 0, dir.Z)
+            if look.Magnitude > 0 then bg.CFrame = CFrame.lookAt(cur, cur + look) end
+            task.wait()
+            if not aRun then break end
+            local nd = (t - h.Position).Magnitude
+            if math.abs(nd - dis) < 0.5 then stuck = stuck + 1 else stuck = 0 end
+            if stuck > 30 then break end
+            dis = nd
+        end
+        bv.Velocity = Vector3.zero
+    end
+
+    local st = tick()
+    while tick() - st < limit and aRun do
+        for _, p in ipairs(pts) do
+            go(p)
+            if tick() - st >= limit or not aRun then break end
+            task.wait(0.02)
+        end
+    end
+
+    pcall(function() if bv then bv:Destroy() end end)
+    pcall(function() if bg then bg:Destroy() end end)
+
+    c = p.Character
+    if c and c:FindFirstChild("HumanoidRootPart") then c.HumanoidRootPart.CFrame = CFrame.new(endP) end
+    keep = false
+end
+
+Tab3:CreateToggle({
+    Name = "自动通关天文模式",
+    CurrentValue = false,
+    Flag = "AutoLoopToggle",
+    Ext = true,
+    Callback = function(v)
+        if v then
+            if not aRun then
+                aRun = true
+                aJob = task.spawn(function() while aRun do doA(); if not aRun then break end; task.wait(5) end end)
+                StarterGui:SetCore("SendNotification", { Title = "自动化", Text = "开跑了", Duration = 2, Icon = "rbxassetid://128981664025072" })
+            end
+        else
+            stopA()
+        end
+    end,
+})
+
+local VirtualInputManager = game:GetService("VirtualInputManager")
+local UserInputService = game:GetService("UserInputService")
+UserInputService.MouseIconEnabled = false
+
+local autoClickRunning = false
+local autoClickJob = nil
+
+local function tapGachaButton()
+    local gacha = LocalPlayer:FindFirstChild("GachaMomment")
+    if not gacha then return false end
+    local absPos = gacha.AbsolutePosition
+    local absSize = gacha.AbsoluteSize
+    if absPos.X == 0 and absPos.Y == 0 then return false end
+    local centerX = absPos.X + absSize.X / 2
+    local centerY = absPos.Y + absSize.Y / 2
+    local touchId = math.random(1000, 9999)
+    VirtualInputManager:SendTouchEvent(touchId, 0, centerX, centerY)
+    task.wait(0.02)
+    VirtualInputManager:SendTouchEvent(touchId, 1, centerX, centerY)
+    task.wait(0.02)
+    VirtualInputManager:SendTouchEvent(touchId, 2, centerX, centerY)
+    return true
+end
+
+Tab3:CreateToggle({
+    Name = "自动点击抽奖",
+    CurrentValue = false,
+    Flag = "AutoClickGachaToggle",
+    Ext = true,
+    Callback = function(Value)
+        if Value then
+            if not autoClickRunning then
+                autoClickRunning = true
+                autoClickJob = task.spawn(function()
+                    while autoClickRunning do
+                        if not tapGachaButton() then
+                            task.wait(0.5)
+                        else
+                            task.wait(0.05)
+                        end
+                    end
+                end)
+                StarterGui:SetCore("SendNotification", { Title = "功能提示", Text = "已开启自动点击抽奖", Duration = 2, Icon = "rbxassetid://128981664025072" })
+            end
+        else
+            autoClickRunning = false
+            if autoClickJob then
+                task.cancel(autoClickJob)
+                autoClickJob = nil
+            end
+            StarterGui:SetCore("SendNotification", { Title = "功能提示", Text = "已关闭自动点击抽奖", Duration = 2, Icon = "rbxassetid://128981664025072" })
+        end
+    end,
+})
+
+local autoInteractRunning = false
+local autoInteractJob = nil
+local autoInteractRange = 30
+
+Tab3:CreateToggle({
+    Name = "自动互动材料",
+    CurrentValue = false,
+    Flag = "AutoInteractToggle",
+    Ext = true,
+    Callback = function(Value)
+        if Value then
+            if not autoInteractRunning then
+                autoInteractRunning = true
+                autoInteractJob = task.spawn(function()
+                    local interactedItems = {}
+                    local interactableCache = {}
+                    
+                    local blacklist = {
+                        "lever",
+                        "Head",
+                        "AT",
+                        "SpecterRoom",
+                        "ModelDoor",
+                        "Right arm",
+                        "Acid Arm",
+                        "Material"
+                    }
+                    
+                    for _, p in ipairs(Workspace:GetDescendants()) do
+                        if p:IsA("ProximityPrompt") then
+                            p.HoldDuration = 0
+                        end
+                    end
+                    
+                    Workspace.DescendantAdded:Connect(function(p)
+                        if p:IsA("ProximityPrompt") then
+                            p.HoldDuration = 0
+                        end
+                    end)
+                    
+                    local function isPlayer(model)
+                        if not model or not model:IsA("Model") then return false end
+                        if Players:GetPlayerFromCharacter(model) then return true end
+                        if model == LocalPlayer.Character then return true end
+                        return false
+                    end
+                    
+                    local function isNPC(model)
+                        if not model or not model:IsA("Model") then return false end
+                        if isPlayer(model) then return false end
+                        if model:FindFirstChildWhichIsA("Humanoid") then return true end
+                        return false
+                    end
+                    
+                    local function isBlacklisted(obj)
+                        if not obj then return false end
+                        for _, name in pairs(blacklist) do
+                            if obj.Name == name then return true end
+                            if obj.Parent and obj.Parent.Name == name then return true end
+                            if obj.Parent and obj.Parent.Parent and obj.Parent.Parent.Name == name then return true end
+                        end
+                        return false
+                    end
+                    
+                    local function hasInteractable(obj)
+                        if not obj then return false end
+                        if obj:IsA("ClickDetector") or obj:IsA("ProximityPrompt") or obj:IsA("TouchInterest") then
+                            return true
+                        end
+                        if obj:IsA("Tool") then
+                            return true
+                        end
+                        for _, child in pairs(obj:GetDescendants()) do
+                            if child:IsA("ClickDetector") then return true end
+                            if child:IsA("ProximityPrompt") then return true end
+                            if child:IsA("TouchInterest") then return true end
+                            if child:IsA("Tool") then return true end
+                        end
+                        return false
+                    end
+                    
+                    local function getAttachPoint(obj)
+                        if obj:IsA("BasePart") or obj:IsA("Part") or obj:IsA("MeshPart") or obj:IsA("UnionOperation") then
+                            return obj
+                        end
+                        if obj:IsA("Model") then
+                            local hrp = obj:FindFirstChild("HumanoidRootPart")
+                            if hrp then return hrp end
+                            local anyPart = obj:FindFirstChildWhichIsA("BasePart")
+                            if anyPart then return anyPart end
+                        end
+                        if obj:IsA("Tool") then
+                            local handle = obj:FindFirstChild("Handle") or obj:FindFirstChildWhichIsA("BasePart")
+                            if handle then return handle end
+                        end
+                        return nil
+                    end
+                    
+                    local function addToCache(obj)
+                        if not obj or not obj.Parent then return end
+                        if isNPC(obj) then return end
+                        if isBlacklisted(obj) then return end
+                        if interactableCache[obj] then return end
+                        interactableCache[obj] = true
+                    end
+                    
+                    local function buildCache()
+                        interactableCache = {}
+                        for _, obj in pairs(Workspace:GetDescendants()) do
+                            if hasInteractable(obj) then
+                                if not isNPC(obj) then
+                                    local target = obj
+                                    if obj:IsA("ClickDetector") or obj:IsA("ProximityPrompt") or obj:IsA("TouchInterest") then
+                                        target = obj.Parent
+                                    end
+                                    if target and not isBlacklisted(target) then
+                                        addToCache(target)
+                                    end
+                                end
+                            end
+                        end
+                    end
+                    
+                    Workspace.DescendantAdded:Connect(function(obj)
+                        task.wait(0.1)
+                        if hasInteractable(obj) then
+                            if not isNPC(obj) then
+                                local target = obj
+                                if obj:IsA("ClickDetector") or obj:IsA("ProximityPrompt") or obj:IsA("TouchInterest") then
+                                    target = obj.Parent
+                                end
+                                if target and not isBlacklisted(target) then
+                                    addToCache(target)
+                                end
+                            end
+                        end
+                    end)
+                    
+                    Workspace.DescendantRemoving:Connect(function(obj)
+                        if interactableCache[obj] then
+                            interactableCache[obj] = nil
+                        end
+                    end)
+                    
+                    local function interactWith(obj)
+                        if not obj or not obj.Parent then return end
+                        local prompt = obj:FindFirstChildWhichIsA("ProximityPrompt", true)
+                        if prompt then
+                            fireproximityprompt(prompt)
+                            return
+                        end
+                        local clickDetector = obj:FindFirstChildWhichIsA("ClickDetector", true)
+                        if clickDetector then
+                            fireclickdetector(clickDetector)
+                            return
+                        end
+                        for _, child in pairs(obj:GetDescendants()) do
+                            if child:IsA("TouchInterest") then
+                                local touchPart = child.Parent
+                                if touchPart and touchPart:IsA("BasePart") then
+                                    firetouchinterest(touchPart, LocalPlayer.Character:FindFirstChild("HumanoidRootPart"), 0)
+                                end
+                                return
+                            end
+                        end
+                    end
+                    
+                    local function findNearestInteractable()
+                        local character = LocalPlayer.Character
+                        if not character then return nil, math.huge end
+                        local hrp = character:FindFirstChild("HumanoidRootPart")
+                        if not hrp then return nil, math.huge end
+                        local nearest = nil
+                        local nearestDist = math.huge
+                        for obj, _ in pairs(interactableCache) do
+                            if obj and obj.Parent then
+                                local attach = getAttachPoint(obj)
+                                if attach and attach.Parent then
+                                    local pos = attach.Position
+                                    if pos then
+                                        local dist = (hrp.Position - pos).Magnitude
+                                        if dist < nearestDist then
+                                            nearestDist = dist
+                                            nearest = obj
+                                        end
+                                    end
+                                end
+                            end
+                        end
+                        return nearest, nearestDist
+                    end
+                    
+                    buildCache()
+                    
+                    while autoInteractRunning do
+                        local character = LocalPlayer.Character
+                        if character then
+                            local hrp = character:FindFirstChild("HumanoidRootPart")
+                            if hrp then
+                                local nearest, dist = findNearestInteractable()
+                                if nearest and dist and dist <= autoInteractRange then
+                                    if not interactedItems[nearest] then
+                                        interactWith(nearest)
+                                        interactedItems[nearest] = true
+                                    end
+                                end
+                            end
+                        end
+                        task.wait(1)
+                    end
+                end)
+                StarterGui:SetCore("SendNotification", { Title = "自动化", Text = "已开启自动互动材料", Duration = 2, Icon = "rbxassetid://128981664025072" })
+            end
+        else
+            autoInteractRunning = false
+            if autoInteractJob then
+                task.cancel(autoInteractJob)
+                autoInteractJob = nil
+            end
+            StarterGui:SetCore("SendNotification", { Title = "自动化", Text = "已关闭自动互动材料", Duration = 2, Icon = "rbxassetid://128981664025072" })
+        end
+    end,
+})
+
+Tab3:CreateSlider({
+    Name = "自动互动材料范围",
+    Range = {0, 50},
+    Increment = 1,
+    CurrentValue = 30,
+    Flag = "AutoInteractRange",
+    Callback = function(Value)
+        autoInteractRange = Value
+        StarterGui:SetCore("SendNotification", { Title = "功能提示", Text = "互动范围已设为: " .. Value .. " 米", Duration = 2, Icon = "rbxassetid://128981664025072" })
+    end,
+})
+
+Tab4:CreateSection("特殊泰坦")
+
+Tab4:CreateButton({
+    Name = "泰坦电视2.0",
+    Ext = true,
+    Callback = function()
+        pcall(function()
+            ReplicatedStorage.ForChangeCharacter:FireServer("Upgraded Titan TV", 1)
+            StarterGui:SetCore("SendNotification", { Title = "角色切换", Text = "已切换至 泰坦电视2.0", Duration = 2, Icon = "rbxassetid://128981664025072" })
+        end)
+    end,
+})
+
+Tab4:CreateButton({
+    Name = "泰坦音响2.0",
+    Ext = true,
+    Callback = function()
+        pcall(function()
+            ReplicatedStorage.ForChangeCharacter:FireServer("Upgraded Titan Speaker", 1)
+            StarterGui:SetCore("SendNotification", { Title = "角色切换", Text = "已切换至 泰坦音响2.0", Duration = 2, Icon = "rbxassetid://128981664025072" })
+        end)
+    end,
+})
+
+Tab4:CreateButton({
+    Name = "泰坦监控2.0",
+    Ext = true,
+    Callback = function()
+        pcall(function()
+            ReplicatedStorage.ForChangeCharacter:FireServer("Upgraded Titan Cameraman", 1)
+            StarterGui:SetCore("SendNotification", { Title = "角色切换", Text = "已切换至 泰坦监控2.0", Duration = 2, Icon = "rbxassetid://128981664025072" })
+        end)
+    end,
+})
+
+Tab4:CreateButton({
+    Name = "泰坦时钟",
+    Ext = true,
+    Callback = function()
+        pcall(function()
+            ReplicatedStorage.ForChangeCharacter:FireServer("Clock Titan", 0)
+            StarterGui:SetCore("SendNotification", { Title = "角色切换", Text = "已切换至 泰坦时钟", Duration = 2, Icon = "rbxassetid://128981664025072" })
+        end)
+    end,
+})
+
+Tab4:CreateButton({
+    Name = "x18",
+    Ext = true,
+    Callback = function()
+        pcall(function()
+            ReplicatedStorage.ForChangeCharacter:FireServer("G-Toilet Z", 0)
+            StarterGui:SetCore("SendNotification", { Title = "角色切换", Text = "已切换至 x18", Duration = 2, Icon = "rbxassetid://128981664025072" })
+        end)
+    end,
+})
+
+Tab4:CreateButton({
+    Name = "塞壬",
+    Ext = true,
+    Callback = function()
+        pcall(function()
+            ReplicatedStorage.ForChangeCharacter:FireServer("Siren Titan", 0)
+            StarterGui:SetCore("SendNotification", { Title = "角色切换", Text = "已切换至 塞壬", Duration = 2, Icon = "rbxassetid://128981664025072" })
+        end)
+    end,
+})
+
+Tab5:CreateSection("角色")
+
+Tab5:CreateButton({
+    Name = "天文大电视",
+    Ext = true,
+    Callback = function()
+        pcall(function()
+            ReplicatedStorage.ForChangeCharacter:FireServer("Astro Large TV man", 0)
+            StarterGui:SetCore("SendNotification", { Title = "角色切换", Text = "已切换至 天文大电视", Duration = 2, Icon = "rbxassetid://128981664025072" })
+        end)
+    end,
+})
+
+Tab5:CreateButton({
+    Name = "故障",
+    Ext = true,
+    Callback = function()
+        pcall(function()
+            ReplicatedStorage.ForChangeCharacter:FireServer("Glitch Double plunger", 0)
+            StarterGui:SetCore("SendNotification", { Title = "角色切换", Text = "已切换至 故障", Duration = 2, Icon = "rbxassetid://128981664025072" })
+        end)
+    end,
+})
+
+Tab5:CreateButton({
+    Name = "反派",
+    Ext = true,
+    Callback = function()
+        pcall(function()
+            ReplicatedStorage.ForChangeCharacter:FireServer("Brown Camera man", 1)
+            StarterGui:SetCore("SendNotification", { Title = "角色切换", Text = "已切换至 反派", Duration = 2, Icon = "rbxassetid://128981664025072" })
+        end)
+    end,
+})
+
+Tab5:CreateButton({
+    Name = "音队",
+    Ext = true,
+    Callback = function()
+        pcall(function()
+            ReplicatedStorage.ForChangeCharacter:FireServer("Dark Speakerman", 2)
+            StarterGui:SetCore("SendNotification", { Title = "角色切换", Text = "已切换至 音队", Duration = 2, Icon = "rbxassetid://128981664025072" })
+        end)
+    end,
+})
+
+Tab5:CreateButton({
+    Name = "首席时钟",
+    Ext = true,
+    Callback = function()
+        pcall(function()
+            ReplicatedStorage.ForChangeCharacter:FireServer("Clock Man", 0)
+            StarterGui:SetCore("SendNotification", { Title = "角色切换", Text = "已切换至 首席时钟", Duration = 2, Icon = "rbxassetid://128981664025072" })
+        end)
+    end,
+})
+
+Tab5:CreateButton({
+    Name = "女三体",
+    Ext = true,
+    Callback = function()
+        pcall(function()
+            ReplicatedStorage.ForChangeCharacter:FireServer("Tri Soldier Athena (Girl)", 0)
+            StarterGui:SetCore("SendNotification", { Title = "角色切换", Text = "已切换至 女三体", Duration = 2, Icon = "rbxassetid://128981664025072" })
+        end)
+    end,
+})
+
+Tab5:CreateButton({
+    Name = "山本",
+    Ext = true,
+    Callback = function()
+        pcall(function()
+            ReplicatedStorage.ForChangeCharacter:FireServer("Head Captain Of The CCTV", 0)
+            StarterGui:SetCore("SendNotification", { Title = "角色切换", Text = "已切换至 山本", Duration = 2, Icon = "rbxassetid://128981664025072" })
+        end)
+    end,
+})
+
+Tab5:CreateButton({
+    Name = "普罗米修斯",
+    Ext = true,
+    Callback = function()
+        pcall(function()
+            ReplicatedStorage.ForChangeCharacter:FireServer("Prometheus", 0)
+            StarterGui:SetCore("SendNotification", { Title = "角色切换", Text = "已切换至 普罗米修斯", Duration = 2, Icon = "rbxassetid://128981664025072" })
+        end)
+    end,
+})
+
+Tab5:CreateButton({
+    Name = "女监控2.0",
+    Ext = true,
+    Callback = function()
+        pcall(function()
+            ReplicatedStorage.ForChangeCharacter:FireServer("Camera woman 2.0", 0)
+            StarterGui:SetCore("SendNotification", { Title = "角色切换", Text = "已切换至 女监控2.0", Duration = 2, Icon = "rbxassetid://128981664025072" })
+        end)
+    end,
+})
+
+Tab5:CreateButton({
+    Name = "DJ2.0",
+    Ext = true,
+    Callback = function()
+        pcall(function()
+            ReplicatedStorage.ForChangeCharacter:FireServer("DJ Toilet 2.0", 0)
+            StarterGui:SetCore("SendNotification", { Title = "角色切换", Text = "已切换至 DJ2.0", Duration = 2, Icon = "rbxassetid://128981664025072" })
+        end)
+    end,
+})
+
+Tab6:CreateButton({
+    Name = "点击进入私服",
+    Ext = true,
+    Callback = function()
+        pcall(function()
+            ReplicatedStorage.VIPServer:FireServer("Join", "TLSophvrRP")
+            StarterGui:SetCore("SendNotification", { Title = "功能提示", Text = "已尝试加入私服代码: TLSophvrRP", Duration = 2, Icon = "rbxassetid://128981664025072" })
+        end)
+    end,
+})
+
+local hEnabled = false
+local hList = {}
+local dLabels = {}
+local hDistConn = nil
+local hAddConn = nil
+
+local function updateNames()
+    local t = {}
+    for _, p in pairs(Players:GetPlayers()) do
+        t[p.Name] = true
+        t[p.DisplayName] = true
+    end
+    return t
+end
+
+local pNames = updateNames()
+Players.PlayerAdded:Connect(function() pNames = updateNames() end)
+Players.PlayerRemoving:Connect(function() pNames = updateNames() end)
+
+local function isPly(m)
+    if not m or not m:IsA("Model") then return false end
+    if Players:GetPlayerFromCharacter(m) then return true end
+    if pNames[m.Name] then return true end
+    if m == LocalPlayer.Character then return true end
+    local h = m:FindFirstChild("Humanoid")
+    if h and h:FindFirstChild("DisplayName") then return true end
+    return false
+end
+
+local function addLbl(m)
+    if dLabels[m] then return end
+    local r = m:FindFirstChild("HumanoidRootPart") or m:FindFirstChildWhichIsA("BasePart")
+    if not r then return end
+    local bb = Instance.new("BillboardGui")
+    bb.Adornee = r
+    bb.Size = UDim2.new(0, 120, 0, 40)
+    bb.StudsOffset = Vector3.new(0, 2.5, 0)
+    bb.AlwaysOnTop = true
+    bb.Parent = m
+    local n = Instance.new("TextLabel", bb)
+    n.Size = UDim2.new(1, 0, 0.6, 0)
+    n.Position = UDim2.new(0, 0, 0, 0)
+    n.BackgroundTransparency = 1
+    n.Text = m.Name
+    n.TextColor3 = Color3.fromRGB(255, 255, 0)
+    n.TextSize = 11
+    n.Font = Enum.Font.GothamBold
+    n.TextStrokeTransparency = 0.3
+    n.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+    local d = Instance.new("TextLabel", bb)
+    d.Size = UDim2.new(1, 0, 0.4, 0)
+    d.Position = UDim2.new(0, 0, 0.6, 0)
+    d.BackgroundTransparency = 1
+    d.Text = "0m"
+    d.TextColor3 = Color3.fromRGB(200, 200, 200)
+    d.TextSize = 9
+    d.Font = Enum.Font.Gotham
+    d.TextStrokeTransparency = 0.3
+    d.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+    dLabels[m] = {name = n, dist = d}
+end
+
+local function rmLbl(m)
+    if dLabels[m] then
+        local bb = dLabels[m].name.Parent
+        if bb then bb:Destroy() end
+        dLabels[m] = nil
+    end
+end
+
+local function addHL(m)
+    if hList[m] then return end
+    if not m or not m:IsA("Model") then return end
+    if isPly(m) then return end
+    local h = m:FindFirstChildWhichIsA("Humanoid")
+    if not h then return end
+    if h.Health <= 0 then return end
+    local hl = Instance.new("Highlight")
+    hl.Adornee = m
+    hl.FillColor = Color3.fromRGB(255, 255, 255)
+    hl.OutlineColor = Color3.fromRGB(255, 255, 255)
+    hl.FillTransparency = 0.7
+    hl.OutlineTransparency = 0.5
+    hl.Parent = m
+    hList[m] = hl
+    addLbl(m)
+end
+
+local function rmHL(m)
+    if hList[m] then
+        hList[m]:Destroy()
+        hList[m] = nil
+    end
+    rmLbl(m)
+end
+
+local function clearAll()
+    for m, _ in pairs(hList) do rmHL(m) end
+    for m, _ in pairs(dLabels) do rmLbl(m) end
+end
+
+local function scan()
+    clearAll()
+    if not hEnabled then return end
+    pNames = updateNames()
+    local living = Workspace:FindFirstChild("Living")
+    if not living then return end
+    for _, m in pairs(living:GetChildren()) do
+        if m:IsA("Model") and not isPly(m) then addHL(m) end
+    end
+end
+
+local function updDist()
+    if not hEnabled then return end
+    local hrp = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+    if not hrp then return end
+    for m, lbl in pairs(dLabels) do
+        if lbl and lbl.dist and lbl.dist.Parent then
+            local t = m:FindFirstChild("HumanoidRootPart") or m:FindFirstChildWhichIsA("BasePart")
+            if t then
+                local d = (hrp.Position - t.Position).Magnitude
+                lbl.dist.Text = string.format("%.1fm", d)
+            end
+        end
+    end
+end
+
+local living = Workspace:FindFirstChild("Living")
+if living then
+    hAddConn = living.ChildAdded:Connect(function(c)
+        task.wait(0.3)
+        if hEnabled and c:IsA("Model") and not isPly(c) then addHL(c) end
+    end)
+end
+
+Tab7:CreateToggle({
+    Name = "透视ST角色",
+    CurrentValue = false,
+    Flag = "NpcHighlightToggle",
+    Ext = true,
+    Callback = function(v)
+        hEnabled = v
+        if v then
+            if not hDistConn then hDistConn = RunService.Heartbeat:Connect(updDist) end
+            scan()
+            StarterGui:SetCore("SendNotification", { Title = "功能提示", Text = "已开启透视ST角色", Duration = 2, Icon = "rbxassetid://128981664025072" })
+        else
+            clearAll()
+            if hDistConn then hDistConn:Disconnect(); hDistConn = nil end
+            StarterGui:SetCore("SendNotification", { Title = "功能提示", Text = "已关闭透视ST角色", Duration = 2, Icon = "rbxassetid://128981664025072" })
+        end
+    end,
+})
+
+local playerEspEnabled = false
+local playerEspConnections = {}
+local playerEspScanLoop = nil
+
+local function getPlayerFromCharacter(character)
+    for _, player in ipairs(Players:GetPlayers()) do
+        if player.Character == character then
+            return player
+        end
+    end
+    return nil
+end
+
+local function createBillboard(character, player)
+    local head = character:FindFirstChild("Head")
+    if not head then return end
+
+    local billboard = Instance.new("BillboardGui")
+    billboard.Name = "PlayerInfo"
+    billboard.Size = UDim2.new(0, 120, 0, 40)
+    billboard.StudsOffset = Vector3.new(0, 2.5, 0)
+    billboard.AlwaysOnTop = true
+    billboard.MaxDistance = 10000
+    billboard.Parent = head
+
+    local nameLabel = Instance.new("TextLabel")
+    nameLabel.Size = UDim2.new(1, 0, 0.6, 0)
+    nameLabel.Position = UDim2.new(0, 0, 0, 0)
+    nameLabel.BackgroundTransparency = 1
+    nameLabel.Text = player.Name
+    nameLabel.TextColor3 = Color3.fromRGB(255, 255, 0)
+    nameLabel.TextSize = 11
+    nameLabel.Font = Enum.Font.GothamBold
+    nameLabel.TextStrokeTransparency = 0.3
+    nameLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+    nameLabel.Parent = billboard
+
+    local distLabel = Instance.new("TextLabel")
+    distLabel.Name = "DistLabel"
+    distLabel.Size = UDim2.new(1, 0, 0.4, 0)
+    distLabel.Position = UDim2.new(0, 0, 0.6, 0)
+    distLabel.BackgroundTransparency = 1
+    distLabel.Text = "0m"
+    distLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
+    distLabel.TextSize = 9
+    distLabel.Font = Enum.Font.Gotham
+    distLabel.TextStrokeTransparency = 0.3
+    distLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+    distLabel.Parent = billboard
+
+    return {billboard = billboard, name = nameLabel, dist = distLabel}
+end
+
+local function createHighlight(character, player)
+    local humanoid = character:FindFirstChild("Humanoid")
+    if not humanoid then return end
+
+    local highlight = Instance.new("Highlight")
+    highlight.Name = "PlayerESP"
+    highlight.Adornee = character
+    highlight.FillColor = Color3.fromRGB(255, 255, 255)
+    highlight.OutlineColor = Color3.fromRGB(255, 255, 255)
+    highlight.FillTransparency = 0.7
+    highlight.OutlineTransparency = 0.5
+    highlight.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
+    highlight.Parent = character
+
+    return highlight
+end
+
+local function removeESP(character)
+    local highlight = character:FindFirstChild("PlayerESP")
+    if highlight then highlight:Destroy() end
+
+    local head = character:FindFirstChild("Head")
+    if head then
+        local billboard = head:FindFirstChild("PlayerInfo")
+        if billboard then billboard:Destroy() end
+    end
+end
+
+local function handleLivingCharacter(character)
+    local player = getPlayerFromCharacter(character)
+    if not player then return end
+
+    if character:FindFirstChild("PlayerESP") then return end
+
+    task.wait(0.2)
+    createHighlight(character, player)
+    createBillboard(character, player)
+end
+
+local function scanLiving()
+    local livingFolder = Workspace:FindFirstChild("Living")
+    if not livingFolder then return end
+
+    for _, character in ipairs(livingFolder:GetChildren()) do
+        if character:IsA("Model") and character:FindFirstChild("Humanoid") then
+            handleLivingCharacter(character)
+        end
+    end
+end
+
+local function updatePlayerDistances()
+    if not playerEspEnabled then return end
+    local hrp = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+    if not hrp then return end
+
+    local livingFolder = Workspace:FindFirstChild("Living")
+    if not livingFolder then return end
+
+    for _, character in ipairs(livingFolder:GetChildren()) do
+        if character:IsA("Model") then
+            local head = character:FindFirstChild("Head")
+            if head then
+                local billboard = head:FindFirstChild("PlayerInfo")
+                if billboard then
+                    local distLabel = billboard:FindFirstChild("DistLabel")
+                    if distLabel then
+                        local targetPart = character:FindFirstChild("HumanoidRootPart") or character:FindFirstChildWhichIsA("BasePart")
+                        if targetPart then
+                            local dist = (hrp.Position - targetPart.Position).Magnitude
+                            distLabel.Text = string.format("%.1fm", dist)
+                        end
+                    end
+                end
+            end
+        end
+    end
+end
+
+local function setupLivingWatcher()
+    if not playerEspEnabled then return end
+    local livingFolder = Workspace:FindFirstChild("Living")
+    if not livingFolder then
+        local conn = Workspace.ChildAdded:Connect(function(child)
+            if child.Name == "Living" then
+                setupLivingWatcher()
+            end
+        end)
+        table.insert(playerEspConnections, conn)
+        return
+    end
+
+    scanLiving()
+
+    local addConn = livingFolder.ChildAdded:Connect(function(character)
+        if character:IsA("Model") and character:FindFirstChild("Humanoid") then
+            handleLivingCharacter(character)
+        end
+    end)
+    table.insert(playerEspConnections, addConn)
+
+    local remConn = livingFolder.ChildRemoved:Connect(function(character)
+        removeESP(character)
+    end)
+    table.insert(playerEspConnections, remConn)
+end
+
+local function clearPlayerESP()
+    if playerEspScanLoop then
+        task.cancel(playerEspScanLoop)
+        playerEspScanLoop = nil
+    end
+    for _, conn in ipairs(playerEspConnections) do
+        pcall(function() conn:Disconnect() end)
+    end
+    playerEspConnections = {}
+    local livingFolder = Workspace:FindFirstChild("Living")
+    if livingFolder then
+        for _, character in ipairs(livingFolder:GetChildren()) do
+            removeESP(character)
+        end
+    end
+end
+
+Tab7:CreateToggle({
+    Name = "玩家透视",
+    CurrentValue = false,
+    Flag = "PlayerEspToggle",
+    Ext = true,
+    Callback = function(Value)
+        playerEspEnabled = Value
+        if Value then
+            clearPlayerESP()
+            setupLivingWatcher()
+            playerEspScanLoop = task.spawn(function()
+                while playerEspEnabled do
+                    task.wait(0.5)
+                    updatePlayerDistances()
+                end
+            end)
+            StarterGui:SetCore("SendNotification", { Title = "功能提示", Text = "已开启玩家透视", Duration = 2, Icon = "rbxassetid://128981664025072" })
+        else
+            clearPlayerESP()
+            StarterGui:SetCore("SendNotification", { Title = "功能提示", Text = "已关闭玩家透视", Duration = 2, Icon = "rbxassetid://128981664025072" })
+        end
+    end,
+})
+
+local playerDisplayEnabled = false
+local displayKeepAliveLoop = nil
+local displayUpdateLoop = nil
+
+local function destroyDisplayUI()
+    local playerGui = LocalPlayer:FindFirstChild("PlayerGui")
+    if playerGui then
+        local screenGui = playerGui:FindFirstChild("PlayerCountUI")
+        if screenGui then
+            screenGui:Destroy()
+        end
+    end
+end
+
+local function createDisplayUI()
+    local playerGui = LocalPlayer:FindFirstChild("PlayerGui")
+    if not playerGui then return nil end
+    
+    local screenGui = Instance.new("ScreenGui")
+    screenGui.Name = "PlayerCountUI"
+    screenGui.IgnoreGuiInset = true
+    screenGui.ResetOnSpawn = false
+    screenGui.Parent = playerGui
+
+    local aliveLabel = Instance.new("TextLabel")
+    aliveLabel.Name = "AliveLabel"
+    aliveLabel.Size = UDim2.new(0, 100, 0, 22)
+    aliveLabel.Position = UDim2.new(1, -105, 0, 5)
+    aliveLabel.BackgroundTransparency = 1
+    aliveLabel.Text = "存活: 0"
+    aliveLabel.TextColor3 = Color3.fromRGB(0, 255, 100)
+    aliveLabel.Font = Enum.Font.SourceSansBold
+    aliveLabel.TextSize = 14
+    aliveLabel.TextStrokeTransparency = 0
+    aliveLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+    aliveLabel.TextXAlignment = Enum.TextXAlignment.Right
+    aliveLabel.Parent = screenGui
+
+    local downedLabel = Instance.new("TextLabel")
+    downedLabel.Name = "DownedLabel"
+    downedLabel.Size = UDim2.new(0, 100, 0, 22)
+    downedLabel.Position = UDim2.new(1, -105, 0, 27)
+    downedLabel.BackgroundTransparency = 1
+    downedLabel.Text = "倒地: 0"
+    downedLabel.TextColor3 = Color3.fromRGB(255, 80, 80)
+    downedLabel.Font = Enum.Font.SourceSansBold
+    downedLabel.TextSize = 14
+    downedLabel.TextStrokeTransparency = 0
+    downedLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+    downedLabel.TextXAlignment = Enum.TextXAlignment.Right
+    downedLabel.Parent = screenGui
+    
+    return screenGui
+end
+
+local function updateCounts()
+    local playerGui = LocalPlayer:FindFirstChild("PlayerGui")
+    if not playerGui then return end
+    local screenGui = playerGui:FindFirstChild("PlayerCountUI")
+    if not screenGui then return end
+    
+    local aliveLabel = screenGui:FindFirstChild("AliveLabel")
+    local downedLabel = screenGui:FindFirstChild("DownedLabel")
+    if not aliveLabel or not downedLabel then return end
+    
+    pcall(function()
+        local livingFolder = Workspace:FindFirstChild("Living")
+        if not livingFolder then
+            aliveLabel.Text = "存活: 0"
+            downedLabel.Text = "倒地: 0"
+            return
+        end
+
+        local aliveCount = 0
+        local downedCount = 0
+
+        for _, otherPlayer in ipairs(Players:GetPlayers()) do
+            local char = otherPlayer.Character
+            if char and char:IsDescendantOf(livingFolder) then
+                local hrp = char:FindFirstChild("HumanoidRootPart")
+                local isDowned = false
+                if hrp then
+                    local reviveUI = hrp:FindFirstChild("ReviveUI")
+                    if reviveUI then
+                        isDowned = true
+                    end
+                end
+
+                if isDowned then
+                    downedCount = downedCount + 1
+                else
+                    aliveCount = aliveCount + 1
+                end
+            end
+        end
+
+        aliveLabel.Text = "存活: " .. aliveCount
+        downedLabel.Text = "倒地: " .. downedCount
+    end)
+end
+
+local function startDisplayUpdate()
+    if displayUpdateLoop then return end
+    displayUpdateLoop = task.spawn(function()
+        while playerDisplayEnabled do
+            updateCounts()
+            task.wait(1)
+        end
+    end)
+end
+
+local function stopDisplayUpdate()
+    if displayUpdateLoop then
+        task.cancel(displayUpdateLoop)
+        displayUpdateLoop = nil
+    end
+end
+
+local function startDisplayKeepAlive()
+    if displayKeepAliveLoop then return end
+    displayKeepAliveLoop = task.spawn(function()
+        while playerDisplayEnabled do
+            local playerGui = LocalPlayer:FindFirstChild("PlayerGui")
+            if playerGui then
+                local screenGui = playerGui:FindFirstChild("PlayerCountUI")
+                if not screenGui then
+                    createDisplayUI()
+                end
+            end
+            task.wait(0.5)
+        end
+    end)
+end
+
+local function stopDisplayKeepAlive()
+    if displayKeepAliveLoop then
+        task.cancel(displayKeepAliveLoop)
+        displayKeepAliveLoop = nil
+    end
+end
+
+Tab7:CreateToggle({
+    Name = "玩家显示",
+    CurrentValue = false,
+    Flag = "PlayerDisplayToggle",
+    Ext = true,
+    Callback = function(Value)
+        playerDisplayEnabled = Value
+        if Value then
+            destroyDisplayUI()
+            createDisplayUI()
+            startDisplayKeepAlive()
+            startDisplayUpdate()
+            StarterGui:SetCore("SendNotification", { Title = "功能提示", Text = "已开启玩家显示", Duration = 2, Icon = "rbxassetid://128981664025072" })
+        else
+            stopDisplayKeepAlive()
+            stopDisplayUpdate()
+            destroyDisplayUI()
+            StarterGui:SetCore("SendNotification", { Title = "功能提示", Text = "已关闭玩家显示", Duration = 2, Icon = "rbxassetid://128981664025072" })
+        end
+    end,
+})
+
+local gachaStatEnabled = false
+local gachaStatScreenGui = nil
+local gachaStatMainLabel = nil
+local gachaStatTotal = {Common = 0, Epic = 0, Legendary = 0, Mythic = 0}
+local gachaStatTotal100Spins = 0
+
+local function createGachaStatUI()
+    if gachaStatScreenGui then return end
+    
+    local existingUI = game:GetService("CoreGui"):FindFirstChild("GachaStatUI")
+    if existingUI then
+        existingUI:Destroy()
+    end
+    
+    gachaStatScreenGui = Instance.new("ScreenGui")
+    gachaStatScreenGui.Name = "GachaStatUI"
+    gachaStatScreenGui.Parent = game:GetService("CoreGui")
+    gachaStatScreenGui.DisplayOrder = 999
+    gachaStatScreenGui.Enabled = true
+    gachaStatScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+    gachaStatScreenGui.ResetOnSpawn = false
+
+    gachaStatMainLabel = Instance.new("TextLabel")
+    gachaStatMainLabel.Size = UDim2.new(0.5, 0, 0.07, 0)
+    gachaStatMainLabel.Position = UDim2.new(0.25, 0, 0.02, 0)
+    gachaStatMainLabel.BackgroundTransparency = 1
+    gachaStatMainLabel.TextColor3 = Color3.new(1, 1, 1)
+    gachaStatMainLabel.TextScaled = true
+    gachaStatMainLabel.Font = Enum.Font.Gotham
+    gachaStatMainLabel.ZIndex = 10
+    gachaStatMainLabel.Text = "普通:" .. gachaStatTotal.Common .. " 史诗:" .. gachaStatTotal.Epic .. " 传说:" .. gachaStatTotal.Legendary .. " 神话:" .. gachaStatTotal.Mythic
+    gachaStatMainLabel.Parent = gachaStatScreenGui
+    
+    task.wait()
+    gachaStatScreenGui.Enabled = true
+end
+
+local function destroyGachaStatUI()
+    if gachaStatScreenGui then
+        gachaStatScreenGui:Destroy()
+        gachaStatScreenGui = nil
+        gachaStatMainLabel = nil
+    end
+    local existingUI = game:GetService("CoreGui"):FindFirstChild("GachaStatUI")
+    if existingUI then
+        existingUI:Destroy()
+    end
+end
+
+local function updateGachaStatLabel()
+    if gachaStatMainLabel then
+        gachaStatMainLabel.Text = "普通:" .. gachaStatTotal.Common .. " 史诗:" .. gachaStatTotal.Epic .. " 传说:" .. gachaStatTotal.Legendary .. " 神话:" .. gachaStatTotal.Mythic
+    end
+end
+
+local gachaStatConnection = nil
+local function setupGachaStatListener()
+    if gachaStatConnection then return end
+    local GachaCharacter = ReplicatedStorage:FindFirstChild("GachaCharacter")
+    if not GachaCharacter then return end
+    gachaStatConnection = GachaCharacter.OnClientEvent:Connect(function(data, ...)
+        if type(data) ~= "table" then return end
+        if not gachaStatEnabled then return end
+        local counts = {}
+        for _, item in ipairs(data) do
+            local rarity = item[2]
+            counts[rarity] = (counts[rarity] or 0) + 1
+        end
+        gachaStatTotal.Common = gachaStatTotal.Common + (counts["Common"] or 0)
+        gachaStatTotal.Epic = gachaStatTotal.Epic + (counts["Epic"] or 0)
+        gachaStatTotal.Legendary = gachaStatTotal.Legendary + (counts["Legendary"] or 0)
+        gachaStatTotal.Mythic = gachaStatTotal.Mythic + (counts["Mythic"] or 0)
+        updateGachaStatLabel()
+    end)
+
+    local oldFire = GachaCharacter.FireServer
+    GachaCharacter.FireServer = function(self, ...)
+        local args = {...}
+        for _, arg in pairs(args) do
+            if type(arg) == "string" and arg:lower():find("100") then
+                gachaStatTotal100Spins = gachaStatTotal100Spins + 1
+                if gachaStatEnabled then
+                    StarterGui:SetCore("SendNotification", {
+                        Title = "100抽统计",
+                        Text = "已进行 " .. gachaStatTotal100Spins .. " 次100抽",
+                        Duration = 4
+                    })
+                end
+                break
+            end
+        end
+        return oldFire(self, ...)
+    end
+end
+
+Tab7:CreateToggle({
+    Name = "抽奖统计显示",
+    CurrentValue = false,
+    Flag = "GachaStatToggle",
+    Ext = true,
+    Callback = function(Value)
+        gachaStatEnabled = Value
+        if Value then
+            setupGachaStatListener()
+            destroyGachaStatUI()
+            createGachaStatUI()
+            updateGachaStatLabel()
+            task.wait(0.1)
+            if gachaStatScreenGui then
+                gachaStatScreenGui.Enabled = true
+            end
+            StarterGui:SetCore("SendNotification", { Title = "功能提示", Text = "已开启抽奖统计显示", Duration = 2, Icon = "rbxassetid://128981664025072" })
+        else
+            destroyGachaStatUI()
+            StarterGui:SetCore("SendNotification", { Title = "功能提示", Text = "已关闭抽奖统计显示", Duration = 2, Icon = "rbxassetid://128981664025072" })
+        end
+    end,
+})
+
+local matEnabled = false
+local matHList = {}
+local matDLabels = {}
+local matDistConn = nil
+
+local blacklist = {
+    "lever",
+    "Head",
+    "AT",
+    "SpecterRoom",
+    "ModelDoor",
+    "Right arm",
+    "Acid Arm",
+    "Material"
+}
+
+local function isPlayer(model)
+    if not model or not model:IsA("Model") then return false end
+    if Players:GetPlayerFromCharacter(model) then return true end
+    if model == LocalPlayer.Character then return true end
+    return false
+end
+
+local function isNPC(model)
+    if not model or not model:IsA("Model") then return false end
+    if isPlayer(model) then return false end
+    if model:FindFirstChildWhichIsA("Humanoid") then return true end
+    return false
+end
+
+local function isBlacklisted(obj)
+    if not obj then return false end
+    for _, name in pairs(blacklist) do
+        if obj.Name == name then return true end
+        if obj.Parent and obj.Parent.Name == name then return true end
+        if obj.Parent and obj.Parent.Parent and obj.Parent.Parent.Name == name then return true end
+    end
+    return false
+end
+
+local function hasInteractable(obj)
+    if not obj then return false end
+
+    if obj:IsA("ClickDetector") or obj:IsA("ProximityPrompt") or obj:IsA("TouchInterest") then
+        return true
+    end
+
+    if obj:IsA("Tool") then
+        return true
+    end
+
+    for _, child in pairs(obj:GetDescendants()) do
+        if child:IsA("ClickDetector") then return true end
+        if child:IsA("ProximityPrompt") then return true end
+        if child:IsA("TouchInterest") then return true end
+        if child:IsA("Tool") then return true end
+    end
+
+    return false
+end
+
+local function getAttachPoint(obj)
+    if obj:IsA("BasePart") or obj:IsA("Part") or obj:IsA("MeshPart") or obj:IsA("UnionOperation") then
+        return obj
+    end
+    if obj:IsA("Model") then
+        local hrp = obj:FindFirstChild("HumanoidRootPart")
+        if hrp then return hrp end
+        local anyPart = obj:FindFirstChildWhichIsA("BasePart")
+        if anyPart then return anyPart end
+    end
+    if obj:IsA("Tool") then
+        local handle = obj:FindFirstChild("Handle") or obj:FindFirstChildWhichIsA("BasePart")
+        if handle then return handle end
+    end
+    return nil
+end
+
+local function matAddLabel(obj)
+    if matDLabels[obj] then return end
+
+    local attach = getAttachPoint(obj)
+    if not attach then return end
+
+    local bill = Instance.new("BillboardGui")
+    bill.Adornee = attach
+    bill.Size = UDim2.new(0, 160, 0, 45)
+    bill.StudsOffset = Vector3.new(0, 3, 0)
+    bill.AlwaysOnTop = true
+    bill.MaxDistance = math.huge
+    bill.Parent = attach
+
+    local nameLabel = Instance.new("TextLabel", bill)
+    nameLabel.Size = UDim2.new(1, 0, 0.6, 0)
+    nameLabel.Position = UDim2.new(0, 0, 0, 0)
+    nameLabel.BackgroundTransparency = 1
+    nameLabel.Text = obj.Name or "互动"
+    nameLabel.TextColor3 = Color3.fromRGB(0, 150, 255)
+    nameLabel.TextSize = 11
+    nameLabel.Font = Enum.Font.GothamBold
+    nameLabel.TextStrokeTransparency = 0.3
+    nameLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+
+    local distLabel = Instance.new("TextLabel", bill)
+    distLabel.Size = UDim2.new(1, 0, 0.4, 0)
+    distLabel.Position = UDim2.new(0, 0, 0.6, 0)
+    distLabel.BackgroundTransparency = 1
+    distLabel.Text = "0m"
+    distLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
+    distLabel.TextSize = 9
+    distLabel.Font = Enum.Font.Gotham
+    distLabel.TextStrokeTransparency = 0.3
+    distLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+
+    matDLabels[obj] = {name = nameLabel, dist = distLabel, attach = attach}
+end
+
+local function matRemoveLabel(obj)
+    if matDLabels[obj] then
+        local bill = matDLabels[obj].name.Parent
+        if bill then bill:Destroy() end
+        matDLabels[obj] = nil
+    end
+end
+
+local function matAddHighlight(obj)
+    if matHList[obj] then return end
+    if not obj then return end
+
+    if isNPC(obj) then return end
+    if isBlacklisted(obj) then return end
+
+    local attach = getAttachPoint(obj)
+    if not attach then return end
+
+    if attach:FindFirstChild("Highlight_ESP") then return end
+
+    local hl = Instance.new("Highlight")
+    hl.Name = "Highlight_ESP"
+    hl.Adornee = attach
+    hl.FillColor = Color3.fromRGB(0, 100, 255)
+    hl.OutlineColor = Color3.fromRGB(255, 255, 255)
+    hl.FillTransparency = 0.5
+    hl.OutlineTransparency = 0
+    hl.Parent = attach
+    matHList[obj] = hl
+
+    matAddLabel(obj)
+end
+
+local function matRemoveHighlight(obj)
+    if matHList[obj] then
+        matHList[obj]:Destroy()
+        matHList[obj] = nil
+    end
+    matRemoveLabel(obj)
+end
+
+local function matClearAll()
+    for obj, _ in pairs(matHList) do
+        matRemoveHighlight(obj)
+    end
+    for obj, _ in pairs(matDLabels) do
+        matRemoveLabel(obj)
+    end
+end
+
+local function scanInteractables()
+    matClearAll()
+
+    local count = 0
+    for _, obj in pairs(Workspace:GetDescendants()) do
+        if hasInteractable(obj) then
+            if not isNPC(obj) then
+                local target = obj
+                if obj:IsA("ClickDetector") or obj:IsA("ProximityPrompt") or obj:IsA("TouchInterest") then
+                    target = obj.Parent
+                end
+                if target and not isBlacklisted(target) then
+                    matAddHighlight(target)
+                    count = count + 1
+                end
+            end
+        end
+    end
+end
+
+local function matUpdateDistances()
+    if not matEnabled then return end
+    local hrp = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+    if not hrp then return end
+
+    for obj, labels in pairs(matDLabels) do
+        if labels and labels.dist and labels.dist.Parent then
+            local attach = labels.attach
+            if attach and attach.Parent then
+                local pos = attach.Position
+                if pos then
+                    local dist = (hrp.Position - pos).Magnitude
+                    labels.dist.Text = string.format("%.1fm", dist)
+                end
+            end
+        end
+    end
+end
+
+local matDescendantConn = nil
+
+Tab7:CreateToggle({
+    Name = "材料透视",
+    CurrentValue = false,
+    Flag = "MaterialEspToggle",
+    Ext = true,
+    Callback = function(Value)
+        matEnabled = Value
+        if Value then
+            scanInteractables()
+            if matDescendantConn then
+                matDescendantConn:Disconnect()
+                matDescendantConn = nil
+            end
+            matDescendantConn = Workspace.DescendantAdded:Connect(function(obj)
+                task.wait(0.1)
+                if matEnabled and hasInteractable(obj) then
+                    local target = obj
+                    if obj:IsA("ClickDetector") or obj:IsA("ProximityPrompt") or obj:IsA("TouchInterest") then
+                        target = obj.Parent
+                    end
+                    if target and not isNPC(target) and not isBlacklisted(target) then
+                        matAddHighlight(target)
+                    end
+                end
+            end)
+            if not matDistConn then 
+                matDistConn = RunService.Heartbeat:Connect(matUpdateDistances) 
+            end
+            StarterGui:SetCore("SendNotification", { Title = "功能提示", Text = "已开启材料透视", Duration = 2, Icon = "rbxassetid://128981664025072" })
+        else
+            if matDescendantConn then
+                matDescendantConn:Disconnect()
+                matDescendantConn = nil
+            end
+            if matDistConn then 
+                matDistConn:Disconnect() 
+                matDistConn = nil 
+            end
+            matClearAll()
+            StarterGui:SetCore("SendNotification", { Title = "功能提示", Text = "已关闭材料透视", Duration = 2, Icon = "rbxassetid://128981664025072" })
+        end
+    end,
+})
+
+local playerGui = LocalPlayer:WaitForChild("PlayerGui")
+
+Tab8:CreateToggle({
+    Name = "直升机商店",
+    CurrentValue = false,
+    Flag = "HeliShopToggle",
+    Ext = true,
+    Callback = function(Value)
+        local target = playerGui:FindFirstChild("003-A")
+        if target then
+            target.Enabled = Value
+            StarterGui:SetCore("SendNotification", { Title = "功能提示", Text = Value and "已开启直升机商店" or "已关闭直升机商店", Duration = 2, Icon = "rbxassetid://128981664025072" })
+        else
+            StarterGui:SetCore("SendNotification", { Title = "错误提示", Text = "未找到商店", Duration = 2, Icon = "rbxassetid://128981664025072" })
+        end
+    end,
+})
+
+Tab8:CreateToggle({
+    Name = "泰坦电视2.0装备商店",
+    CurrentValue = false,
+    Flag = "TVShopToggle",
+    Ext = true,
+    Callback = function(Value)
+        local target = playerGui:FindFirstChild("UpgradeTVShop")
+        if target then
+            target.Enabled = Value
+            StarterGui:SetCore("SendNotification", { Title = "功能提示", Text = Value and "已开启泰坦电视2.0装备商店" or "已关闭泰坦电视2.0装备商店", Duration = 2, Icon = "rbxassetid://128981664025072" })
+        else
+            StarterGui:SetCore("SendNotification", { Title = "错误提示", Text = "未找到泰坦电视2.0装备商店", Duration = 2, Icon = "rbxassetid://128981664025072" })
+        end
+    end,
+})
+
+Tab8:CreateToggle({
+    Name = "泰坦音响2.0装备商店",
+    CurrentValue = false,
+    Flag = "UTSMShopToggle",
+    Ext = true,
+    Callback = function(Value)
+        local target = playerGui:FindFirstChild("ConfirmUTSM")
+        if target then
+            target.Enabled = Value
+            StarterGui:SetCore("SendNotification", { Title = "功能提示", Text = Value and "已开启泰坦音响2.0装备商店" or "已关闭泰坦音响2.0装备商店", Duration = 2, Icon = "rbxassetid://128981664025072" })
+        else
+            StarterGui:SetCore("SendNotification", { Title = "错误提示", Text = "未找到泰坦音响2.0装备商店", Duration = 2, Icon = "rbxassetid://128981664025072" })
+        end
+    end,
+})
+
+Tab8:CreateToggle({
+    Name = "泰坦监控2.0装备商店",
+    CurrentValue = false,
+    Flag = "CameraShopToggle",
+    Ext = true,
+    Callback = function(Value)
+        local target = playerGui:FindFirstChild("UpgradeCameraShop")
+        if target then
+            target.Enabled = Value
+            StarterGui:SetCore("SendNotification", { Title = "功能提示", Text = Value and "已开启泰坦监控2.0装备商店" or "已关闭泰坦监控2.0装备商店", Duration = 2, Icon = "rbxassetid://128981664025072" })
+        else
+            StarterGui:SetCore("SendNotification", { Title = "错误提示", Text = "未找到泰坦监控2.0装备商店", Duration = 2, Icon = "rbxassetid://128981664025072" })
+        end
+    end,
+})
+
+local isBuyingC4 = false
+Tab8:CreateButton({
+    Name = "导弹人装备升级",
+    Ext = true,
+    Callback = function()
+        if isBuyingC4 then return end
+        isBuyingC4 = true
+        local nukeTitanSet = ReplicatedStorage:FindFirstChild("NukeTitanSet")
+        if nukeTitanSet then
+            pcall(function()
+                nukeTitanSet:FireServer("BuyC4s")
+            end)
+            StarterGui:SetCore("SendNotification", { Title = "功能提示", Text = "已购买 C4 装备", Duration = 2, Icon = "rbxassetid://128981664025072" })
+        else
+            StarterGui:SetCore("SendNotification", { Title = "错误提示", Text = "未找到装备", Duration = 2, Icon = "rbxassetid://128981664025072" })
+        end
+        task.wait(1)
+        isBuyingC4 = false
+    end,
+})
+
+local whitelist = {"SA_BERROXY"}
+local function checkIsWhitelisted()
+    local name = LocalPlayer.Name
+    local display = LocalPlayer.DisplayName
+    for _, w in ipairs(whitelist) do
+        if name == w or display == w then
+            return true
+        end
+    end
+    return false
+end
+
+Tab9:CreateButton({
+    Name = "一刀修罗",
+    Ext = true,
+    Callback = function()
+        if not checkIsWhitelisted() then
+            StarterGui:SetCore("SendNotification", {
+                Title = "付费功能",
+                Text = "您无权使用此功能，仅限白名单用户",
+                Duration = 3,
+                Icon = "rbxassetid://128981664025072"
+            })
+            return
+        end
+
+        local existingUI = LocalPlayer:FindFirstChild("PlayerGui"):FindFirstChild("SkillSwitchUI")
+        if existingUI then
+            existingUI:Destroy()
+            StarterGui:SetCore("SendNotification", {
+                Title = "付费功能",
+                Text = "已关闭一刀修罗界面",
+                Duration = 2,
+                Icon = "rbxassetid://128981664025072"
+            })
+            return
+        end
+
+        local ScreenUI = Instance.new("ScreenGui")
+        ScreenUI.Name = "SkillSwitchUI"
+        ScreenUI.ResetOnSpawn = false
+        ScreenUI.IgnoreGuiInset = true
+        ScreenUI.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+        ScreenUI.Parent = LocalPlayer:WaitForChild("PlayerGui")
+
+        local SkillBtn = Instance.new("TextButton")
+        SkillBtn.Size = UDim2.new(0, 160, 0, 50)
+        SkillBtn.Position = UDim2.new(0.02, 0, 0.4, 0)
+        SkillBtn.BackgroundColor3 = Color3.fromRGB(20, 120, 220)
+        SkillBtn.TextColor3 = Color3.new(1, 1, 1)
+        SkillBtn.Font = Enum.Font.SourceSansBold
+        SkillBtn.TextSize = 18
+        SkillBtn.Text = "开启一刀修罗"
+        SkillBtn.Draggable = true
+        SkillBtn.Parent = ScreenUI
+
+        local isDragging = false
+        local dragStart, startPos
+        SkillBtn.InputBegan:Connect(function(input)
+            if input.UserInputType == Enum.UserInputType.Touch then
+                isDragging = true
+                dragStart = input.Position
+                startPos = SkillBtn.AbsolutePosition
+            end
+        end)
+
+        UserInputService.InputChanged:Connect(function(input)
+            if isDragging and input.UserInputType == Enum.UserInputType.TouchMovement then
+                local delta = input.Position - dragStart
+                SkillBtn.Position = UDim2.new(0, startPos.X + delta.X, 0, startPos.Y + delta.Y)
+            end
+        end)
+
+        UserInputService.InputEnded:Connect(function(input)
+            if input.UserInputType == Enum.UserInputType.TouchEnd then
+                isDragging = false
+            end
+        end)
+
+        local SkillSwitch = false
+        local function RunSkill()
+            task.spawn(function()
+                while task.wait(0.3) do
+                    if not SkillSwitch then break end
+                    local args = {{Skill = "Kaijin"}}
+                    pcall(function()
+                        ReplicatedStorage:WaitForChild("HeadCaptainOfCCTVSet"):FireServer(unpack(args))
+                    end)
+                end
+            end)
+        end
+
+        SkillBtn.MouseButton1Click:Connect(function()
+            SkillSwitch = not SkillSwitch
+            if SkillSwitch then
+                SkillBtn.BackgroundColor3 = Color3.fromRGB(30, 180, 60)
+                SkillBtn.Text = "关闭一刀修罗"
+                RunSkill()
+                StarterGui:SetCore("SendNotification", {
+                    Title = "功能提示",
+                    Text = "已开启一刀修罗",
+                    Duration = 2
+                })
+            else
+                SkillBtn.BackgroundColor3 = Color3.fromRGB(20, 120, 220)
+                SkillBtn.Text = "开启一刀修罗"
+                StarterGui:SetCore("SendNotification", {
+                    Title = "功能提示",
+                    Text = "已关闭一刀修罗",
+                    Duration = 2
+                })
+            end
+        end)
+
+        StarterGui:SetCore("SendNotification", {
+            Title = "付费功能",
+            Text = "已开启一刀修罗界面",
+            Duration = 2,
+            Icon = "rbxassetid://128981664025072"
+        })
+    end,
+})
+
+task.spawn(function()
+    StarterGui:SetCore("SendNotification", { Title = "已加载银狼脚本", Text = " ", Duration = 3, Icon = "rbxassetid://128981664025072" })
+    task.wait(3)
+    StarterGui:SetCore("SendNotification", { Title = "每天周日更新", Text = " ", Duration = 3, Icon = "rbxassetid://128981664025072" })
+    task.wait(3)
+    StarterGui:SetCore("SendNotification", { Title = "感谢你的支持", Text = " ", Duration = 3, Icon = "rbxassetid://128981664025072" })
+end)
