@@ -832,12 +832,16 @@ local autoInteractRunning = false
 local autoInteractLoaded = false
 local autoInteractLoop = nil
 
-local function startAutoInteract()
-    if autoInteractLoaded then return end
-    autoInteractLoaded = true
-    
-    autoInteractLoop = task.spawn(function()
-        loadstring([[
+Tab3:CreateButton({
+    Name = "自动互动材料",
+    Ext = true,
+    Callback = function()
+        if not autoInteractLoaded then
+            autoInteractLoaded = true
+            autoInteractRunning = true
+            
+            autoInteractLoop = task.spawn(function()
+                loadstring([[
 local Workspace = game:GetService("Workspace")
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
@@ -1081,18 +1085,9 @@ buildCache()
 task.spawn(autoInteractFunction)
 
 print("靠近自动互动已加载（范围30，right armAstro已加入黑名单）")
-        ]])()
-    end)
-end
-
-Tab3:CreateButton({
-    Name = "自动互动材料",
-    Ext = true,
-    Callback = function()
-        if not autoInteractLoaded then
-            autoInteractLoaded = true
-            autoInteractRunning = true
-            startAutoInteract()
+                ]])()
+            end)
+            
             StarterGui:SetCore("SendNotification", { Title = "功能提示", Text = "已开启自动互动材料", Duration = 2, Icon = "rbxassetid://128981664025072" })
         else
             autoInteractRunning = false
@@ -1814,65 +1809,52 @@ Tab7:CreateToggle({
     end,
 })
 
-local gachaStatEnabled = false
 local gachaStatScreenGui = nil
-local gachaStatMainLabel = nil
+local gachaStatTextLabel = nil
 local gachaStatTotal = {Common = 0, Epic = 0, Legendary = 0, Mythic = 0}
-local gachaStatTotal100Spins = 0
 local gachaStatConnection = nil
-local gachaStatOriginalFire = nil
-local gachaStatHookActive = false
 
-local function createGachaStatUI()
-    if gachaStatScreenGui then return end
-    
-    local existingUI = game:GetService("CoreGui"):FindFirstChild("GachaStatUI")
-    if existingUI then
-        existingUI:Destroy()
-    end
-    
-    gachaStatScreenGui = Instance.new("ScreenGui")
-    gachaStatScreenGui.Name = "GachaStatUI"
-    gachaStatScreenGui.Parent = game:GetService("CoreGui")
-    gachaStatScreenGui.DisplayOrder = 999
-    gachaStatScreenGui.Enabled = true
-    gachaStatScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-    gachaStatScreenGui.ResetOnSpawn = false
+local function showSkinPopup(skins)
+    local gui = Instance.new("ScreenGui")
+    gui.Parent = game:GetService("CoreGui")
+    gui.DisplayOrder = 999
 
-    gachaStatMainLabel = Instance.new("TextLabel")
-    gachaStatMainLabel.Size = UDim2.new(0.5, 0, 0.07, 0)
-    gachaStatMainLabel.Position = UDim2.new(0.25, 0, 0.02, 0)
-    gachaStatMainLabel.BackgroundTransparency = 1
-    gachaStatMainLabel.TextColor3 = Color3.new(1, 1, 1)
-    gachaStatMainLabel.TextScaled = true
-    gachaStatMainLabel.Font = Enum.Font.Gotham
-    gachaStatMainLabel.ZIndex = 10
-    gachaStatMainLabel.Text = "普通:" .. gachaStatTotal.Common .. " 史诗:" .. gachaStatTotal.Epic .. " 传说:" .. gachaStatTotal.Legendary .. " 神话:" .. gachaStatTotal.Mythic
-    gachaStatMainLabel.Parent = gachaStatScreenGui
-    
-    task.wait()
-    gachaStatScreenGui.Enabled = true
+    local frame = Instance.new("Frame", gui)
+    frame.Size = UDim2.new(0.6, 0, 0.4, 0)
+    frame.Position = UDim2.new(0.2, 0, 0.3, 0)
+    frame.BackgroundColor3 = Color3.fromRGB(20, 20, 40)
+    frame.BackgroundTransparency = 0.1
+    Instance.new("UICorner", frame).CornerRadius = UDim.new(0, 12)
+
+    local label = Instance.new("TextLabel", frame)
+    label.Size = UDim2.new(1, -20, 1, -20)
+    label.Position = UDim2.new(0, 10, 0, 10)
+    label.BackgroundTransparency = 1
+    label.TextColor3 = Color3.fromRGB(255, 255, 255)
+    label.TextScaled = true
+    label.Font = Enum.Font.Gotham
+    label.Text = skins
+
+    local closeBtn = Instance.new("TextButton", frame)
+    closeBtn.Size = UDim2.new(0, 50, 0, 30)
+    closeBtn.Position = UDim2.new(1, -60, 1, -35)
+    closeBtn.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
+    closeBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+    closeBtn.Text = "关闭"
+    closeBtn.Font = Enum.Font.GothamBold
+    closeBtn.TextSize = 14
+    Instance.new("UICorner", closeBtn).CornerRadius = UDim.new(0, 6)
+    closeBtn.MouseButton1Click:Connect(function()
+        gui:Destroy()
+    end)
+
+    task.spawn(function()
+        task.wait(5)
+        if gui then gui:Destroy() end
+    end)
 end
 
-local function destroyGachaStatUI()
-    if gachaStatScreenGui then
-        gachaStatScreenGui:Destroy()
-        gachaStatScreenGui = nil
-        gachaStatMainLabel = nil
-    end
-    local existingUI = game:GetService("CoreGui"):FindFirstChild("GachaStatUI")
-    if existingUI then
-        existingUI:Destroy()
-    end
-end
-
-local function updateGachaStatLabel()
-    if gachaStatMainLabel then
-        gachaStatMainLabel.Text = "普通:" .. gachaStatTotal.Common .. " 史诗:" .. gachaStatTotal.Epic .. " 传说:" .. gachaStatTotal.Legendary .. " 神话:" .. gachaStatTotal.Mythic
-    end
-end
-
-local function setupGachaStatListener()
+local function setupGachaStatDisplay()
     if gachaStatConnection then return end
     
     local GachaCharacter = ReplicatedStorage:FindFirstChild("GachaCharacter")
@@ -1881,82 +1863,71 @@ local function setupGachaStatListener()
         if not GachaCharacter then return end
     end
     
+    gachaStatScreenGui = Instance.new("ScreenGui")
+    gachaStatScreenGui.Parent = game:GetService("CoreGui")
+    gachaStatScreenGui.DisplayOrder = 999
+
+    gachaStatTextLabel = Instance.new("TextLabel")
+    gachaStatTextLabel.Size = UDim2.new(0.5, 0, 0.08, 0)
+    gachaStatTextLabel.Position = UDim2.new(0.25, 0, 0.03, 0)
+    gachaStatTextLabel.BackgroundTransparency = 1
+    gachaStatTextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    gachaStatTextLabel.TextScaled = true
+    gachaStatTextLabel.Font = Enum.Font.GothamBold
+    gachaStatTextLabel.ZIndex = 10
+    gachaStatTextLabel.Text = "普通:0 史诗:0 传说:0 神话:0"
+    gachaStatTextLabel.Parent = gachaStatScreenGui
+    
     gachaStatConnection = GachaCharacter.OnClientEvent:Connect(function(data, ...)
-        if type(data) ~= "table" then return end
-        if not gachaStatEnabled then return end
+        if type(data) ~= "table" or #data == 0 then return end
+        
         local counts = {}
+        local skinList = {}
         for _, item in ipairs(data) do
-            local rarity = item[2]
+            local name = item[1] or "未知皮肤"
+            local rarity = item[2] or ""
             counts[rarity] = (counts[rarity] or 0) + 1
+            table.insert(skinList, string.format("[%s] %s", rarity, name))
         end
+        
         gachaStatTotal.Common = gachaStatTotal.Common + (counts["Common"] or 0)
         gachaStatTotal.Epic = gachaStatTotal.Epic + (counts["Epic"] or 0)
         gachaStatTotal.Legendary = gachaStatTotal.Legendary + (counts["Legendary"] or 0)
         gachaStatTotal.Mythic = gachaStatTotal.Mythic + (counts["Mythic"] or 0)
-        updateGachaStatLabel()
-    end)
-
-    if not gachaStatHookActive then
-        gachaStatHookActive = true
-        gachaStatOriginalFire = GachaCharacter.FireServer
-        GachaCharacter.FireServer = function(self, ...)
-            local args = {...}
-            for _, arg in pairs(args) do
-                if type(arg) == "string" and arg:lower():find("100") then
-                    gachaStatTotal100Spins = gachaStatTotal100Spins + 1
-                    if gachaStatEnabled then
-                        StarterGui:SetCore("SendNotification", {
-                            Title = "100抽统计",
-                            Text = "已进行 " .. gachaStatTotal100Spins .. " 次100抽",
-                            Duration = 4
-                        })
-                    end
-                    break
-                end
-            end
-            if gachaStatOriginalFire then
-                return gachaStatOriginalFire(self, ...)
-            end
+        
+        if gachaStatTextLabel then
+            gachaStatTextLabel.Text = string.format("普通:%d 史诗:%d 传说:%d 神话:%d",
+                gachaStatTotal.Common, gachaStatTotal.Epic, gachaStatTotal.Legendary, gachaStatTotal.Mythic)
         end
-    end
+        
+        local displayText = table.concat(skinList, "\n")
+        showSkinPopup(displayText)
+    end)
 end
 
-local function cleanupGachaStat()
+local function cleanupGachaStatDisplay()
     if gachaStatConnection then
         gachaStatConnection:Disconnect()
         gachaStatConnection = nil
     end
-    if gachaStatHookActive then
-        gachaStatHookActive = false
-        local GachaCharacter = ReplicatedStorage:FindFirstChild("GachaCharacter")
-        if GachaCharacter and gachaStatOriginalFire then
-            GachaCharacter.FireServer = gachaStatOriginalFire
-            gachaStatOriginalFire = nil
-        end
+    if gachaStatScreenGui then
+        gachaStatScreenGui:Destroy()
+        gachaStatScreenGui = nil
+        gachaStatTextLabel = nil
     end
+    gachaStatTotal = {Common = 0, Epic = 0, Legendary = 0, Mythic = 0}
 end
 
 Tab7:CreateButton({
-    Name = "抽奖统计显示",
+    Name = "抽奖统计皮肤",
     Ext = true,
     Callback = function()
-        gachaStatEnabled = not gachaStatEnabled
-        if gachaStatEnabled then
-            pcall(function()
-                setupGachaStatListener()
-            end)
-            destroyGachaStatUI()
-            createGachaStatUI()
-            updateGachaStatLabel()
-            task.wait(0.1)
-            if gachaStatScreenGui then
-                gachaStatScreenGui.Enabled = true
-            end
-            StarterGui:SetCore("SendNotification", { Title = "功能提示", Text = "已开启抽奖统计显示", Duration = 2, Icon = "rbxassetid://128981664025072" })
+        if gachaStatScreenGui then
+            cleanupGachaStatDisplay()
+            StarterGui:SetCore("SendNotification", { Title = "功能提示", Text = "已关闭抽奖统计皮肤", Duration = 2, Icon = "rbxassetid://128981664025072" })
         else
-            cleanupGachaStat()
-            destroyGachaStatUI()
-            StarterGui:SetCore("SendNotification", { Title = "功能提示", Text = "已关闭抽奖统计显示", Duration = 2, Icon = "rbxassetid://128981664025072" })
+            setupGachaStatDisplay()
+            StarterGui:SetCore("SendNotification", { Title = "功能提示", Text = "已开启抽奖统计皮肤", Duration = 2, Icon = "rbxassetid://128981664025072" })
         end
     end,
 })
