@@ -859,7 +859,7 @@ local blacklist = {
     "Map", "right armAstro"
 }
 
-local interactRange = 30
+local interactRange = 100
 
 for _, p in ipairs(Workspace:GetDescendants()) do
     if p:IsA("ProximityPrompt") then
@@ -939,7 +939,6 @@ local function addToCache(obj)
     if isNPC(obj) then return end
     if isInLiving(obj) then return end
     if isBlacklisted(obj) then return end
-    if interactedItems[obj] then return end
     if interactableCache[obj] then return end
     
     interactableCache[obj] = true
@@ -955,9 +954,7 @@ local function buildCache()
                     target = obj.Parent
                 end
                 if target and not isBlacklisted(target) and not isInLiving(target) then
-                    if not interactedItems[target] then
-                        newCache[target] = true
-                    end
+                    newCache[target] = true
                 end
             end
         end
@@ -974,9 +971,7 @@ Workspace.DescendantAdded:Connect(function(obj)
                 target = obj.Parent
             end
             if target and not isBlacklisted(target) and not isInLiving(target) then
-                if not interactedItems[target] then
-                    addToCache(target)
-                end
+                addToCache(target)
             end
         end
     end
@@ -1063,28 +1058,20 @@ local function autoInteractFunction()
                     if nearby then
                         isProcessing = true
                         interactWith(nearby)
-                        
-                        if nearby and nearby.Parent then
-                            interactedItems[nearby] = true
-                            interactableCache[nearby] = nil
-                        else
-                            interactableCache[nearby] = nil
-                        end
-                        
-                        task.wait(0.3)
+                        task.wait(0.2)
                         isProcessing = false
                     end
                 end
             end
         end
-        task.wait(0.5)
+        task.wait(0.3)
     end
 end
 
 buildCache()
 task.spawn(autoInteractFunction)
 
-print("靠近自动互动已加载（范围30，right armAstro已加入黑名单）")
+print("靠近自动互动已加载（范围100，持续互动）")
                 ]])()
             end)
             
@@ -1814,46 +1801,6 @@ local gachaStatTextLabel = nil
 local gachaStatTotal = {Common = 0, Epic = 0, Legendary = 0, Mythic = 0}
 local gachaStatConnection = nil
 
-local function showSkinPopup(skins)
-    local gui = Instance.new("ScreenGui")
-    gui.Parent = game:GetService("CoreGui")
-    gui.DisplayOrder = 999
-
-    local frame = Instance.new("Frame", gui)
-    frame.Size = UDim2.new(0.6, 0, 0.4, 0)
-    frame.Position = UDim2.new(0.2, 0, 0.3, 0)
-    frame.BackgroundColor3 = Color3.fromRGB(20, 20, 40)
-    frame.BackgroundTransparency = 0.1
-    Instance.new("UICorner", frame).CornerRadius = UDim.new(0, 12)
-
-    local label = Instance.new("TextLabel", frame)
-    label.Size = UDim2.new(1, -20, 1, -20)
-    label.Position = UDim2.new(0, 10, 0, 10)
-    label.BackgroundTransparency = 1
-    label.TextColor3 = Color3.fromRGB(255, 255, 255)
-    label.TextScaled = true
-    label.Font = Enum.Font.Gotham
-    label.Text = skins
-
-    local closeBtn = Instance.new("TextButton", frame)
-    closeBtn.Size = UDim2.new(0, 50, 0, 30)
-    closeBtn.Position = UDim2.new(1, -60, 1, -35)
-    closeBtn.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
-    closeBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-    closeBtn.Text = "关闭"
-    closeBtn.Font = Enum.Font.GothamBold
-    closeBtn.TextSize = 14
-    Instance.new("UICorner", closeBtn).CornerRadius = UDim.new(0, 6)
-    closeBtn.MouseButton1Click:Connect(function()
-        gui:Destroy()
-    end)
-
-    task.spawn(function()
-        task.wait(5)
-        if gui then gui:Destroy() end
-    end)
-end
-
 local function setupGachaStatDisplay()
     if gachaStatConnection then return end
     
@@ -1882,12 +1829,9 @@ local function setupGachaStatDisplay()
         if type(data) ~= "table" or #data == 0 then return end
         
         local counts = {}
-        local skinList = {}
         for _, item in ipairs(data) do
-            local name = item[1] or "未知皮肤"
             local rarity = item[2] or ""
             counts[rarity] = (counts[rarity] or 0) + 1
-            table.insert(skinList, string.format("[%s] %s", rarity, name))
         end
         
         gachaStatTotal.Common = gachaStatTotal.Common + (counts["Common"] or 0)
@@ -1899,9 +1843,6 @@ local function setupGachaStatDisplay()
             gachaStatTextLabel.Text = string.format("普通:%d 史诗:%d 传说:%d 神话:%d",
                 gachaStatTotal.Common, gachaStatTotal.Epic, gachaStatTotal.Legendary, gachaStatTotal.Mythic)
         end
-        
-        local displayText = table.concat(skinList, "\n")
-        showSkinPopup(displayText)
     end)
 end
 
@@ -1919,15 +1860,15 @@ local function cleanupGachaStatDisplay()
 end
 
 Tab7:CreateButton({
-    Name = "抽奖统计皮肤",
+    Name = "抽奖统计",
     Ext = true,
     Callback = function()
         if gachaStatScreenGui then
             cleanupGachaStatDisplay()
-            StarterGui:SetCore("SendNotification", { Title = "功能提示", Text = "已关闭抽奖统计皮肤", Duration = 2, Icon = "rbxassetid://128981664025072" })
+            StarterGui:SetCore("SendNotification", { Title = "功能提示", Text = "已关闭抽奖统计", Duration = 2, Icon = "rbxassetid://128981664025072" })
         else
             setupGachaStatDisplay()
-            StarterGui:SetCore("SendNotification", { Title = "功能提示", Text = "已开启抽奖统计皮肤", Duration = 2, Icon = "rbxassetid://128981664025072" })
+            StarterGui:SetCore("SendNotification", { Title = "功能提示", Text = "已开启抽奖统计", Duration = 2, Icon = "rbxassetid://128981664025072" })
         end
     end,
 })
