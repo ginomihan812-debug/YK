@@ -843,6 +843,7 @@ local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local LocalPlayer = Players.LocalPlayer
 
+local autoInteractEnabled = true
 local interactedItems = {}
 local interactableCache = {}
 local isProcessing = false
@@ -1046,33 +1047,40 @@ local function findNearbyInteractable()
     return nearest, math.sqrt(nearestDistSq)
 end
 
-while autoInteractRunning do
-    if not isProcessing then
-        local character = LocalPlayer.Character
-        if character then
-            local hrp = character:FindFirstChild("HumanoidRootPart")
-            if hrp then
-                local nearby = findNearbyInteractable()
-                
-                if nearby then
-                    isProcessing = true
-                    interactWith(nearby)
+local function autoInteractFunction()
+    while autoInteractEnabled do
+        if not isProcessing then
+            local character = LocalPlayer.Character
+            if character then
+                local hrp = character:FindFirstChild("HumanoidRootPart")
+                if hrp then
+                    local nearby = findNearbyInteractable()
                     
-                    if nearby and nearby.Parent then
-                        interactedItems[nearby] = true
-                        interactableCache[nearby] = nil
-                    else
-                        interactableCache[nearby] = nil
+                    if nearby then
+                        isProcessing = true
+                        interactWith(nearby)
+                        
+                        if nearby and nearby.Parent then
+                            interactedItems[nearby] = true
+                            interactableCache[nearby] = nil
+                        else
+                            interactableCache[nearby] = nil
+                        end
+                        
+                        task.wait(0.3)
+                        isProcessing = false
                     end
-                    
-                    task.wait(0.3)
-                    isProcessing = false
                 end
             end
         end
+        task.wait(0.5)
     end
-    task.wait(0.5)
 end
+
+buildCache()
+task.spawn(autoInteractFunction)
+
+print("靠近自动互动已加载（范围30，right armAstro已加入黑名单）")
         ]])()
     end)
 end
@@ -1928,14 +1936,12 @@ local function cleanupGachaStat()
     end
 end
 
-Tab7:CreateToggle({
+Tab7:CreateButton({
     Name = "抽奖统计显示",
-    CurrentValue = false,
-    Flag = "GachaStatToggle",
     Ext = true,
-    Callback = function(Value)
-        gachaStatEnabled = Value
-        if Value then
+    Callback = function()
+        gachaStatEnabled = not gachaStatEnabled
+        if gachaStatEnabled then
             pcall(function()
                 setupGachaStatListener()
             end)
