@@ -832,16 +832,12 @@ local autoInteractRunning = false
 local autoInteractLoaded = false
 local autoInteractLoop = nil
 
-Tab3:CreateButton({
-    Name = "自动互动材料",
-    Ext = true,
-    Callback = function()
-        if not autoInteractLoaded then
-            autoInteractLoaded = true
-            autoInteractRunning = true
-            
-            autoInteractLoop = task.spawn(function()
-                loadstring([[
+local function startAutoInteract()
+    if autoInteractLoaded then return end
+    autoInteractLoaded = true
+    
+    autoInteractLoop = task.spawn(function()
+        loadstring([[
 local Workspace = game:GetService("Workspace")
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
@@ -1077,9 +1073,18 @@ while autoInteractRunning do
     end
     task.wait(0.5)
 end
-                ]])()
-            end)
-            
+        ]])()
+    end)
+end
+
+Tab3:CreateButton({
+    Name = "自动互动材料",
+    Ext = true,
+    Callback = function()
+        if not autoInteractLoaded then
+            autoInteractLoaded = true
+            autoInteractRunning = true
+            startAutoInteract()
             StarterGui:SetCore("SendNotification", { Title = "功能提示", Text = "已开启自动互动材料", Duration = 2, Icon = "rbxassetid://128981664025072" })
         else
             autoInteractRunning = false
@@ -1954,8 +1959,8 @@ local matEnabled = false
 local matHList = {}
 local matDLabels = {}
 local matDistConn = nil
-local matDescendantConn = nil
 local matLoaded = false
+local matDescendantConn = nil
 
 local blacklist = {
     "lever", "Head", "AT", "SpecterRoom", "ModelDoor",
@@ -2138,7 +2143,6 @@ local function matClearAll()
 end
 
 local function scanInteractables()
-    matClearAll()
     for _, obj in pairs(Workspace:GetDescendants()) do
         if hasInteractable(obj) then
             local target = obj
@@ -2174,9 +2178,7 @@ local function startMatESP()
     if matLoaded then return end
     matLoaded = true
     
-    task.defer(function()
-        scanInteractables()
-    end)
+    scanInteractables()
     
     matDescendantConn = Workspace.DescendantAdded:Connect(function(obj)
         task.wait(0.1)
@@ -2202,12 +2204,10 @@ Tab7:CreateToggle({
     Callback = function(Value)
         matEnabled = Value
         if Value then
-            matLoaded = false
             startMatESP()
             StarterGui:SetCore("SendNotification", { Title = "功能提示", Text = "已开启材料透视", Duration = 2, Icon = "rbxassetid://128981664025072" })
         else
             matClearAll()
-            matLoaded = false
             StarterGui:SetCore("SendNotification", { Title = "功能提示", Text = "已关闭材料透视", Duration = 2, Icon = "rbxassetid://128981664025072" })
         end
     end,
