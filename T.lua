@@ -828,8 +828,249 @@ Tab3:CreateToggle({
     end,
 })
 
+-- ==================== 优化后的自动互动材料 ====================
 local autoInteractRunning = false
-local autoInteractJob = nil
+local autoInteractLoaded = false
+local autoInteractLoop = nil
+
+local function startAutoInteract()
+    if autoInteractLoaded then return end
+    autoInteractLoaded = true
+    
+    autoInteractLoop = task.spawn(function()
+        local interactedItems = {}
+        local interactableCache = {}
+        local isProcessing = false
+        
+        local blacklist = {
+            "lever", "Head", "AT", "SpecterRoom", "ModelDoor",
+            "Right arm", "Acid Arm", "Material",
+            "Clicker", "Drawer_Side", "Drawer_middle", "door", "Base"
+        }
+        
+        local interactRange = 30
+        
+        for _, p in ipairs(Workspace:GetDescendants()) do
+            if p:IsA("ProximityPrompt") then
+                p.HoldDuration = 0
+            end
+        end
+        
+        Workspace.DescendantAdded:Connect(function(p)
+            if p:IsA("ProximityPrompt") then
+                p.HoldDuration = 0
+            end
+        end)
+        
+        local function isInLiving(obj)
+            if not obj then return false end
+            local parent = obj
+            while parent do
+                if parent:IsA("Folder") and parent.Name == "Living" then
+                    return true
+                end
+                parent = parent.Parent
+            end
+            return false
+        end
+        
+        local function isInMap(obj)
+            if not obj then return false end
+            local parent = obj
+            while parent do
+                if parent:IsA("Folder") and parent.Name == "Map" then
+                    return true
+                end
+                if parent:IsA("Model") and parent.Name == "Map" then
+                    return true
+                end
+                parent = parent.Parent
+            end
+            return false
+        end
+        
+        local function isNPC(model)
+            if not model or not model:IsA("Model") then return false end
+            if model:FindFirstChildWhichIsA("Humanoid") then return true end
+            return false
+        end
+        
+        local function isBlacklisted(obj)
+            if not obj then return false end
+            for _, name in pairs(blacklist) do
+                if obj.Name == name then return true end
+                if obj.Parent and obj.Parent.Name == name then return true end
+                if obj.Parent and obj.Parent.Parent and obj.Parent.Parent.Name == name then return true end
+            end
+            return false
+        end
+        
+        local function isExcluded(obj)
+            if not obj then return true end
+            if isInLiving(obj) then return true end
+            if isInMap(obj) then return true end
+            if isNPC(obj) then return true end
+            if isBlacklisted(obj) then return true end
+            return false
+        end
+        
+        local function hasInteractable(obj)
+            if not obj then return false end
+            if obj:IsA("ClickDetector") or obj:IsA("ProximityPrompt") or obj:IsA("TouchInterest") then
+                return true
+            end
+            if obj:IsA("Tool") then
+                return true
+            end
+            for _, child in pairs(obj:GetDescendants()) do
+                if child:IsA("ClickDetector") or child:IsA("ProximityPrompt") or child:IsA("TouchInterest") or child:IsA("Tool") then
+                    return true
+                end
+            end
+            return false
+        end
+        
+        local function getAttachPoint(obj)
+            if obj:IsA("BasePart") or obj:IsA("Part") or obj:IsA("MeshPart") or obj:IsA("UnionOperation") then
+                return obj
+            end
+            if obj:IsA("Model") then
+                local hrp = obj:FindFirstChild("HumanoidRootPart")
+                if hrp then return hrp end
+                local anyPart = obj:FindFirstChildWhichIsA("BasePart")
+                if anyPart then return anyPart end
+            end
+            if obj:IsA("Tool") then
+                local handle = obj:FindFirstChild("Handle") or obj:FindFirstChildWhichIsA("BasePart")
+                if handle then return handle end
+            end
+            return nil
+        end
+        
+        local function addToCache(obj)
+            if not obj or not obj.Parent then return end
+            if isExcluded(obj) then return end
+            if interactedItems[obj] then return end
+            if interactableCache[obj] then return end
+            interactableCache[obj] = true
+        end
+        
+        local function buildCache()
+            interactableCache = {}
+            for _, obj in pairs(Workspace:GetDescendants()) do
+                if hasInteractable(obj) then
+                    local target = obj
+                    if obj:IsA("ClickDetector") or obj:IsA("ProximityPrompt") or obj:IsA("TouchInterest") then
+                        target = obj.Parent
+                    end
+                    if target and not isExcluded(target) and not interactedItems[target] then
+                        addToCache(target)
+                    end
+                end
+            end
+        end
+        
+        Workspace.DescendantAdded:Connect(function(obj)
+            task.wait(0.1)
+            if autoInteractRunning and hasInteractable(obj) then
+                local target = obj
+                if obj:IsA("ClickDetector") or obj:IsA("ProximityPrompt") or obj:IsA("TouchInterest") then
+                    target = obj.Parent
+                end
+                if target and not isExcluded(target) and not interactedItems[target] then
+                    addToCache(target)
+                end
+            end
+        end)
+        
+        Workspace.DescendantRemoving:Connect(function(obj)
+            if interactableCache[obj] then
+                interactableCache[obj] = nil
+            end
+        end)
+        
+        local function interactWith(obj)
+            if not obj or not obj.Parent then return false end
+            local prompt = obj:FindFirstChildWhichIsA("ProximityPrompt", true)
+            if prompt then
+                fireproximityprompt(prompt)
+                return true
+            end
+            local clickDetector = obj:FindFirstChildWhichIsA("ClickDetector", true)
+            if clickDetector then
+                fireclickdetector(clickDetector)
+                return true
+            end
+            for _, child in pairs(obj:GetDescendants()) do
+                if child:IsA("TouchInterest") then
+                    local touchPart = child.Parent
+                    if touchPart and touchPart:IsA("BasePart") then
+                        firetouchinterest(touchPart, LocalPlayer.Character:FindFirstChild("HumanoidRootPart"), 0)
+                    end
+                    return true
+                end
+            end
+            return false
+        end
+        
+        local function findNearbyInteractable()
+            local character = LocalPlayer.Character
+            if not character then return nil, math.huge end
+            local hrp = character:FindFirstChild("HumanoidRootPart")
+            if not hrp then return nil, math.huge end
+            local hrpPos = hrp.Position
+            local nearest = nil
+            local nearestDistSq = math.huge
+            
+            for obj in pairs(interactableCache) do
+                if obj and obj.Parent and not interactedItems[obj] then
+                    local attach = getAttachPoint(obj)
+                    if attach and attach.Parent then
+                        local pos = attach.Position
+                        local diff = pos - hrpPos
+                        local distSq = diff:Dot(diff)
+                        if distSq <= interactRange * interactRange then
+                            if distSq < nearestDistSq then
+                                nearestDistSq = distSq
+                                nearest = obj
+                            end
+                        end
+                    else
+                        interactableCache[obj] = nil
+                    end
+                end
+            end
+            return nearest, math.sqrt(nearestDistSq)
+        end
+        
+        buildCache()
+        
+        while autoInteractRunning do
+            if not isProcessing then
+                local character = LocalPlayer.Character
+                if character then
+                    local hrp = character:FindFirstChild("HumanoidRootPart")
+                    if hrp then
+                        local nearby = findNearbyInteractable()
+                        if nearby then
+                            isProcessing = true
+                            local success = interactWith(nearby)
+                            if success then
+                                interactedItems[nearby] = true
+                                interactableCache[nearby] = nil
+                            else
+                                interactableCache[nearby] = nil
+                            end
+                            task.wait(0.3)
+                            isProcessing = false
+                        end
+                    end
+                end
+            end
+            task.wait(0.5)
+        end
+    end)
+end
 
 Tab3:CreateToggle({
     Name = "自动互动材料",
@@ -840,264 +1081,280 @@ Tab3:CreateToggle({
         if Value then
             if not autoInteractRunning then
                 autoInteractRunning = true
-                autoInteractJob = task.spawn(function()
-                    loadstring([[
-                        local Workspace = game:GetService("Workspace")
-                        local Players = game:GetService("Players")
-                        local RunService = game:GetService("RunService")
-                        local LocalPlayer = Players.LocalPlayer
-
-                        local autoInteractEnabled = true
-                        local interactedItems = {}
-                        local interactableCache = {}
-                        local isProcessing = false
-
-                        local blacklist = {
-                            "lever", "Head", "AT", "SpecterRoom", "ModelDoor",
-                            "Right arm", "Acid Arm", "Material",
-                            "Clicker", "Drawer_Side", "Drawer_middle", "door", "Base"
-                        }
-
-                        local interactRange = 30
-
-                        for _, p in ipairs(Workspace:GetDescendants()) do
-                            if p:IsA("ProximityPrompt") then
-                                p.HoldDuration = 0
-                            end
-                        end
-
-                        Workspace.DescendantAdded:Connect(function(p)
-                            if p:IsA("ProximityPrompt") then
-                                p.HoldDuration = 0
-                            end
-                        end)
-
-                        local function isInLiving(obj)
-                            if not obj then return false end
-                            local parent = obj
-                            while parent do
-                                if parent:IsA("Folder") and parent.Name == "Living" then
-                                    return true
-                                end
-                                parent = parent.Parent
-                            end
-                            return false
-                        end
-
-                        local function isNPC(model)
-                            if not model or not model:IsA("Model") then return false end
-                            if model:FindFirstChildWhichIsA("Humanoid") then return true end
-                            return false
-                        end
-
-                        local function isBlacklisted(obj)
-                            if not obj then return false end
-                            for _, name in pairs(blacklist) do
-                                if obj.Name == name then return true end
-                                if obj.Parent and obj.Parent.Name == name then return true end
-                                if obj.Parent and obj.Parent.Parent and obj.Parent.Parent.Name == name then return true end
-                            end
-                            return false
-                        end
-
-                        local function hasInteractable(obj)
-                            if not obj then return false end
-                            if obj:IsA("ClickDetector") or obj:IsA("ProximityPrompt") or obj:IsA("TouchInterest") then
-                                return true
-                            end
-                            if obj:IsA("Tool") then
-                                return true
-                            end
-                            for _, child in pairs(obj:GetDescendants()) do
-                                if child:IsA("ClickDetector") or child:IsA("ProximityPrompt") or child:IsA("TouchInterest") or child:IsA("Tool") then
-                                    return true
-                                end
-                            end
-                            return false
-                        end
-
-                        local function getAttachPoint(obj)
-                            if obj:IsA("BasePart") or obj:IsA("Part") or obj:IsA("MeshPart") or obj:IsA("UnionOperation") then
-                                return obj
-                            end
-                            if obj:IsA("Model") then
-                                local hrp = obj:FindFirstChild("HumanoidRootPart")
-                                if hrp then return hrp end
-                                local anyPart = obj:FindFirstChildWhichIsA("BasePart")
-                                if anyPart then return anyPart end
-                            end
-                            if obj:IsA("Tool") then
-                                local handle = obj:FindFirstChild("Handle") or obj:FindFirstChildWhichIsA("BasePart")
-                                if handle then return handle end
-                            end
-                            return nil
-                        end
-
-                        local function addToCache(obj)
-                            if not obj or not obj.Parent then return end
-                            if isNPC(obj) then return end
-                            if isBlacklisted(obj) then return end
-                            if isInLiving(obj) then return end
-                            if interactedItems[obj] then return end
-                            if interactableCache[obj] then return end
-                            
-                            interactableCache[obj] = true
-                        end
-
-                        local function buildCache()
-                            interactableCache = {}
-                            for _, obj in pairs(Workspace:GetDescendants()) do
-                                if hasInteractable(obj) then
-                                    if not isNPC(obj) then
-                                        local target = obj
-                                        if obj:IsA("ClickDetector") or obj:IsA("ProximityPrompt") or obj:IsA("TouchInterest") then
-                                            target = obj.Parent
-                                        end
-                                        if target and not isBlacklisted(target) and not isInLiving(target) then
-                                            if not interactedItems[target] then
-                                                addToCache(target)
-                                            end
-                                        end
-                                    end
-                                end
-                            end
-                        end
-
-                        Workspace.DescendantAdded:Connect(function(obj)
-                            task.wait(0.1)
-                            if hasInteractable(obj) then
-                                if not isNPC(obj) then
-                                    local target = obj
-                                    if obj:IsA("ClickDetector") or obj:IsA("ProximityPrompt") or obj:IsA("TouchInterest") then
-                                        target = obj.Parent
-                                    end
-                                    if target and not isBlacklisted(target) and not isInLiving(target) then
-                                        if not interactedItems[target] then
-                                            addToCache(target)
-                                        end
-                                    end
-                                end
-                            end
-                        end)
-
-                        Workspace.DescendantRemoving:Connect(function(obj)
-                            if interactableCache[obj] then
-                                interactableCache[obj] = nil
-                            end
-                        end)
-
-                        local function interactWith(obj)
-                            if not obj or not obj.Parent then return false end
-                            
-                            local prompt = obj:FindFirstChildWhichIsA("ProximityPrompt", true)
-                            if prompt then
-                                fireproximityprompt(prompt)
-                                return true
-                            end
-                            
-                            local clickDetector = obj:FindFirstChildWhichIsA("ClickDetector", true)
-                            if clickDetector then
-                                fireclickdetector(clickDetector)
-                                return true
-                            end
-                            
-                            for _, child in pairs(obj:GetDescendants()) do
-                                if child:IsA("TouchInterest") then
-                                    local touchPart = child.Parent
-                                    if touchPart and touchPart:IsA("BasePart") then
-                                        firetouchinterest(touchPart, LocalPlayer.Character:FindFirstChild("HumanoidRootPart"), 0)
-                                    end
-                                    return true
-                                end
-                            end
-                            
-                            return false
-                        end
-
-                        local function findNearbyInteractable()
-                            local character = LocalPlayer.Character
-                            if not character then return nil, math.huge end
-                            
-                            local hrp = character:FindFirstChild("HumanoidRootPart")
-                            if not hrp then return nil, math.huge end
-                            
-                            local hrpPos = hrp.Position
-                            local nearest = nil
-                            local nearestDistSq = math.huge
-
-                            for obj in pairs(interactableCache) do
-                                if obj and obj.Parent and not interactedItems[obj] then
-                                    local attach = getAttachPoint(obj)
-                                    if attach and attach.Parent then
-                                        local pos = attach.Position
-                                        local diff = pos - hrpPos
-                                        local distSq = diff:Dot(diff)
-                                        if distSq <= interactRange * interactRange then
-                                            if distSq < nearestDistSq then
-                                                nearestDistSq = distSq
-                                                nearest = obj
-                                            end
-                                        end
-                                    else
-                                        interactableCache[obj] = nil
-                                    end
-                                end
-                            end
-
-                            return nearest, math.sqrt(nearestDistSq)
-                        end
-
-                        local function autoInteractFunction()
-                            while autoInteractEnabled do
-                                if not isProcessing then
-                                    local character = LocalPlayer.Character
-                                    if character then
-                                        local hrp = character:FindFirstChild("HumanoidRootPart")
-                                        if hrp then
-                                            local nearby = findNearbyInteractable()
-                                            
-                                            if nearby then
-                                                isProcessing = true
-                                                local success = interactWith(nearby)
-                                                
-                                                if success then
-                                                    interactedItems[nearby] = true
-                                                    interactableCache[nearby] = nil
-                                                else
-                                                    interactableCache[nearby] = nil
-                                                end
-                                                
-                                                task.wait(0.3)
-                                                isProcessing = false
-                                            end
-                                        end
-                                    end
-                                end
-                                task.wait(0.5)
-                            end
-                        end
-
-                        buildCache()
-                        task.spawn(autoInteractFunction)
-
-                        print("自动互动已加载（靠近材料30格内自动互动）")
-                    ]])()
-                end)
+                startAutoInteract()
                 StarterGui:SetCore("SendNotification", { Title = "自动化", Text = "已开启自动互动材料", Duration = 2, Icon = "rbxassetid://128981664025072" })
             end
         else
             autoInteractRunning = false
-            if autoInteractJob then
-                task.cancel(autoInteractJob)
-                autoInteractJob = nil
-            end
             StarterGui:SetCore("SendNotification", { Title = "自动化", Text = "已关闭自动互动材料", Duration = 2, Icon = "rbxassetid://128981664025072" })
         end
     end,
 })
 
+-- ==================== 优化后的自动传送互动材料 ====================
 local autoTeleportRunning = false
-local autoTeleportJob = nil
+local autoTeleportLoaded = false
+local autoTeleportLoop = nil
+
+local function startAutoTeleport()
+    if autoTeleportLoaded then return end
+    autoTeleportLoaded = true
+    
+    autoTeleportLoop = task.spawn(function()
+        local interactedItems = {}
+        local interactableCache = {}
+        local isTeleporting = false
+        local isProcessing = false
+        
+        local blacklist = {
+            "lever", "Head", "AT", "SpecterRoom", "ModelDoor",
+            "Right arm", "Acid Arm", "Material",
+            "Clicker", "Drawer_Side", "Drawer_middle", "door", "Base"
+        }
+        
+        for _, p in ipairs(Workspace:GetDescendants()) do
+            if p:IsA("ProximityPrompt") then
+                p.HoldDuration = 0
+            end
+        end
+        
+        Workspace.DescendantAdded:Connect(function(p)
+            if p:IsA("ProximityPrompt") then
+                p.HoldDuration = 0
+            end
+        end)
+        
+        local function isInLiving(obj)
+            if not obj then return false end
+            local parent = obj
+            while parent do
+                if parent:IsA("Folder") and parent.Name == "Living" then
+                    return true
+                end
+                parent = parent.Parent
+            end
+            return false
+        end
+        
+        local function isInMap(obj)
+            if not obj then return false end
+            local parent = obj
+            while parent do
+                if parent:IsA("Folder") and parent.Name == "Map" then
+                    return true
+                end
+                if parent:IsA("Model") and parent.Name == "Map" then
+                    return true
+                end
+                parent = parent.Parent
+            end
+            return false
+        end
+        
+        local function isNPC(model)
+            if not model or not model:IsA("Model") then return false end
+            if model:FindFirstChildWhichIsA("Humanoid") then return true end
+            return false
+        end
+        
+        local function isBlacklisted(obj)
+            if not obj then return false end
+            for _, name in pairs(blacklist) do
+                if obj.Name == name then return true end
+                if obj.Parent and obj.Parent.Name == name then return true end
+                if obj.Parent and obj.Parent.Parent and obj.Parent.Parent.Name == name then return true end
+            end
+            return false
+        end
+        
+        local function isExcluded(obj)
+            if not obj then return true end
+            if isInLiving(obj) then return true end
+            if isInMap(obj) then return true end
+            if isNPC(obj) then return true end
+            if isBlacklisted(obj) then return true end
+            return false
+        end
+        
+        local function hasInteractable(obj)
+            if not obj then return false end
+            if obj:IsA("ClickDetector") or obj:IsA("ProximityPrompt") or obj:IsA("TouchInterest") then
+                return true
+            end
+            if obj:IsA("Tool") then
+                return true
+            end
+            for _, child in pairs(obj:GetDescendants()) do
+                if child:IsA("ClickDetector") or child:IsA("ProximityPrompt") or child:IsA("TouchInterest") or child:IsA("Tool") then
+                    return true
+                end
+            end
+            return false
+        end
+        
+        local function getAttachPoint(obj)
+            if obj:IsA("BasePart") or obj:IsA("Part") or obj:IsA("MeshPart") or obj:IsA("UnionOperation") then
+                return obj
+            end
+            if obj:IsA("Model") then
+                local hrp = obj:FindFirstChild("HumanoidRootPart")
+                if hrp then return hrp end
+                local anyPart = obj:FindFirstChildWhichIsA("BasePart")
+                if anyPart then return anyPart end
+            end
+            if obj:IsA("Tool") then
+                local handle = obj:FindFirstChild("Handle") or obj:FindFirstChildWhichIsA("BasePart")
+                if handle then return handle end
+            end
+            return nil
+        end
+        
+        local function addToCache(obj)
+            if not obj or not obj.Parent then return end
+            if isExcluded(obj) then return end
+            if interactedItems[obj] then return end
+            if interactableCache[obj] then return end
+            interactableCache[obj] = true
+        end
+        
+        local function buildCache()
+            interactableCache = {}
+            for _, obj in pairs(Workspace:GetDescendants()) do
+                if hasInteractable(obj) then
+                    local target = obj
+                    if obj:IsA("ClickDetector") or obj:IsA("ProximityPrompt") or obj:IsA("TouchInterest") then
+                        target = obj.Parent
+                    end
+                    if target and not isExcluded(target) and not interactedItems[target] then
+                        addToCache(target)
+                    end
+                end
+            end
+        end
+        
+        Workspace.DescendantAdded:Connect(function(obj)
+            task.wait(0.1)
+            if autoTeleportRunning and hasInteractable(obj) then
+                local target = obj
+                if obj:IsA("ClickDetector") or obj:IsA("ProximityPrompt") or obj:IsA("TouchInterest") then
+                    target = obj.Parent
+                end
+                if target and not isExcluded(target) and not interactedItems[target] then
+                    addToCache(target)
+                end
+            end
+        end)
+        
+        Workspace.DescendantRemoving:Connect(function(obj)
+            if interactableCache[obj] then
+                interactableCache[obj] = nil
+            end
+        end)
+        
+        local function interactWith(obj)
+            if not obj or not obj.Parent then return false end
+            local prompt = obj:FindFirstChildWhichIsA("ProximityPrompt", true)
+            if prompt then
+                fireproximityprompt(prompt)
+                return true
+            end
+            local clickDetector = obj:FindFirstChildWhichIsA("ClickDetector", true)
+            if clickDetector then
+                fireclickdetector(clickDetector)
+                return true
+            end
+            for _, child in pairs(obj:GetDescendants()) do
+                if child:IsA("TouchInterest") then
+                    local touchPart = child.Parent
+                    if touchPart and touchPart:IsA("BasePart") then
+                        firetouchinterest(touchPart, LocalPlayer.Character:FindFirstChild("HumanoidRootPart"), 0)
+                    end
+                    return true
+                end
+            end
+            return false
+        end
+        
+        local function findNearestInteractable()
+            local character = LocalPlayer.Character
+            if not character then return nil, math.huge end
+            local hrp = character:FindFirstChild("HumanoidRootPart")
+            if not hrp then return nil, math.huge end
+            local hrpPos = hrp.Position
+            local nearest = nil
+            local nearestDistSq = math.huge
+            
+            for obj in pairs(interactableCache) do
+                if obj and obj.Parent and not interactedItems[obj] then
+                    local attach = getAttachPoint(obj)
+                    if attach and attach.Parent then
+                        local pos = attach.Position
+                        local diff = pos - hrpPos
+                        local distSq = diff:Dot(diff)
+                        if distSq < nearestDistSq then
+                            nearestDistSq = distSq
+                            nearest = obj
+                        end
+                    else
+                        interactableCache[obj] = nil
+                    end
+                end
+            end
+            return nearest, math.sqrt(nearestDistSq)
+        end
+        
+        local function teleportToInteractable(obj)
+            if not obj or not obj.Parent then return false end
+            if isTeleporting then return false end
+            local character = LocalPlayer.Character
+            if not character then return false end
+            local hrp = character:FindFirstChild("HumanoidRootPart")
+            if not hrp then return false end
+            local attach = getAttachPoint(obj)
+            if not attach then return false end
+            local pos = attach.Position
+            if not pos then return false end
+            
+            isTeleporting = true
+            isProcessing = true
+            hrp.CFrame = CFrame.new(pos + Vector3.new(0, 2, 3))
+            task.wait(0.3)
+            isTeleporting = false
+            
+            local success = interactWith(obj)
+            if success then
+                interactedItems[obj] = true
+                interactableCache[obj] = nil
+            end
+            task.wait(0.5)
+            isProcessing = false
+            return success
+        end
+        
+        buildCache()
+        
+        while autoTeleportRunning do
+            if not isProcessing then
+                local character = LocalPlayer.Character
+                if character then
+                    local hrp = character:FindFirstChild("HumanoidRootPart")
+                    if hrp then
+                        local nearest = findNearestInteractable()
+                        if nearest then
+                            local success = teleportToInteractable(nearest)
+                            if not success then
+                                interactableCache[nearest] = nil
+                            end
+                        else
+                            buildCache()
+                        end
+                    end
+                end
+            end
+            task.wait(0.5)
+        end
+    end)
+end
 
 Tab3:CreateToggle({
     Name = "自动传送互动材料",
@@ -1108,284 +1365,11 @@ Tab3:CreateToggle({
         if Value then
             if not autoTeleportRunning then
                 autoTeleportRunning = true
-                autoTeleportJob = task.spawn(function()
-                    loadstring([[
-                        local Workspace = game:GetService("Workspace")
-                        local Players = game:GetService("Players")
-                        local RunService = game:GetService("RunService")
-                        local LocalPlayer = Players.LocalPlayer
-
-                        local autoInteractEnabled = true
-                        local interactedItems = {}
-                        local interactableCache = {}
-                        local isTeleporting = false
-                        local isProcessing = false
-
-                        local blacklist = {
-                            "lever", "Head", "AT", "SpecterRoom", "ModelDoor",
-                            "Right arm", "Acid Arm", "Material",
-                            "Clicker", "Drawer_Side", "Drawer_middle", "door", "Base"
-                        }
-
-                        for _, p in ipairs(Workspace:GetDescendants()) do
-                            if p:IsA("ProximityPrompt") then
-                                p.HoldDuration = 0
-                            end
-                        end
-
-                        Workspace.DescendantAdded:Connect(function(p)
-                            if p:IsA("ProximityPrompt") then
-                                p.HoldDuration = 0
-                            end
-                        end)
-
-                        local function isInLiving(obj)
-                            if not obj then return false end
-                            local parent = obj
-                            while parent do
-                                if parent:IsA("Folder") and parent.Name == "Living" then
-                                    return true
-                                end
-                                parent = parent.Parent
-                            end
-                            return false
-                        end
-
-                        local function isNPC(model)
-                            if not model or not model:IsA("Model") then return false end
-                            if model:FindFirstChildWhichIsA("Humanoid") then return true end
-                            return false
-                        end
-
-                        local function isBlacklisted(obj)
-                            if not obj then return false end
-                            for _, name in pairs(blacklist) do
-                                if obj.Name == name then return true end
-                                if obj.Parent and obj.Parent.Name == name then return true end
-                                if obj.Parent and obj.Parent.Parent and obj.Parent.Parent.Name == name then return true end
-                            end
-                            return false
-                        end
-
-                        local function hasInteractable(obj)
-                            if not obj then return false end
-                            if obj:IsA("ClickDetector") or obj:IsA("ProximityPrompt") or obj:IsA("TouchInterest") then
-                                return true
-                            end
-                            if obj:IsA("Tool") then
-                                return true
-                            end
-                            for _, child in pairs(obj:GetDescendants()) do
-                                if child:IsA("ClickDetector") or child:IsA("ProximityPrompt") or child:IsA("TouchInterest") or child:IsA("Tool") then
-                                    return true
-                                end
-                            end
-                            return false
-                        end
-
-                        local function getAttachPoint(obj)
-                            if obj:IsA("BasePart") or obj:IsA("Part") or obj:IsA("MeshPart") or obj:IsA("UnionOperation") then
-                                return obj
-                            end
-                            if obj:IsA("Model") then
-                                local hrp = obj:FindFirstChild("HumanoidRootPart")
-                                if hrp then return hrp end
-                                local anyPart = obj:FindFirstChildWhichIsA("BasePart")
-                                if anyPart then return anyPart end
-                            end
-                            if obj:IsA("Tool") then
-                                local handle = obj:FindFirstChild("Handle") or obj:FindFirstChildWhichIsA("BasePart")
-                                if handle then return handle end
-                            end
-                            return nil
-                        end
-
-                        local function addToCache(obj)
-                            if not obj or not obj.Parent then return end
-                            if isNPC(obj) then return end
-                            if isBlacklisted(obj) then return end
-                            if isInLiving(obj) then return end
-                            if interactedItems[obj] then return end
-                            if interactableCache[obj] then return end
-                            
-                            interactableCache[obj] = true
-                        end
-
-                        local function buildCache()
-                            interactableCache = {}
-                            for _, obj in pairs(Workspace:GetDescendants()) do
-                                if hasInteractable(obj) then
-                                    if not isNPC(obj) then
-                                        local target = obj
-                                        if obj:IsA("ClickDetector") or obj:IsA("ProximityPrompt") or obj:IsA("TouchInterest") then
-                                            target = obj.Parent
-                                        end
-                                        if target and not isBlacklisted(target) and not isInLiving(target) then
-                                            if not interactedItems[target] then
-                                                addToCache(target)
-                                            end
-                                        end
-                                    end
-                                end
-                            end
-                        end
-
-                        Workspace.DescendantAdded:Connect(function(obj)
-                            task.wait(0.1)
-                            if hasInteractable(obj) then
-                                if not isNPC(obj) then
-                                    local target = obj
-                                    if obj:IsA("ClickDetector") or obj:IsA("ProximityPrompt") or obj:IsA("TouchInterest") then
-                                        target = obj.Parent
-                                    end
-                                    if target and not isBlacklisted(target) and not isInLiving(target) then
-                                        if not interactedItems[target] then
-                                            addToCache(target)
-                                        end
-                                    end
-                                end
-                            end
-                        end)
-
-                        Workspace.DescendantRemoving:Connect(function(obj)
-                            if interactableCache[obj] then
-                                interactableCache[obj] = nil
-                            end
-                        end)
-
-                        local function interactWith(obj)
-                            if not obj or not obj.Parent then return false end
-                            
-                            local prompt = obj:FindFirstChildWhichIsA("ProximityPrompt", true)
-                            if prompt then
-                                fireproximityprompt(prompt)
-                                return true
-                            end
-                            
-                            local clickDetector = obj:FindFirstChildWhichIsA("ClickDetector", true)
-                            if clickDetector then
-                                fireclickdetector(clickDetector)
-                                return true
-                            end
-                            
-                            for _, child in pairs(obj:GetDescendants()) do
-                                if child:IsA("TouchInterest") then
-                                    local touchPart = child.Parent
-                                    if touchPart and touchPart:IsA("BasePart") then
-                                        firetouchinterest(touchPart, LocalPlayer.Character:FindFirstChild("HumanoidRootPart"), 0)
-                                    end
-                                    return true
-                                end
-                            end
-                            
-                            return false
-                        end
-
-                        local function findNearestInteractable()
-                            local character = LocalPlayer.Character
-                            if not character then return nil, math.huge end
-                            
-                            local hrp = character:FindFirstChild("HumanoidRootPart")
-                            if not hrp then return nil, math.huge end
-                            
-                            local hrpPos = hrp.Position
-                            local nearest = nil
-                            local nearestDistSq = math.huge
-
-                            for obj in pairs(interactableCache) do
-                                if obj and obj.Parent and not interactedItems[obj] then
-                                    local attach = getAttachPoint(obj)
-                                    if attach and attach.Parent then
-                                        local pos = attach.Position
-                                        local diff = pos - hrpPos
-                                        local distSq = diff:Dot(diff)
-                                        if distSq < nearestDistSq then
-                                            nearestDistSq = distSq
-                                            nearest = obj
-                                        end
-                                    else
-                                        interactableCache[obj] = nil
-                                    end
-                                end
-                            end
-
-                            return nearest, math.sqrt(nearestDistSq)
-                        end
-
-                        local function teleportToInteractable(obj)
-                            if not obj or not obj.Parent then return false end
-                            if isTeleporting then return false end
-                            
-                            local character = LocalPlayer.Character
-                            if not character then return false end
-                            
-                            local hrp = character:FindFirstChild("HumanoidRootPart")
-                            if not hrp then return false end
-                            
-                            local attach = getAttachPoint(obj)
-                            if not attach then return false end
-                            
-                            local pos = attach.Position
-                            if not pos then return false end
-                            
-                            isTeleporting = true
-                            isProcessing = true
-                            
-                            hrp.CFrame = CFrame.new(pos + Vector3.new(0, 2, 3))
-                            
-                            task.wait(0.3)
-                            isTeleporting = false
-                            
-                            local success = interactWith(obj)
-                            
-                            if success then
-                                interactedItems[obj] = true
-                                interactableCache[obj] = nil
-                            end
-                            
-                            task.wait(0.5)
-                            isProcessing = false
-                            
-                            return success
-                        end
-
-                        local function autoInteractFunction()
-                            while autoInteractEnabled do
-                                if not isProcessing then
-                                    local character = LocalPlayer.Character
-                                    if character then
-                                        local hrp = character:FindFirstChild("HumanoidRootPart")
-                                        if hrp then
-                                            local nearest = findNearestInteractable()
-                                            if nearest then
-                                                local success = teleportToInteractable(nearest)
-                                                if not success then
-                                                    interactableCache[nearest] = nil
-                                                end
-                                            else
-                                                buildCache()
-                                            end
-                                        end
-                                    end
-                                end
-                                task.wait(0.5)
-                            end
-                        end
-
-                        buildCache()
-                        task.spawn(autoInteractFunction)
-
-                        print("自动传送互动已加载（持续检测，互动完继续找下一个）")
-                    ]])()
-                end)
+                startAutoTeleport()
                 StarterGui:SetCore("SendNotification", { Title = "自动化", Text = "已开启自动传送互动材料", Duration = 2, Icon = "rbxassetid://128981664025072" })
             end
         else
             autoTeleportRunning = false
-            if autoTeleportJob then
-                task.cancel(autoTeleportJob)
-                autoTeleportJob = nil
-            end
             StarterGui:SetCore("SendNotification", { Title = "自动化", Text = "已关闭自动传送互动材料", Duration = 2, Icon = "rbxassetid://128981664025072" })
         end
     end,
@@ -1861,7 +1845,8 @@ local function updatePlayerDistances()
                             distLabel.Text = string.format("%.1fm", dist)
                         end
                     end
-                end            end
+                end
+            end
         end
     end
 end
@@ -2217,11 +2202,14 @@ Tab7:CreateToggle({
     end,
 })
 
+-- ==================== 优化后的材料透视 ====================
 local matEnabled = false
 local matHList = {}
 local matDLabels = {}
 local matDistConn = nil
 local matDescendantConn = nil
+local matLoaded = false
+local matScanRunning = false
 
 local blacklist = {
     "lever", "Head", "AT", "SpecterRoom", "ModelDoor",
@@ -2234,6 +2222,21 @@ local function isInLiving(obj)
     local parent = obj
     while parent do
         if parent:IsA("Folder") and parent.Name == "Living" then
+            return true
+        end
+        parent = parent.Parent
+    end
+    return false
+end
+
+local function isInMap(obj)
+    if not obj then return false end
+    local parent = obj
+    while parent do
+        if parent:IsA("Folder") and parent.Name == "Map" then
+            return true
+        end
+        if parent:IsA("Model") and parent.Name == "Map" then
             return true
         end
         parent = parent.Parent
@@ -2262,6 +2265,15 @@ local function isBlacklisted(obj)
         if obj.Parent and obj.Parent.Name == name then return true end
         if obj.Parent and obj.Parent.Parent and obj.Parent.Parent.Name == name then return true end
     end
+    return false
+end
+
+local function isExcludedMat(obj)
+    if not obj then return true end
+    if isInLiving(obj) then return true end
+    if isInMap(obj) then return true end
+    if isNPC(obj) then return true end
+    if isBlacklisted(obj) then return true end
     return false
 end
 
@@ -2347,9 +2359,7 @@ end
 local function matAddHighlight(obj)
     if matHList[obj] then return end
     if not obj then return end
-    if isNPC(obj) then return end
-    if isBlacklisted(obj) then return end
-    if isInLiving(obj) then return end
+    if isExcludedMat(obj) then return end
 
     local attach = getAttachPoint(obj)
     if not attach then return end
@@ -2382,18 +2392,14 @@ end
 
 local function scanInteractables()
     matClearAll()
-    local count = 0
     for _, obj in pairs(Workspace:GetDescendants()) do
         if hasInteractable(obj) then
-            if not isNPC(obj) then
-                local target = obj
-                if obj:IsA("ClickDetector") or obj:IsA("ProximityPrompt") or obj:IsA("TouchInterest") then
-                    target = obj.Parent
-                end
-                if target and not isBlacklisted(target) and not isInLiving(target) then
-                    matAddHighlight(target)
-                    count = count + 1
-                end
+            local target = obj
+            if obj:IsA("ClickDetector") or obj:IsA("ProximityPrompt") or obj:IsA("TouchInterest") then
+                target = obj.Parent
+            end
+            if target and not isExcludedMat(target) then
+                matAddHighlight(target)
             end
         end
     end
@@ -2403,7 +2409,6 @@ local function matUpdateDistances()
     if not matEnabled then return end
     local hrp = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
     if not hrp then return end
-
     for obj, labels in pairs(matDLabels) do
         if labels and labels.dist and labels.dist.Parent then
             local attach = labels.attach
@@ -2418,6 +2423,28 @@ local function matUpdateDistances()
     end
 end
 
+local function startMatESP()
+    if matLoaded then return end
+    matLoaded = true
+    
+    scanInteractables()
+    
+    matDescendantConn = Workspace.DescendantAdded:Connect(function(obj)
+        task.wait(0.1)
+        if matEnabled and hasInteractable(obj) then
+            local target = obj
+            if obj:IsA("ClickDetector") or obj:IsA("ProximityPrompt") or obj:IsA("TouchInterest") then
+                target = obj.Parent
+            end
+            if target and not isExcludedMat(target) then
+                matAddHighlight(target)
+            end
+        end
+    end)
+    
+    matDistConn = RunService.Heartbeat:Connect(matUpdateDistances)
+end
+
 Tab7:CreateToggle({
     Name = "材料透视",
     CurrentValue = false,
@@ -2426,36 +2453,9 @@ Tab7:CreateToggle({
     Callback = function(Value)
         matEnabled = Value
         if Value then
-            scanInteractables()
-            if matDescendantConn then
-                matDescendantConn:Disconnect()
-                matDescendantConn = nil
-            end
-            matDescendantConn = Workspace.DescendantAdded:Connect(function(obj)
-                task.wait(0.1)
-                if matEnabled and hasInteractable(obj) then
-                    local target = obj
-                    if obj:IsA("ClickDetector") or obj:IsA("ProximityPrompt") or obj:IsA("TouchInterest") then
-                        target = obj.Parent
-                    end
-                    if target and not isNPC(target) and not isBlacklisted(target) and not isInLiving(target) then
-                        matAddHighlight(target)
-                    end
-                end
-            end)
-            if not matDistConn then 
-                matDistConn = RunService.Heartbeat:Connect(matUpdateDistances) 
-            end
+            startMatESP()
             StarterGui:SetCore("SendNotification", { Title = "功能提示", Text = "已开启材料透视", Duration = 2, Icon = "rbxassetid://128981664025072" })
         else
-            if matDescendantConn then
-                matDescendantConn:Disconnect()
-                matDescendantConn = nil
-            end
-            if matDistConn then 
-                matDistConn:Disconnect() 
-                matDistConn = nil 
-            end
             matClearAll()
             StarterGui:SetCore("SendNotification", { Title = "功能提示", Text = "已关闭材料透视", Duration = 2, Icon = "rbxassetid://128981664025072" })
         end
