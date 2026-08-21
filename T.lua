@@ -843,23 +843,17 @@ local blacklist = {
 
 local interactRange = 100
 
-local function buildCache()
-    local newCache = {}
-    for _, obj in pairs(Workspace:GetDescendants()) do
-        if hasInteractable(obj) then
-            if not isNPC(obj) then
-                local target = obj
-                if obj:IsA("ClickDetector") or obj:IsA("ProximityPrompt") or obj:IsA("TouchInterest") then
-                    target = obj.Parent
-                end
-                if target and not isBlacklisted(target) and not isInLiving(target) then
-                    newCache[target] = true
-                end
-            end
-        end
+for _, p in ipairs(Workspace:GetDescendants()) do
+    if p:IsA("ProximityPrompt") then
+        p.HoldDuration = 0
     end
-    interactableCache = newCache
 end
+
+Workspace.DescendantAdded:Connect(function(p)
+    if p:IsA("ProximityPrompt") then
+        p.HoldDuration = 0
+    end
+end)
 
 local function isInLiving(obj)
     if not obj then return false end
@@ -906,7 +900,8 @@ local function hasInteractable(obj)
 end
 
 local function getAttachPoint(obj)
-    if obj:IsA("BasePart") or obj:IsA("Part") or obj:IsA("MeshPart") or obj:IsA("UnionOperation") then        return obj
+    if obj:IsA("BasePart") or obj:IsA("Part") or obj:IsA("MeshPart") or obj:IsA("UnionOperation") then
+        return obj
     end
     if obj:IsA("Model") then
         local hrp = obj:FindFirstChild("HumanoidRootPart")
@@ -928,6 +923,24 @@ local function addToCache(obj)
     if isBlacklisted(obj) then return end
     if interactableCache[obj] then return end
     interactableCache[obj] = true
+end
+
+local function buildCache()
+    local newCache = {}
+    for _, obj in pairs(Workspace:GetDescendants()) do
+        if hasInteractable(obj) then
+            if not isNPC(obj) then
+                local target = obj
+                if obj:IsA("ClickDetector") or obj:IsA("ProximityPrompt") or obj:IsA("TouchInterest") then
+                    target = obj.Parent
+                end
+                if target and not isBlacklisted(target) and not isInLiving(target) then
+                    newCache[target] = true
+                end
+            end
+        end
+    end
+    interactableCache = newCache
 end
 
 Workspace.DescendantAdded:Connect(function(obj)
@@ -983,7 +996,7 @@ local function findNearbyInteractable()
     local hrpPos = hrp.Position
     local nearest = nil
     local nearestDistSq = math.huge
-    
+
     for obj in pairs(interactableCache) do
         if obj and obj.Parent then
             local attach = getAttachPoint(obj)
